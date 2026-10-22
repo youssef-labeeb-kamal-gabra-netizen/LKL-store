@@ -13,6 +13,10 @@ export interface SessionUser {
   role: "USER" | "ADMIN";
 }
 
+export interface SessionResult extends SessionUser {
+  token: string;
+}
+
 interface StoredSessionPayload {
   user: SessionUser;
   iat: number;
@@ -130,7 +134,7 @@ function verifySignature(payloadStr: string, signature: string): boolean {
 /**
  * Encodes and cryptographically signs a session payload into an HTTP-only cookie.
  */
-export async function createSession(user: Omit<SessionUser, "role">): Promise<SessionUser> {
+export async function createSession(user: Omit<SessionUser, "role">): Promise<SessionResult> {
   const role = resolveUserRole(user.email);
   const sessionUser: SessionUser = {
     ...user,
@@ -150,14 +154,18 @@ export async function createSession(user: Omit<SessionUser, "role">): Promise<Se
   const signature = signPayload(payloadStr);
   const token = `${payloadStr}.${signature}`;
 
-  const cookieStore = await cookies();
-  cookieStore.set(SESSION_COOKIE_NAME, token, {
-    httpOnly: true,
-    secure: env.isProduction,
-    sameSite: "lax",
-    path: "/",
-    maxAge: SESSION_MAX_AGE_SECONDS,
-  });
+  try {
+    const cookieStore = await cookies();
+    cookieStore.set(SESSION_COOKIE_NAME, token, {
+      httpOnly: true,
+      secure: env.isProduction,
+      sameSite: "lax",
+      path: "/",
+      maxAge: SESSION_MAX_AGE_SECONDS,
+    });
+  } catch {
+    // Non-fatal if setting cookies() fails in some contexts
+  }
 
   try {
     upsertUser({
@@ -169,7 +177,10 @@ export async function createSession(user: Omit<SessionUser, "role">): Promise<Se
     // Non-fatal if storage fails during edge session creation
   }
 
-  return sessionUser;
+  return {
+    ...sessionUser,
+    token,
+  };
 }
 
 /**

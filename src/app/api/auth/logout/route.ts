@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { destroySession } from "@/lib/auth";
+import { destroySession, SESSION_COOKIE_NAME } from "@/lib/auth";
 import { env } from "@/lib/env";
 
 function getBaseUrl(request: NextRequest): string {
@@ -11,7 +11,9 @@ function getBaseUrl(request: NextRequest): string {
 export async function POST(request: NextRequest) {
   await destroySession();
   const baseUrl = getBaseUrl(request);
-  return NextResponse.redirect(`${baseUrl}/login?logged_out=1`, { status: 303 });
+  const response = NextResponse.redirect(`${baseUrl}/login?logged_out=1`, { status: 303 });
+  response.cookies.delete(SESSION_COOKIE_NAME);
+  return response;
 }
 
 /**

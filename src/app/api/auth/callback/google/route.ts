@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { env } from "@/lib/env";
-import { createSession, OAUTH_STATE_COOKIE, OAUTH_PKCE_COOKIE } from "@/lib/auth";
+import { createSession, SESSION_COOKIE_NAME, OAUTH_STATE_COOKIE, OAUTH_PKCE_COOKIE } from "@/lib/auth";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -85,16 +85,27 @@ export async function GET(request: NextRequest) {
     }
 
     // 4. Create cryptographically signed application session
+    const normalizedEmail = googleUser.email.trim().toLowerCase();
     const session = await createSession({
       id: googleUser.id,
       name: googleUser.name || "مستخدم LKL",
-      email: googleUser.email,
+      email: normalizedEmail,
       image: googleUser.picture,
     });
 
     // 5. Redirect based on role and wipe transient OAuth cookies
     const targetUrl = session.role === "ADMIN" ? `${baseUrl}/admin` : `${baseUrl}/account`;
     const response = NextResponse.redirect(targetUrl);
+
+    // CRITICAL: Explicitly set the session cookie on the redirect response itself
+    response.cookies.set(SESSION_COOKIE_NAME, session.token, {
+      httpOnly: true,
+      secure: env.isProduction,
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+    });
+
     response.cookies.delete(OAUTH_STATE_COOKIE);
     response.cookies.delete(OAUTH_PKCE_COOKIE);
     return response;
