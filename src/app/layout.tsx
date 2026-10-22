@@ -34,10 +34,10 @@ export default async function RootLayout({
   const settings = getCustomSettings();
 
   return (
-    <html lang="ar" dir="rtl" className={cairo.variable}>
-      <body className="font-sans antialiased bg-brand-neutral-50 text-brand-neutral-900 flex flex-col min-h-screen">
+    <html lang="ar" dir="rtl" className={`${cairo.variable} overflow-x-clip`}>
+      <body className="font-sans antialiased bg-brand-neutral-50 text-brand-neutral-900 flex flex-col min-h-screen overflow-x-clip">
         <Header user={session} settings={settings} />
-        <main className="flex-1 w-full pb-16 md:pb-0">{children}</main>
+        <main className="flex-1 w-full pb-20 md:pb-0">{children}</main>
         <Footer settings={settings} />
         <WhatsAppFloatingButton settings={settings} />
         <MobileActionBar settings={settings} />

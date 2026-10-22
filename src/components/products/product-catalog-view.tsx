@@ -73,11 +73,11 @@ export function ProductCatalogView({
       </div>
 
       {/* Category Badges Filter Bar */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-3 pt-1 scrollbar-none">
+      <div className="flex items-center gap-2 overflow-x-auto pb-3 pt-1 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
         <button
           type="button"
           onClick={() => setSelectedCategory("")}
-          className={`rounded-2xl px-5 py-2.5 text-xs sm:text-sm font-bold whitespace-nowrap transition-all active:scale-95 cursor-pointer btn-touch flex items-center gap-1.5 ${
+          className={`rounded-2xl px-4 sm:px-5 py-2.5 text-xs sm:text-sm font-bold whitespace-nowrap transition-all active:scale-95 cursor-pointer btn-touch flex items-center gap-1.5 shrink-0 ${
             !selectedCategory
               ? "bg-brand-green-800 text-white shadow-md ring-2 ring-brand-green-500/40"
               : "bg-white border-2 border-brand-neutral-200 text-brand-neutral-700 hover:border-brand-green-500/50 hover:bg-brand-green-50/40"
@@ -101,7 +101,7 @@ export function ProductCatalogView({
               key={cat.id}
               type="button"
               onClick={() => setSelectedCategory(cat.slug)}
-              className={`rounded-2xl px-5 py-2.5 text-xs sm:text-sm font-bold whitespace-nowrap transition-all active:scale-95 cursor-pointer btn-touch flex items-center gap-1.5 ${
+              className={`rounded-2xl px-4 sm:px-5 py-2.5 text-xs sm:text-sm font-bold whitespace-nowrap transition-all active:scale-95 cursor-pointer btn-touch flex items-center gap-1.5 shrink-0 ${
                 isSelected
                   ? "bg-brand-green-800 text-white shadow-md ring-2 ring-brand-green-500/40"
                   : "bg-white border-2 border-brand-neutral-200 text-brand-neutral-700 hover:border-brand-green-500/50 hover:bg-brand-green-50/40"
@@ -127,12 +127,12 @@ export function ProductCatalogView({
           />
         </div>
 
-        <div className="flex items-center gap-2">
-          <ArrowUpDown className="h-4 w-4 text-brand-neutral-500" />
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <ArrowUpDown className="h-4 w-4 text-brand-neutral-500 shrink-0" />
           <select
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value as "newest" | "name_asc" | "name_desc")}
-            className="rounded-xl border border-brand-neutral-300 bg-white px-3 py-2.5 text-xs sm:text-sm font-semibold text-brand-neutral-800 focus:outline-none focus:ring-2 focus:ring-brand-green-600 shadow-sm"
+            className="w-full sm:w-auto rounded-xl border border-brand-neutral-300 bg-white px-3 py-2.5 text-xs sm:text-sm font-semibold text-brand-neutral-800 focus:outline-none focus:ring-2 focus:ring-brand-green-600 shadow-sm"
           >
             <option value="newest">الترتيب: الأحدث إضافة</option>
             <option value="name_asc">الترتيب: الاسم أ - ي</option>

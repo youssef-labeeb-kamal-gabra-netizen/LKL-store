@@ -412,14 +412,14 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
               </p>
 
               {/* Specs Pills */}
-              <div className="grid grid-cols-2 gap-2 pt-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                 {recommendedProduct.specifications.slice(0, 4).map((spec, idx) => (
                   <div
                     key={idx}
                     className="p-2.5 rounded-xl bg-white border border-brand-neutral-200/80 text-xs"
                   >
                     <span className="text-brand-neutral-500 block text-[10px]">{spec.label}</span>
-                    <span className="font-bold text-brand-neutral-900">{spec.value}</span>
+                    <span className="font-bold text-brand-neutral-900 leading-snug">{spec.value}</span>
                   </div>
                 ))}
               </div>

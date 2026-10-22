@@ -222,7 +222,7 @@ export function ContactForm({ initialProductSlug, whatsappNumber = "01220792948"
             variant="primary"
             size="lg"
             isLoading={isLoading}
-            className="w-full sm:w-auto font-bold px-8"
+            className="w-full sm:w-auto font-bold px-8 btn-touch py-3.5 rounded-xl shadow-md"
           >
             <Send className="h-4 w-4 ms-2" />
             إرسال الطلب والاستفسار

@@ -61,7 +61,7 @@ export default async function ProductDetailsPage({ params }: ProductDetailsPageP
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-12 text-start">
       {/* Breadcrumbs Navigation */}
-      <nav aria-label="مسار التصفح" className="flex items-center gap-2 text-xs sm:text-sm text-brand-neutral-500">
+      <nav aria-label="مسار التصفح" className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-brand-neutral-500">
         <Link href="/" className="hover:text-brand-green-800 transition-colors">
           الرئيسية
         </Link>
@@ -77,7 +77,7 @@ export default async function ProductDetailsPage({ params }: ProductDetailsPageP
           {product.categoryName}
         </Link>
         <span>/</span>
-        <span className="text-brand-neutral-900 font-semibold truncate max-w-xs">{product.name}</span>
+        <span className="text-brand-neutral-900 font-semibold truncate max-w-[200px] sm:max-w-xs">{product.name}</span>
       </nav>
 
       {/* Main Product Showcase Section */}

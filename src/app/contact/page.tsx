@@ -54,7 +54,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
         {/* Contact Form Column */}
-        <div className="lg:col-span-7 bg-white rounded-3xl border border-brand-neutral-200 p-6 sm:p-10 shadow-sm">
+        <div className="lg:col-span-7 bg-white rounded-3xl border border-brand-neutral-200 p-5 sm:p-8 lg:p-10 shadow-sm">
           <div className="mb-6 space-y-1">
             <h2 className="text-xl font-bold text-brand-neutral-900">
               نموذج طلب استفسار أو عرض مواصفات
@@ -70,7 +70,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
         {/* Business Context & Direct Channels Column */}
         <div className="lg:col-span-5 space-y-6">
           {/* Quick Channels Card */}
-          <div className="rounded-3xl border border-brand-neutral-200 bg-white p-6 sm:p-8 space-y-6 shadow-sm">
+          <div className="rounded-3xl border border-brand-neutral-200 bg-white p-5 sm:p-8 space-y-6 shadow-sm">
             <h3 className="text-lg font-bold text-brand-neutral-900 border-b border-brand-neutral-100 pb-3">
               بيانات المقر والتواصل الفوري
             </h3>

@@ -46,7 +46,9 @@ export function BrandLogo({ className = "", size = "md", showText = true }: Bran
             شركة لبيب كمال لبيب
           </span>
           <span className={`font-bold text-brand-gold-600 mt-1 leading-none truncate ${textSizes[size].sub}`}>
-            للأدوات والآلات الزراعية • LKL
+            <span className="hidden sm:inline">للأدوات والآلات الزراعية • </span>
+            <span className="sm:hidden">آلات زراعية • </span>
+            <span>LKL</span>
           </span>
         </div>
       )}

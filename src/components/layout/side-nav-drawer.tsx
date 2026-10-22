@@ -92,7 +92,7 @@ export function SideNavDrawer({ isOpen, onClose, user, onOpenAdvisor }: SideNavD
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
 
-  if (!mounted) return null;
+  if (!mounted || !isOpen) return null;
 
   const phone1 = env.business.phone || "01220792948";
   const phone2 = env.business.secondaryPhone || "01114587917";
@@ -104,25 +104,18 @@ export function SideNavDrawer({ isOpen, onClose, user, onOpenAdvisor }: SideNavD
   const mapsUrl = env.business.googleMapsUrl || "https://maps.app.goo.gl/fjJacxeJPcMBw7rU8";
 
   return (
-    <>
+    <div className="fixed inset-0 z-50 flex animate-in fade-in duration-200">
       {/* Backdrop overlay */}
       <div
-        className={cn(
-          "fixed inset-0 z-50 bg-brand-green-950/70 backdrop-blur-sm transition-opacity duration-300",
-          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        )}
+        className="fixed inset-0 bg-brand-green-950/70 backdrop-blur-sm transition-opacity duration-300"
         onClick={onClose}
         aria-hidden="true"
       />
 
       {/* Slide-out Drawer Panel (from right side in RTL) */}
       <aside
-        className={cn(
-          "fixed top-0 bottom-0 start-0 z-50 w-full sm:w-[420px] max-w-full bg-white shadow-2xl transition-transform duration-300 ease-in-out flex flex-col overflow-hidden text-start",
-          isOpen ? "translate-x-0" : "-translate-x-full rtl:translate-x-full"
-        )}
+        className="relative w-full sm:w-[420px] max-w-[90vw] h-full bg-white shadow-2xl z-50 flex flex-col border-e border-brand-neutral-200 animate-in slide-in-from-right duration-300 text-start overflow-hidden"
         aria-label="القائمة الجانبية للتنقل"
-        aria-hidden={!isOpen}
       >
         {/* Drawer Header */}
         <div className="p-5 border-b border-brand-neutral-200 bg-brand-neutral-50/90 flex items-center justify-between shrink-0">
@@ -335,6 +328,6 @@ export function SideNavDrawer({ isOpen, onClose, user, onOpenAdvisor }: SideNavD
           )}
         </div>
       </aside>
-    </>
+    </div>
   );
 }

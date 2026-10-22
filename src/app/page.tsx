@@ -53,11 +53,11 @@ export default function HomePage() {
 
               {/* Title & Clear Agricultural Tagline */}
               <div className="space-y-2">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white">
+                <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white">
                   شركة لبيب كمال لبيب <br className="hidden sm:inline" />
                   <span className="text-brand-gold-400">للأدوات والآلات الزراعية</span>
                 </h1>
-                <p className="text-base sm:text-xl text-brand-gold-300 font-bold">
+                <p className="text-sm xs:text-base sm:text-xl text-brand-gold-300 font-bold">
                   طلمبات ديزل وبنزين • مواتير رش وضغط عالي • قطع غيار أصلية
                 </p>
               </div>
@@ -71,7 +71,7 @@ export default function HomePage() {
                 <Link href="/products" className="w-full">
                   <button
                     type="button"
-                    className="w-full py-4 px-4 rounded-2xl bg-brand-gold-500 hover:bg-brand-gold-600 active:bg-brand-gold-700 text-white font-black text-sm sm:text-base shadow-lg btn-touch flex items-center justify-center gap-2 cursor-pointer border border-brand-gold-400/40"
+                    className="w-full py-3.5 sm:py-4 px-4 rounded-2xl bg-brand-gold-500 hover:bg-brand-gold-600 active:bg-brand-gold-700 text-white font-black text-sm sm:text-base shadow-lg btn-touch flex items-center justify-center gap-2 cursor-pointer border border-brand-gold-400/40"
                   >
                     <span>كتالوج الماكينات</span>
                     <ArrowLeft className="h-5 w-5" />
@@ -82,7 +82,7 @@ export default function HomePage() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-4 px-4 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white font-black text-sm sm:text-base shadow-lg btn-touch flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3.5 sm:py-4 px-4 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white font-black text-sm sm:text-base shadow-lg btn-touch flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <MessageCircle className="h-5 w-5" />
                   <span>شات واتساب فوري</span>
@@ -90,7 +90,7 @@ export default function HomePage() {
 
                 <a
                   href={`tel:${phone1}`}
-                  className="w-full py-4 px-4 rounded-2xl bg-white/15 hover:bg-white/20 active:bg-white/30 text-white font-bold text-sm sm:text-base border border-white/20 shadow-md btn-touch flex items-center justify-center gap-2 cursor-pointer backdrop-blur-sm"
+                  className="w-full py-3.5 sm:py-4 px-4 rounded-2xl bg-white/15 hover:bg-white/20 active:bg-white/30 text-white font-bold text-sm sm:text-base border border-white/20 shadow-md btn-touch flex items-center justify-center gap-2 cursor-pointer backdrop-blur-sm"
                 >
                   <Phone className="h-4 w-4 text-brand-gold-300" />
                   <span dir="ltr">{phone1}</span>
@@ -160,49 +160,49 @@ export default function HomePage() {
                 </div>
 
                 {/* The 3 Featured Machines from the Card */}
-                <div className="grid grid-cols-3 gap-2 text-[11px] text-emerald-100 text-center pt-1">
-                  <Link href="/products?category=diesel-motors" className="p-2.5 rounded-2xl bg-white/[0.08] hover:bg-white/[0.14] border border-white/10 hover:border-emerald-400/40 transition-all duration-200 active:scale-95 flex flex-col items-center justify-center gap-1.5 group cursor-pointer">
-                    <div className="relative h-12 w-12 rounded-xl overflow-hidden bg-white shadow-sm border border-white/20">
+                <div className="grid grid-cols-3 gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] text-emerald-100 text-center pt-1">
+                  <Link href="/products?category=diesel-motors" className="p-1.5 sm:p-2.5 rounded-2xl bg-white/[0.08] hover:bg-white/[0.14] border border-white/10 hover:border-emerald-400/40 transition-all duration-200 active:scale-95 flex flex-col items-center justify-center gap-1 sm:gap-1.5 group cursor-pointer">
+                    <div className="relative h-10 w-10 sm:h-12 sm:w-12 rounded-xl overflow-hidden bg-white shadow-sm border border-white/20">
                       <Image src="/images/products/petter-diesel-pump-hd.jpg" alt="طلمبات بتر ديزل" fill className="object-cover group-hover:scale-110 transition-transform" />
                     </div>
                     <div>
-                      <span className="text-white font-bold block text-xs">بتر ديزل</span>
-                      <span className="text-[10px] text-emerald-200/80">Petter PH1</span>
+                      <span className="text-white font-bold block text-[11px] sm:text-xs">بتر ديزل</span>
+                      <span className="text-[9px] sm:text-[10px] text-emerald-200/80">Petter PH1</span>
                     </div>
                   </Link>
-                  <Link href="/products?category=water-pumps" className="p-2.5 rounded-2xl bg-white/[0.08] hover:bg-white/[0.14] border border-white/10 hover:border-emerald-400/40 transition-all duration-200 active:scale-95 flex flex-col items-center justify-center gap-1.5 group cursor-pointer">
-                    <div className="relative h-12 w-12 rounded-xl overflow-hidden bg-white shadow-sm border border-white/20">
+                  <Link href="/products?category=water-pumps" className="p-1.5 sm:p-2.5 rounded-2xl bg-white/[0.08] hover:bg-white/[0.14] border border-white/10 hover:border-emerald-400/40 transition-all duration-200 active:scale-95 flex flex-col items-center justify-center gap-1 sm:gap-1.5 group cursor-pointer">
+                    <div className="relative h-10 w-10 sm:h-12 sm:w-12 rounded-xl overflow-hidden bg-white shadow-sm border border-white/20">
                       <Image src="/images/products/gasoline-water-pump-hd.jpg" alt="طلمبات مياه بنزين" fill className="object-cover group-hover:scale-110 transition-transform" />
                     </div>
                     <div>
-                      <span className="text-white font-bold block text-xs">مياه بنزين</span>
-                      <span className="text-[10px] text-emerald-200/80">قفص حماية</span>
+                      <span className="text-white font-bold block text-[11px] sm:text-xs">مياه بنزين</span>
+                      <span className="text-[9px] sm:text-[10px] text-emerald-200/80">قفص واقي</span>
                     </div>
                   </Link>
-                  <Link href="/products?category=spray-motors" className="p-2.5 rounded-2xl bg-white/[0.08] hover:bg-white/[0.14] border border-white/10 hover:border-emerald-400/40 transition-all duration-200 active:scale-95 flex flex-col items-center justify-center gap-1.5 group cursor-pointer">
-                    <div className="relative h-12 w-12 rounded-xl overflow-hidden bg-white shadow-sm border border-white/20">
+                  <Link href="/products?category=spray-motors" className="p-1.5 sm:p-2.5 rounded-2xl bg-white/[0.08] hover:bg-white/[0.14] border border-white/10 hover:border-emerald-400/40 transition-all duration-200 active:scale-95 flex flex-col items-center justify-center gap-1 sm:gap-1.5 group cursor-pointer">
+                    <div className="relative h-10 w-10 sm:h-12 sm:w-12 rounded-xl overflow-hidden bg-white shadow-sm border border-white/20">
                       <Image src="/images/products/knapsack-sprayer-hd.jpg" alt="مواتير رش ظهر" fill className="object-cover group-hover:scale-110 transition-transform" />
                     </div>
                     <div>
-                      <span className="text-white font-bold block text-xs">رش ظهر</span>
-                      <span className="text-[10px] text-emerald-200/80">محرك ورذاذ</span>
+                      <span className="text-white font-bold block text-[11px] sm:text-xs">رش ظهر</span>
+                      <span className="text-[9px] sm:text-[10px] text-emerald-200/80">محرك ورذاذ</span>
                     </div>
                   </Link>
                 </div>
 
                 {/* Direct quick call / whatsapp banner inside card */}
-                <div className="pt-2 flex items-center justify-around text-xs font-bold text-white border-t border-white/15">
-                  <a href={`tel:${phone1}`} className="flex items-center gap-1.5 hover:text-brand-gold-300 active:scale-95 transition-all">
+                <div className="pt-2 flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs font-bold text-white border-t border-white/15">
+                  <a href={`tel:${phone1}`} className="flex items-center gap-1 hover:text-brand-gold-300 active:scale-95 transition-all">
                     <Phone className="h-3.5 w-3.5 text-brand-gold-400" />
                     <span dir="ltr">{phone1}</span>
                   </a>
-                  <span className="text-white/30">|</span>
-                  <a href={`tel:${phone2}`} className="flex items-center gap-1.5 hover:text-brand-gold-300 active:scale-95 transition-all">
+                  <span className="text-white/30 hidden xs:inline">•</span>
+                  <a href={`tel:${phone2}`} className="flex items-center gap-1 hover:text-brand-gold-300 active:scale-95 transition-all">
                     <Phone className="h-3.5 w-3.5 text-brand-gold-400" />
                     <span dir="ltr">{phone2}</span>
                   </a>
-                  <span className="text-white/30">|</span>
-                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-[#25D366] hover:text-emerald-300 active:scale-95 transition-all">
+                  <span className="text-white/30 hidden xs:inline">•</span>
+                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-[#25D366] hover:text-emerald-300 active:scale-95 transition-all">
                     <MessageCircle className="h-3.5 w-3.5" />
                     <span>واتساب</span>
                   </a>
@@ -214,29 +214,29 @@ export default function HomePage() {
       </section>
 
       {/* Live Interactive Ticker Banner */}
-      <div className="bg-white text-brand-neutral-800 text-xs sm:text-sm py-3 px-4 shadow-2xs border-y border-brand-neutral-200 overflow-hidden">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          <div className="flex items-center gap-2.5">
-            <span className="flex h-2.5 w-2.5 relative">
+      <div className="bg-white text-brand-neutral-800 text-xs sm:text-sm py-2.5 sm:py-3 px-3 sm:px-4 shadow-2xs border-y border-brand-neutral-200 overflow-hidden">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
+            <span className="flex h-2.5 w-2.5 relative shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-600" />
             </span>
-            <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-brand-green-50 text-brand-green-800 border border-brand-green-200 text-[11px] font-black">مباشر</span>
-            <span className="text-brand-neutral-700 font-medium">توريد فوري لجميع محافظات مصر • قطع غيار طلمبات ومحركات بتر ديزل متوفرة • صيانة وضمان شامل</span>
+            <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-brand-green-50 text-brand-green-800 border border-brand-green-200 text-[11px] font-black shrink-0">مباشر</span>
+            <span className="text-brand-neutral-700 font-medium text-xs sm:text-sm truncate sm:overflow-visible sm:whitespace-normal">توريد فوري لكافة المحافظات • قطع غيار طلمبات وبتر ديزل متوفرة • صيانة وضمان</span>
           </div>
           <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-brand-green-800 text-white text-xs font-bold hover:bg-brand-green-700 active:scale-95 transition-all shadow-2xs"
+            className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-brand-green-800 text-white text-xs font-bold hover:bg-brand-green-700 active:scale-95 transition-all shadow-2xs shrink-0"
           >
             <MessageCircle className="h-3.5 w-3.5 text-emerald-300" />
-            <span>استشارة المهندس الفني الآن</span>
+            <span>استشارة المهندس الفني</span>
           </a>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14 sm:space-y-20">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14 sm:space-y-20 min-w-0">
         {/* 2. THE 4 BIG VISUAL DOORS (Clear Photos for Everyone) */}
         <section className="space-y-6 text-start">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-brand-neutral-200 pb-4">

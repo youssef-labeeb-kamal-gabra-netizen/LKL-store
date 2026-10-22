@@ -1,8 +1,7 @@
 import React from "react";
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
-import { AdminSidebar } from "@/components/admin/admin-sidebar";
-import { AdminHeader } from "@/components/admin/admin-header";
+import { AdminShell } from "@/components/admin/admin-shell";
 import { constructMetadata } from "@/lib/seo";
 
 export const metadata = constructMetadata({
@@ -27,15 +26,5 @@ export default async function AdminLayout({
     redirect("/unauthorized");
   }
 
-  return (
-    <div className="flex h-screen bg-brand-neutral-100 overflow-hidden text-start">
-      <AdminSidebar />
-      <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
-        <AdminHeader user={session} />
-        <main className="flex-1 overflow-y-auto p-6 sm:p-8">
-          <div className="max-w-7xl mx-auto">{children}</div>
-        </main>
-      </div>
-    </div>
-  );
+  return <AdminShell user={session}>{children}</AdminShell>;
 }

@@ -12,11 +12,11 @@ export function ProductSpecifications({ specifications }: ProductSpecificationsP
   return (
     <div className="space-y-4 text-start">
       <div className="rounded-2xl border border-brand-neutral-200 overflow-hidden shadow-xs bg-white">
-        <div className="bg-brand-neutral-50 px-6 py-4 border-b border-brand-neutral-200 flex items-center justify-between">
-          <h3 className="text-base font-extrabold text-brand-neutral-900">
+        <div className="bg-brand-neutral-50 px-4 sm:px-6 py-3.5 sm:py-4 border-b border-brand-neutral-200 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4">
+          <h3 className="text-sm sm:text-base font-extrabold text-brand-neutral-900">
             البيانات والملامح الفنية للمعدة
           </h3>
-          <span className="text-xs text-brand-neutral-500 font-medium">
+          <span className="text-[11px] sm:text-xs text-brand-neutral-500 font-medium">
             تحديث معتمد من إدارة المحل
           </span>
         </div>
@@ -26,14 +26,14 @@ export function ProductSpecifications({ specifications }: ProductSpecificationsP
             {specifications.map((spec, index) => (
               <div
                 key={index}
-                className={`px-6 py-3.5 sm:grid sm:grid-cols-3 sm:gap-4 ${
+                className={`px-4 sm:px-6 py-3 sm:py-3.5 sm:grid sm:grid-cols-3 sm:gap-4 ${
                   index % 2 === 0 ? "bg-white" : "bg-brand-neutral-50/40"
                 }`}
               >
-                <dt className="text-sm font-bold text-brand-neutral-700">
+                <dt className="text-xs sm:text-sm font-bold text-brand-neutral-700">
                   {spec.label}
                 </dt>
-                <dd className="mt-1 text-sm text-brand-neutral-800 sm:col-span-2 sm:mt-0 font-medium leading-relaxed">
+                <dd className="mt-0.5 sm:mt-0 text-xs sm:text-sm text-brand-neutral-800 sm:col-span-2 font-medium leading-relaxed">
                   {spec.value}
                 </dd>
               </div>
