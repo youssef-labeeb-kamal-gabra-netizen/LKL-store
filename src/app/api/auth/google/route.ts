@@ -1,12 +1,17 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { env } from "@/lib/env";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   if (!env.auth.googleClientId || env.auth.googleClientId.trim() === "") {
-    return NextResponse.redirect(`${env.appUrl}/login?error=not_configured`);
+    return NextResponse.redirect(new URL("/login?error=not_configured", request.url));
   }
 
-  const redirectUri = `${env.appUrl}/api/auth/callback/google`;
+  // Dynamically detect the actual live host (Vercel domain or custom domain)
+  const host = request.headers.get("x-forwarded-host") || request.headers.get("host");
+  const proto = request.headers.get("x-forwarded-proto") || (request.url.startsWith("https") ? "https" : "http");
+  const baseUrl = host ? `${proto}://${host}` : (env.appUrl || new URL(request.url).origin);
+
+  const redirectUri = `${baseUrl}/api/auth/callback/google`;
   const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
 
   const options = {
