@@ -20,8 +20,6 @@ import {
   LogOut,
   ChevronLeft,
   Sparkles,
-  HelpCircle,
-  Clock,
   Compass,
 } from "lucide-react";
 import { BrandLogo } from "@/components/common/brand-logo";
@@ -68,6 +66,7 @@ export function SideNavDrawer({ isOpen, onClose, user, onOpenAdvisor }: SideNavD
   // Close drawer on path change
   useEffect(() => {
     onClose();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   // Lock body scroll when drawer is open

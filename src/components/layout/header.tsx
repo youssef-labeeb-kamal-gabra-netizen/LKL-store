@@ -7,16 +7,12 @@ import { cn } from "@/lib/utils";
 import { BrandLogo } from "@/components/common/brand-logo";
 import { SideNavDrawer } from "@/components/layout/side-nav-drawer";
 import {
-  Menu,
-  X,
   User,
   ShieldCheck,
   LogOut,
   MessageCircle,
   MapPin,
   Sparkles,
-  Phone,
-  Compass,
 } from "lucide-react";
 import { env } from "@/lib/env";
 

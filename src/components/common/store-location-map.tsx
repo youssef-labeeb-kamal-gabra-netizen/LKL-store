@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { MapPin, Navigation, ExternalLink, Phone, Check, Copy, Share2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { env } from "@/lib/env";
 
 interface StoreLocationMapProps {

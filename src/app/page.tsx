@@ -11,18 +11,15 @@ import { StoreLocationMap } from "@/components/common/store-location-map";
 import { InteractiveEquipmentAdvisor } from "@/components/common/interactive-equipment-advisor";
 import { Button } from "@/components/ui/button";
 import {
-  Tractor,
   ShieldCheck,
   Wrench,
   CheckCircle2,
-  MapPin,
   Phone,
   ArrowLeft,
   Settings,
   Sparkles,
   Droplets,
   MessageCircle,
-  ExternalLink,
   Award,
 } from "lucide-react";
 import { env } from "@/lib/env";
@@ -38,7 +35,6 @@ export default function HomePage() {
   const whatsappUrl = `https://wa.me/${cleanWhatsApp.startsWith("0") ? `2${cleanWhatsApp}` : cleanWhatsApp}?text=${encodeURIComponent(
     "السلام عليكم، أود الاستفسار عن الآلات والمعدات الزراعية المتوفرة لدى شركة لبيب كمال."
   )}`;
-  const mapsUrl = env.business.googleMapsUrl || "https://maps.app.goo.gl/fjJacxeJPcMBw7rU8";
 
   return (
     <div className="flex flex-col gap-12 sm:gap-20 pb-16">

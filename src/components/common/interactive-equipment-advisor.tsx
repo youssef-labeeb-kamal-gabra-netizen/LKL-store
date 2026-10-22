@@ -15,12 +15,8 @@ import {
   ArrowLeft,
   CheckCircle2,
   MessageCircle,
-  Phone,
   RefreshCw,
-  HelpCircle,
-  ThumbsUp,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { env } from "@/lib/env";
 import { INITIAL_PRODUCTS } from "@/data/catalog";
 import { Product } from "@/types/product";
