@@ -36,7 +36,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-12 text-start">
       {/* Page Title */}
       <div className="space-y-3 max-w-3xl">
-        <div className="inline-flex items-center gap-2 rounded-full bg-brand-green-100 text-brand-green-800 px-3.5 py-1 text-xs font-bold uppercase tracking-wider">
+        <div className="inline-flex items-center gap-2 rounded-full bg-brand-green-50 text-brand-green-800 border border-brand-green-200 px-3.5 py-1 text-xs font-bold uppercase tracking-wider">
           <Sparkles className="h-3.5 w-3.5 text-brand-green-700" />
           <span>قنوات التواصل والاستفسار المباشر</span>
         </div>
@@ -85,7 +85,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 w-full rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white p-3 text-sm font-bold shadow-sm transition-all hover:scale-105 active:scale-95"
+                  className="inline-flex items-center justify-center gap-2 w-full rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white p-3 text-sm font-bold shadow-xs transition-all active:scale-95"
                 >
                   <MessageCircle className="h-4 w-4" />
                   <span>مراسلة واتساب ({rawWhatsApp})</span>

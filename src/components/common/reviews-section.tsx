@@ -69,8 +69,8 @@ export function ReviewsSection() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full bg-brand-gold-500/10 border border-brand-gold-400/30 px-3.5 py-1 text-xs font-bold text-brand-gold-800 mb-2">
-            <ShieldCheck className="h-4 w-4 text-brand-gold-600" />
+          <div className="inline-flex items-center gap-2 rounded-full bg-brand-green-50 border border-brand-green-200 px-3.5 py-1 text-xs font-bold text-brand-green-800 mb-2">
+            <ShieldCheck className="h-4 w-4 text-brand-green-700" />
             <span>شهادات حقيقية من قلب الغيط والمزرعة</span>
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-brand-neutral-900 tracking-tight">
@@ -83,7 +83,7 @@ export function ReviewsSection() {
 
         <button
           onClick={() => setModalOpen(true)}
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-green-700 hover:bg-brand-green-800 text-white px-5 py-3 text-sm font-bold shadow-md hover:shadow-lg transition-all shrink-0 cursor-pointer"
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-green-800 hover:bg-brand-green-700 active:bg-brand-green-900 active:scale-95 text-white px-5 py-3 text-sm font-bold shadow-xs transition-all shrink-0 cursor-pointer"
         >
           <MessageSquarePlus className="h-4 w-4" />
           <span>أضف رأيك وتجربتك معنا (اختياري)</span>
@@ -95,7 +95,7 @@ export function ReviewsSection() {
         {reviews.map((rev) => (
           <div
             key={rev.id}
-            className="rounded-3xl border border-brand-neutral-200 bg-white p-6 sm:p-7 shadow-sm hover:shadow-md hover:border-brand-green-600/40 transition-all flex flex-col justify-between space-y-4"
+            className="rounded-3xl border border-brand-neutral-200/80 bg-white p-6 sm:p-7 shadow-xs hover:shadow-md hover:border-brand-green-600/40 transition-all flex flex-col justify-between space-y-4"
           >
             <div className="space-y-3">
               {/* Rating & Verified badge */}

@@ -150,16 +150,13 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
 
   return (
     <div
-      className={`rounded-3xl border-2 border-brand-green-800/20 bg-gradient-to-br from-white via-brand-neutral-50/50 to-brand-green-50/30 p-4 sm:p-6 md:p-10 shadow-xl relative overflow-hidden text-start ${className}`}
+      className={`rounded-3xl border border-brand-neutral-200 bg-white p-6 sm:p-10 shadow-xs relative overflow-hidden text-start ${className}`}
     >
-      {/* Decorative background element */}
-      <div className="absolute top-0 end-0 -mt-10 -me-10 h-48 w-48 rounded-full bg-brand-gold-500/10 blur-3xl pointer-events-none" />
-
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b border-brand-neutral-200">
         <div className="space-y-1">
-          <div className="inline-flex items-center gap-2 rounded-full bg-brand-green-100 px-3 py-1 text-xs font-bold text-brand-green-900">
-            <Sparkles className="h-3.5 w-3.5 text-brand-gold-600 animate-pulse" />
+          <div className="inline-flex items-center gap-2 rounded-full bg-brand-green-50 text-brand-green-800 border border-brand-green-200 px-3 py-1 text-xs font-bold">
+            <Sparkles className="h-3.5 w-3.5 text-brand-gold-600" />
             <span>نظام التفاعل المباشر الذكي</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-black text-brand-neutral-900">
@@ -174,7 +171,7 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
           <button
             type="button"
             onClick={resetAdvisor}
-            className="self-start sm:self-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-brand-neutral-300 text-xs font-bold text-brand-neutral-700 hover:bg-brand-neutral-100 transition-colors"
+            className="self-start sm:self-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-brand-neutral-300 text-xs font-bold text-brand-neutral-700 hover:bg-brand-neutral-100 active:scale-95 transition-all cursor-pointer"
           >
             <RefreshCw className="h-3.5 w-3.5 text-brand-neutral-500" />
             <span>البدء من جديد</span>
@@ -211,42 +208,36 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
                 title: "سحب ورفع مياه الري",
                 desc: "طلمبات ري الحقول والترع والآبار",
                 icon: Waves,
-                color: "text-blue-600 bg-blue-50 border-blue-200",
               },
               {
                 id: "spray",
                 title: "رش المحاصيل ومكافحة الآفات",
                 desc: "مواتير رش ظهر ومجموعات ضغط عالي",
                 icon: SprayCan,
-                color: "text-emerald-600 bg-emerald-50 border-emerald-200",
               },
               {
                 id: "diesel",
                 title: "محرك ديزل شاق للخدمة المستمرة",
                 desc: "محركات بتر Petter لإدارة الطلمبات والمعدات",
                 icon: Cpu,
-                color: "text-amber-600 bg-amber-50 border-amber-200",
               },
               {
                 id: "tiller",
                 title: "خدمة وتقليب وتجهيز الأرض",
                 desc: "عزاقات وآلات الحراثة المدمجة",
                 icon: Tractor,
-                color: "text-green-700 bg-green-50 border-green-200",
               },
               {
                 id: "irrigation",
                 title: "شبكات وفلاتر ري حديث",
                 desc: "فلاتر ديسك ومستلزمات ري بالتنقيط",
                 icon: Pipette,
-                color: "text-teal-600 bg-teal-50 border-teal-200",
               },
               {
                 id: "parts",
                 title: "قطع غيار وصيانة محركات",
                 desc: "بساتم، شنابر، خراطيم، وطلمبات غيار",
                 icon: Wrench,
-                color: "text-purple-600 bg-purple-50 border-purple-200",
               },
             ].map((item) => {
               const Icon = item.icon;
@@ -255,18 +246,16 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
                   key={item.id}
                   type="button"
                   onClick={() => handleNeedSelect(item.id)}
-                  className="flex items-start gap-3.5 p-4 rounded-2xl border border-brand-neutral-200 bg-white hover:border-brand-green-600 hover:shadow-md transition-all group text-start cursor-pointer hover:scale-[1.01]"
+                  className="flex items-start gap-3.5 p-4 sm:p-5 rounded-2xl border border-brand-neutral-200 bg-brand-neutral-50/60 hover:bg-white hover:border-brand-green-600/60 hover:shadow-md active:scale-[0.98] active:bg-brand-green-50/20 transition-all duration-200 group text-start cursor-pointer"
                 >
-                  <div
-                    className={`p-3 rounded-xl ${item.color} shrink-0 group-hover:scale-110 transition-transform`}
-                  >
+                  <div className="p-3 rounded-2xl bg-brand-green-50 text-brand-green-800 group-hover:bg-brand-green-800 group-hover:text-white transition-colors duration-200 shrink-0">
                     <Icon className="h-6 w-6" />
                   </div>
                   <div>
                     <h5 className="font-bold text-brand-neutral-900 group-hover:text-brand-green-800 transition-colors text-sm sm:text-base">
                       {item.title}
                     </h5>
-                    <p className="text-xs text-brand-neutral-500 mt-0.5 leading-relaxed">
+                    <p className="text-xs text-brand-neutral-500 mt-1 leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
@@ -309,9 +298,9 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
                 key={item.id}
                 type="button"
                 onClick={() => handleAreaSelect(item.id)}
-                className="p-5 rounded-2xl border border-brand-neutral-200 bg-white hover:border-brand-green-600 hover:shadow-md transition-all text-start group cursor-pointer"
+                className="p-5 rounded-2xl border border-brand-neutral-200 bg-brand-neutral-50/60 hover:bg-white hover:border-brand-green-600/60 hover:shadow-md active:scale-[0.98] transition-all duration-200 text-start group cursor-pointer"
               >
-                <div className="h-4 w-4 rounded-full border-2 border-brand-neutral-300 group-hover:border-brand-green-700 mb-3" />
+                <div className="h-5 w-5 rounded-full border-2 border-brand-neutral-300 group-hover:border-brand-green-700 transition-colors mb-3" />
                 <h5 className="font-bold text-brand-neutral-900 text-sm sm:text-base group-hover:text-brand-green-800">
                   {item.title}
                 </h5>
@@ -325,7 +314,7 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
           <button
             type="button"
             onClick={() => setStep(1)}
-            className="inline-flex items-center gap-1 text-xs font-bold text-brand-neutral-600 hover:text-brand-neutral-900 pt-2"
+            className="inline-flex items-center gap-1 text-xs font-bold text-brand-neutral-600 hover:text-brand-neutral-900 active:scale-95 transition-all pt-2"
           >
             <ArrowRight className="h-4 w-4" />
             <span>الرجوع للخطوة السابقة</span>
@@ -360,9 +349,9 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
                 key={item.id}
                 type="button"
                 onClick={() => handleFuelSelect(item.id)}
-                className="p-5 rounded-2xl border border-brand-neutral-200 bg-white hover:border-brand-green-600 hover:shadow-md transition-all text-start group cursor-pointer"
+                className="p-5 rounded-2xl border border-brand-neutral-200 bg-brand-neutral-50/60 hover:bg-white hover:border-brand-green-600/60 hover:shadow-md active:scale-[0.98] transition-all duration-200 text-start group cursor-pointer"
               >
-                <div className="h-4 w-4 rounded-full border-2 border-brand-neutral-300 group-hover:border-brand-green-700 mb-3" />
+                <div className="h-5 w-5 rounded-full border-2 border-brand-neutral-300 group-hover:border-brand-green-700 transition-colors mb-3" />
                 <h5 className="font-bold text-brand-neutral-900 text-sm sm:text-base group-hover:text-brand-green-800">
                   {item.title}
                 </h5>
@@ -376,7 +365,7 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
           <button
             type="button"
             onClick={() => setStep(2)}
-            className="inline-flex items-center gap-1 text-xs font-bold text-brand-neutral-600 hover:text-brand-neutral-900 pt-2"
+            className="inline-flex items-center gap-1 text-xs font-bold text-brand-neutral-600 hover:text-brand-neutral-900 active:scale-95 transition-all pt-2"
           >
             <ArrowRight className="h-4 w-4" />
             <span>الرجوع للخطوة السابقة</span>
@@ -387,14 +376,14 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
       {/* Step 4: Final Recommendation & Instant Action */}
       {step === 4 && recommendedProduct && (
         <div className="space-y-6 py-2 animate-fadeIn">
-          <div className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3.5 py-1 text-xs font-extrabold text-emerald-900">
+          <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200 px-3.5 py-1 text-xs font-extrabold">
             <CheckCircle2 className="h-4 w-4 text-emerald-600" />
             <span>بناءً على اختياراتك — إليك المعدة الأنسب لاحتياجك الميداني:</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 bg-white p-6 rounded-3xl border border-brand-neutral-200 shadow-sm items-center">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 bg-brand-neutral-50/50 p-6 rounded-3xl border border-brand-neutral-200 shadow-xs items-center">
             {/* Product Image */}
-            <div className="md:col-span-5 relative aspect-[4/3] rounded-2xl overflow-hidden bg-brand-neutral-100 border border-brand-neutral-200">
+            <div className="md:col-span-5 relative aspect-[4/3] rounded-2xl overflow-hidden bg-white border border-brand-neutral-200">
               <Image
                 src={recommendedProduct.images[0]}
                 alt={recommendedProduct.name}
@@ -402,7 +391,7 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 40vw"
               />
-              <span className="absolute top-3 end-3 rounded-full bg-brand-gold-500 text-brand-neutral-950 font-black text-[11px] px-2.5 py-1 shadow-sm">
+              <span className="absolute top-3 end-3 rounded-full bg-brand-gold-600 text-white font-bold text-[11px] px-2.5 py-1 shadow-sm">
                 ترشيح مثالي
               </span>
             </div>
@@ -427,7 +416,7 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
                 {recommendedProduct.specifications.slice(0, 4).map((spec, idx) => (
                   <div
                     key={idx}
-                    className="p-2 rounded-xl bg-brand-neutral-50 border border-brand-neutral-100 text-xs"
+                    className="p-2.5 rounded-xl bg-white border border-brand-neutral-200/80 text-xs"
                   >
                     <span className="text-brand-neutral-500 block text-[10px]">{spec.label}</span>
                     <span className="font-bold text-brand-neutral-900">{spec.value}</span>
@@ -441,7 +430,7 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
                   href={`https://wa.me/${formattedWhatsApp}?text=${getWhatsAppMessage()}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 px-4 py-3 text-xs sm:text-sm font-bold text-white shadow-md transition-all hover:scale-[1.02]"
+                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] px-4 py-3 text-xs sm:text-sm font-bold text-white shadow-md active:scale-95 transition-all"
                 >
                   <MessageCircle className="h-4 w-4" />
                   <span>تأكيد الحجز والاستفسار عبر واتساب</span>
@@ -449,7 +438,7 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
 
                 <Link
                   href={`/products/${recommendedProduct.slug}`}
-                  className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-brand-neutral-300 hover:bg-brand-neutral-100 px-4 py-3 text-xs sm:text-sm font-bold text-brand-neutral-800 transition-colors"
+                  className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-brand-neutral-300 hover:bg-white active:bg-brand-neutral-100 active:scale-95 px-4 py-3 text-xs sm:text-sm font-bold text-brand-neutral-800 transition-all"
                 >
                   <span>عرض التفاصيل الكاملة</span>
                   <ArrowLeft className="h-4 w-4" />

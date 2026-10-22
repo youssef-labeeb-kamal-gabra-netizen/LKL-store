@@ -106,17 +106,17 @@ export default function ServicesPage() {
       <FAQSection />
 
       {/* Direct Contact CTA Box */}
-      <div className="rounded-2xl bg-brand-green-900 text-white p-8 sm:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <div className="rounded-3xl bg-gradient-to-r from-[#022c22] to-[#064e3b] text-white p-8 sm:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-md border border-emerald-800/40">
         <div>
           <h3 className="text-xl sm:text-2xl font-bold text-white">
             هل تحتاج إلى مساعدة فنية لاختيار معدتك؟
           </h3>
-          <p className="text-sm text-brand-green-100 mt-1 max-w-xl">
+          <p className="text-sm text-emerald-100/90 mt-1 max-w-xl">
             تواصل معنا مباشرة عبر الهاتف أو تفضل بزيارتنا في مقر الشركة بالزقازيق (طريق مصر الزراعي).
           </p>
         </div>
         <Link href="/contact" className="shrink-0">
-          <Button variant="secondary" size="lg" className="font-bold text-brand-neutral-950">
+          <Button variant="secondary" size="lg" className="font-bold text-white bg-brand-gold-600 hover:bg-brand-gold-500 active:scale-95 transition-all">
             <Phone className="h-4 w-4 ms-2" />
             تواصل معنا الآن
           </Button>

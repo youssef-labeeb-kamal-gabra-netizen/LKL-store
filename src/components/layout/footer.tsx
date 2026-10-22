@@ -16,7 +16,7 @@ export function Footer() {
   const mapsUrl = env.business.googleMapsUrl || "https://maps.app.goo.gl/fjJacxeJPcMBw7rU8";
 
   return (
-    <footer className="mt-auto border-t border-brand-neutral-200 bg-brand-neutral-900 text-brand-neutral-200 text-start">
+    <footer className="mt-auto border-t border-emerald-950/80 bg-[#021811] text-brand-neutral-300 text-start">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand & History */}
@@ -28,7 +28,7 @@ export function Footer() {
               تأسسنا كمحل رسمي عام 2005 مع بدايات وجذور مهنية عريقة قبل ذلك، لنضع بين أيديكم أكثر من 20 عاماً من الخبرة في توفير أحدث محركات الرش، طلمبات المياه، محركات الديزل، وقطع الغيار الأصلية.
             </p>
             <div className="pt-2 flex flex-col gap-1.5">
-              <span className="inline-flex items-center gap-1.5 rounded-md bg-brand-green-950/80 border border-brand-green-800/60 px-3 py-1.5 text-xs font-semibold text-brand-gold-300">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-950/80 border border-emerald-800/60 px-3 py-1.5 text-xs font-semibold text-emerald-200">
                 <Sparkles className="h-3.5 w-3.5 text-brand-gold-400" />
                 <span>الجودة • الثقة • الخدمة المتميزة</span>
               </span>
@@ -37,32 +37,32 @@ export function Footer() {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h4 className="text-base font-bold text-white border-b border-brand-neutral-800 pb-2">
+            <h4 className="text-base font-bold text-white border-b border-emerald-900/60 pb-2">
               روابط سريعة
             </h4>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <Link href="/" className="hover:text-brand-gold-400 transition-colors">
+                <Link href="/" className="hover:text-emerald-300 active:scale-95 transition-all inline-block">
                   الصفحة الرئيسية
                 </Link>
               </li>
               <li>
-                <Link href="/products" className="hover:text-brand-gold-400 transition-colors">
+                <Link href="/products" className="hover:text-emerald-300 active:scale-95 transition-all inline-block">
                   كتالوج الآلات والمعدات
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-brand-gold-400 transition-colors">
+                <Link href="/about" className="hover:text-emerald-300 active:scale-95 transition-all inline-block">
                   عن شركة لبيب كمال وتاريخنا
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="hover:text-brand-gold-400 transition-colors">
+                <Link href="/services" className="hover:text-emerald-300 active:scale-95 transition-all inline-block">
                   الخدمات والدعم الفني
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-brand-gold-400 transition-colors">
+                <Link href="/contact" className="hover:text-emerald-300 active:scale-95 transition-all inline-block">
                   التواصل وطلب عرض سعر
                 </Link>
               </li>
@@ -71,32 +71,32 @@ export function Footer() {
 
           {/* Product Categories */}
           <div className="space-y-4">
-            <h4 className="text-base font-bold text-white border-b border-brand-neutral-800 pb-2">
+            <h4 className="text-base font-bold text-white border-b border-emerald-900/60 pb-2">
               أقسام المعدات
             </h4>
             <ul className="space-y-2.5 text-sm text-brand-neutral-300">
               <li>
-                <Link href="/products?category=spray-motors" className="hover:text-brand-gold-400 transition-colors">
+                <Link href="/products?category=spray-motors" className="hover:text-emerald-300 active:scale-95 transition-all inline-block">
                   محركات ومجموعات الرش
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=water-pumps" className="hover:text-brand-gold-400 transition-colors">
+                <Link href="/products?category=water-pumps" className="hover:text-emerald-300 active:scale-95 transition-all inline-block">
                   طلمبات ومحركات المياه والري
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=diesel-motors" className="hover:text-brand-gold-400 transition-colors">
+                <Link href="/products?category=diesel-motors" className="hover:text-emerald-300 active:scale-95 transition-all inline-block">
                   محركات الديزل الزراعية
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=agricultural-tools" className="hover:text-brand-gold-400 transition-colors">
+                <Link href="/products?category=agricultural-tools" className="hover:text-emerald-300 active:scale-95 transition-all inline-block">
                   الآلات والأدوات الزراعية
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=spare-parts" className="hover:text-brand-gold-400 transition-colors">
+                <Link href="/products?category=spare-parts" className="hover:text-emerald-300 active:scale-95 transition-all inline-block">
                   قطع الغيار الأصلية والمستلزمات
                 </Link>
               </li>

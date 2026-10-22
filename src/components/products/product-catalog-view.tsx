@@ -77,10 +77,10 @@ export function ProductCatalogView({
         <button
           type="button"
           onClick={() => setSelectedCategory("")}
-          className={`rounded-full px-4 py-2 text-xs sm:text-sm font-bold whitespace-nowrap transition-colors ${
+          className={`rounded-full px-4 py-2 text-xs sm:text-sm font-bold whitespace-nowrap transition-all active:scale-95 cursor-pointer ${
             !selectedCategory
-              ? "bg-brand-green-700 text-white shadow-sm"
-              : "bg-white border border-brand-neutral-300 text-brand-neutral-700 hover:bg-brand-neutral-100"
+              ? "bg-brand-green-800 text-white shadow-xs"
+              : "bg-white border border-brand-neutral-200 text-brand-neutral-700 hover:border-brand-neutral-300 hover:bg-brand-neutral-50"
           }`}
         >
           كافة المعدات ({products.filter((p) => p.published).length})
@@ -93,10 +93,10 @@ export function ProductCatalogView({
               key={cat.id}
               type="button"
               onClick={() => setSelectedCategory(cat.slug)}
-              className={`rounded-full px-4 py-2 text-xs sm:text-sm font-semibold whitespace-nowrap transition-colors ${
+              className={`rounded-full px-4 py-2 text-xs sm:text-sm font-semibold whitespace-nowrap transition-all active:scale-95 cursor-pointer ${
                 isSelected
-                  ? "bg-brand-green-700 text-white shadow-sm font-bold"
-                  : "bg-white border border-brand-neutral-300 text-brand-neutral-700 hover:bg-brand-neutral-100"
+                  ? "bg-brand-green-800 text-white shadow-xs font-bold"
+                  : "bg-white border border-brand-neutral-200 text-brand-neutral-700 hover:border-brand-neutral-300 hover:bg-brand-neutral-50"
               }`}
             >
               {cat.name} ({count})

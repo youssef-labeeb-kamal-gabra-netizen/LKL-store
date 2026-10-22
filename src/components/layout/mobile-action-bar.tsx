@@ -23,7 +23,7 @@ export function MobileActionBar() {
         {/* 1. Phone Call */}
         <a
           href={`tel:${phone1}`}
-          className="flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-brand-green-50 text-brand-green-800 hover:bg-brand-green-100 transition-colors active:scale-95"
+          className="flex flex-col items-center justify-center py-2 px-2 rounded-xl bg-brand-neutral-100 text-brand-neutral-800 hover:bg-brand-green-50 hover:text-brand-green-900 active:scale-90 active:bg-brand-green-100 transition-all shadow-2xs cursor-pointer"
         >
           <Phone className="h-4 w-4 mb-1 text-brand-green-700" />
           <span className="text-[11px] font-bold">اتصال هاتفي</span>
@@ -34,7 +34,7 @@ export function MobileActionBar() {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 shadow-md transition-all active:scale-95"
+          className="flex flex-col items-center justify-center py-2 px-2 rounded-xl bg-[#25D366] text-white hover:bg-[#20ba59] active:scale-90 active:bg-[#1da851] shadow-sm transition-all cursor-pointer"
         >
           <MessageCircle className="h-4 w-4 mb-1" />
           <span className="text-[11px] font-black">شات واتساب</span>
@@ -45,7 +45,7 @@ export function MobileActionBar() {
           href={mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-brand-neutral-100 text-brand-neutral-800 hover:bg-brand-neutral-200 transition-colors active:scale-95"
+          className="flex flex-col items-center justify-center py-2 px-2 rounded-xl bg-brand-neutral-100 text-brand-neutral-800 hover:bg-brand-gold-50 hover:text-brand-gold-900 active:scale-90 active:bg-brand-gold-100 transition-all shadow-2xs cursor-pointer"
         >
           <MapPin className="h-4 w-4 mb-1 text-brand-gold-600" />
           <span className="text-[11px] font-bold">الموقع بالخريطة</span>

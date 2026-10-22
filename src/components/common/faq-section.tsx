@@ -56,7 +56,7 @@ export function FAQSection() {
     <section className="text-start space-y-8 my-14">
       {/* Header */}
       <div className="max-w-3xl space-y-2">
-        <div className="inline-flex items-center gap-2 rounded-full bg-brand-green-100 text-brand-green-800 px-3.5 py-1 text-xs font-bold uppercase tracking-wider">
+        <div className="inline-flex items-center gap-2 rounded-full bg-brand-green-50 text-brand-green-800 border border-brand-green-200 px-3.5 py-1 text-xs font-bold uppercase tracking-wider">
           <HelpCircle className="h-3.5 w-3.5 text-brand-green-700" />
           <span>الأسئلة الشائعة والإرشادات الفنية</span>
         </div>
@@ -75,17 +75,17 @@ export function FAQSection() {
           return (
             <div
               key={idx}
-              className="rounded-2xl border border-brand-neutral-200 bg-white overflow-hidden transition-colors shadow-sm"
+              className="rounded-2xl border border-brand-neutral-200 bg-white overflow-hidden transition-all shadow-2xs hover:border-brand-green-600/30"
             >
               <button
                 type="button"
                 onClick={() => setOpenIndex(isOpen ? null : idx)}
-                className="w-full flex items-center justify-between p-5 sm:p-6 text-start font-bold text-brand-neutral-900 hover:text-brand-green-800 transition-colors"
+                className="w-full flex items-center justify-between p-5 sm:p-6 text-start font-bold text-brand-neutral-900 hover:text-brand-green-800 transition-colors cursor-pointer"
                 aria-expanded={isOpen}
               >
                 <span className="text-base sm:text-lg pe-4">{faq.question}</span>
                 <ChevronDown
-                  className={`h-5 w-5 text-brand-green-700 shrink-0 transition-transform duration-200 ${
+                  className={`h-5 w-5 text-brand-green-800 shrink-0 transition-transform duration-200 ${
                     isOpen ? "rotate-180" : ""
                   }`}
                 />
@@ -102,7 +102,7 @@ export function FAQSection() {
       </div>
 
       {/* Still Have Questions CTA */}
-      <div className="p-6 rounded-3xl bg-brand-neutral-100 border border-brand-neutral-200 max-w-4xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="p-6 rounded-3xl bg-white border border-brand-neutral-200 max-w-4xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
         <div>
           <h4 className="font-bold text-brand-neutral-900 text-base">هل لديك استفسار آخر أو حالة خاصة في مزرعتك؟</h4>
           <p className="text-xs sm:text-sm text-brand-neutral-600 mt-1">تواصل معنا الآن وسيجيبك أحد الفنيين المتخصصين على الفور.</p>
@@ -112,17 +112,18 @@ export function FAQSection() {
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 text-xs sm:text-sm font-bold shadow-sm transition-all"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white px-4 py-2.5 text-xs sm:text-sm font-bold shadow-2xs transition-all active:scale-95"
           >
             <MessageCircle className="h-4 w-4" />
             <span>مراسلة واتساب</span>
           </a>
           <a
             href={`tel:${phone1}`}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-brand-neutral-300 bg-white hover:bg-brand-neutral-50 text-brand-neutral-800 px-4 py-2.5 text-xs sm:text-sm font-bold shadow-sm transition-all"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-brand-neutral-300 hover:bg-brand-neutral-100 text-brand-neutral-800 px-4 py-2.5 text-xs sm:text-sm font-semibold transition-all active:scale-95"
+            dir="ltr"
           >
             <Phone className="h-4 w-4 text-brand-green-700" />
-            <span>اتصال مباشر</span>
+            <span>{phone1}</span>
           </a>
         </div>
       </div>

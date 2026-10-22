@@ -48,19 +48,19 @@ export function Header({ user }: HeaderProps) {
     <>
       <header className="sticky top-0 z-40 w-full border-b border-brand-neutral-200 bg-white/95 backdrop-blur-md shadow-xs">
         {/* Top micro-bar for verified contact info, history & location */}
-        <div className="hidden lg:block border-b border-brand-neutral-100 bg-brand-green-950 text-white text-xs py-2 px-4 sm:px-6 lg:px-8">
+        <div className="hidden lg:block border-b border-emerald-900/60 bg-[#022c22] text-white text-xs py-2 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-5">
-              <span className="flex items-center gap-1.5 text-brand-neutral-200">
+              <span className="flex items-center gap-1.5 text-emerald-100/90">
                 <Sparkles className="h-3.5 w-3.5 text-brand-gold-400" />
                 <span>تأسسنا كمحل سنة 2005 • جذور راسخة وخبرة تتجاوز 20 عاماً</span>
               </span>
-              <span className="text-brand-green-700">|</span>
+              <span className="text-emerald-800">|</span>
               <a
                 href={mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 text-brand-neutral-200 hover:text-brand-gold-300 transition-colors"
+                className="flex items-center gap-1 text-emerald-100/90 hover:text-brand-gold-300 transition-colors"
                 title="عرض الموقع على خرائط جوجل"
               >
                 <MapPin className="h-3.5 w-3.5 text-brand-gold-400" />
@@ -69,7 +69,7 @@ export function Header({ user }: HeaderProps) {
             </div>
 
             <div className="flex items-center gap-4 text-xs font-semibold">
-              <span className="text-brand-neutral-300">اتصال مباشر:</span>
+              <span className="text-emerald-300/80">اتصال مباشر:</span>
               <a
                 href={`tel:${phone1}`}
                 className="text-white hover:text-brand-gold-400 transition-colors"
@@ -77,7 +77,7 @@ export function Header({ user }: HeaderProps) {
               >
                 {phone1}
               </a>
-              <span className="text-brand-green-700">•</span>
+              <span className="text-emerald-800">•</span>
               <a
                 href={`tel:${phone2}`}
                 className="text-white hover:text-brand-gold-400 transition-colors"
@@ -85,12 +85,12 @@ export function Header({ user }: HeaderProps) {
               >
                 {phone2}
               </a>
-              <span className="text-brand-green-700">|</span>
+              <span className="text-emerald-800">|</span>
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-bold transition-colors"
+                className="flex items-center gap-1 text-[#25D366] hover:text-emerald-300 font-bold transition-colors"
               >
                 <MessageCircle className="h-3.5 w-3.5" />
                 <span>واتساب فوري</span>
@@ -108,16 +108,16 @@ export function Header({ user }: HeaderProps) {
               <button
                 type="button"
                 onClick={() => setDrawerOpen(true)}
-                className="inline-flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-3.5 py-2 sm:py-2.5 rounded-2xl bg-brand-green-50 border border-brand-green-200 text-brand-green-950 hover:bg-brand-green-100 hover:border-brand-green-300 transition-all shadow-xs group cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-green-600 shrink-0"
+                className="inline-flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-3.5 py-2 sm:py-2.5 rounded-2xl bg-brand-neutral-100/80 border border-brand-neutral-200 text-brand-neutral-900 hover:bg-brand-green-50 hover:border-brand-green-300 hover:text-brand-green-900 active:scale-95 transition-all shadow-2xs group cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-green-600 shrink-0"
                 aria-label="فتح القائمة الجانبية والأقسام"
                 title="القائمة والأقسام"
               >
                 <div className="flex flex-col gap-1 w-4 sm:w-5 justify-center items-center py-0.5">
-                  <span className="block h-0.5 w-4 sm:w-5 bg-brand-green-900 rounded-full group-hover:bg-brand-gold-600 transition-all" />
-                  <span className="block h-0.5 w-4 sm:w-5 bg-brand-green-900 rounded-full group-hover:bg-brand-gold-600 transition-all" />
-                  <span className="block h-0.5 w-4 sm:w-5 bg-brand-green-900 rounded-full group-hover:bg-brand-gold-600 transition-all" />
+                  <span className="block h-0.5 w-4 sm:w-5 bg-brand-neutral-800 rounded-full group-hover:bg-brand-green-700 transition-all" />
+                  <span className="block h-0.5 w-4 sm:w-5 bg-brand-neutral-800 rounded-full group-hover:bg-brand-green-700 transition-all" />
+                  <span className="block h-0.5 w-4 sm:w-5 bg-brand-neutral-800 rounded-full group-hover:bg-brand-green-700 transition-all" />
                 </div>
-                <span className="font-extrabold text-[11px] sm:text-sm text-brand-green-950">
+                <span className="font-extrabold text-[11px] sm:text-sm text-brand-neutral-900 group-hover:text-brand-green-900">
                   القائمة
                 </span>
               </button>
@@ -141,9 +141,9 @@ export function Header({ user }: HeaderProps) {
                     key={link.href}
                     href={link.href}
                     className={cn(
-                      "rounded-xl px-3.5 py-2 text-sm font-bold transition-colors",
+                      "rounded-xl px-3.5 py-2 text-sm font-bold transition-all active:scale-95",
                       isActive
-                        ? "bg-brand-green-50 text-brand-green-800"
+                        ? "bg-brand-green-50 text-brand-green-800 shadow-2xs"
                         : "text-brand-neutral-700 hover:bg-brand-neutral-100 hover:text-brand-neutral-900"
                     )}
                   >
@@ -160,7 +160,7 @@ export function Header({ user }: HeaderProps) {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-bold text-white shadow-sm hover:bg-emerald-700 transition-all hover:scale-105 active:scale-95"
+                className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-bold text-white shadow-2xs transition-all hover:scale-105 active:scale-95"
                 title="مراسلة فورية عبر واتساب"
               >
                 <MessageCircle className="h-4 w-4" />

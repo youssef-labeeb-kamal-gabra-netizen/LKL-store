@@ -23,14 +23,19 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      "inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green-600 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 select-none rounded-lg";
+      "inline-flex items-center justify-center font-bold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green-600 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 select-none rounded-xl active:scale-[0.98] cursor-pointer";
 
     const variantStyles = {
-      primary: "bg-brand-green-700 text-white hover:bg-brand-green-800 active:bg-brand-green-900 shadow-sm",
-      secondary: "bg-brand-gold-600 text-white hover:bg-brand-gold-700 active:bg-brand-gold-800 shadow-sm",
-      outline: "border border-brand-neutral-300 bg-white text-brand-neutral-800 hover:bg-brand-neutral-50 active:bg-brand-neutral-100",
-      ghost: "text-brand-neutral-700 hover:bg-brand-neutral-100 active:bg-brand-neutral-200",
-      destructive: "bg-red-600 text-white hover:bg-red-700 active:bg-red-800 shadow-sm",
+      primary:
+        "bg-brand-green-800 text-white hover:bg-brand-green-700 active:bg-brand-green-900 shadow-sm hover:shadow hover:-translate-y-0.5 active:translate-y-0",
+      secondary:
+        "bg-brand-gold-600 text-white hover:bg-brand-gold-500 active:bg-brand-gold-700 shadow-sm hover:shadow hover:-translate-y-0.5 active:translate-y-0",
+      outline:
+        "border border-brand-neutral-200 bg-white text-brand-neutral-800 hover:bg-brand-neutral-50 hover:border-brand-neutral-300 active:bg-brand-neutral-100 shadow-2xs hover:shadow-xs",
+      ghost:
+        "text-brand-neutral-700 hover:bg-brand-neutral-100 active:bg-brand-neutral-200",
+      destructive:
+        "bg-red-600 text-white hover:bg-red-700 active:bg-red-800 shadow-sm",
     };
 
     const sizeStyles = {

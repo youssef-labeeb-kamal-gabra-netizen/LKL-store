@@ -140,14 +140,14 @@ export function SideNavDrawer({ isOpen, onClose, user, onOpenAdvisor }: SideNavD
         {/* Scrollable Drawer Content */}
         <div className="flex-1 overflow-y-auto p-5 space-y-6">
           {/* Equipment Advisor Banner CTA */}
-          <div className="p-4 rounded-2xl bg-gradient-to-br from-brand-green-900 to-emerald-900 text-white shadow-md relative overflow-hidden">
+          <div className="p-4 rounded-2xl bg-gradient-to-br from-[#022c22] to-[#064e3b] text-white shadow-md relative overflow-hidden">
             <div className="relative z-10 space-y-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-gold-500/20 text-brand-gold-300 text-[11px] font-bold border border-brand-gold-500/30">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-950/60 text-emerald-200 text-[11px] font-bold border border-emerald-500/30">
                 <Sparkles className="h-3 w-3 text-brand-gold-400" />
                 <span>مستشارك الزراعي التفاعلي</span>
               </span>
               <h4 className="text-base font-extrabold text-white">محتار تختار أنهي معدة لأرضك؟</h4>
-              <p className="text-xs text-brand-neutral-200 leading-relaxed">
+              <p className="text-xs text-emerald-100/80 leading-relaxed">
                 حدد نوع المحصول ومساحة الأرض واحصل على ترشيح فوري للمعدة المناسبة.
               </p>
               <button
@@ -156,7 +156,7 @@ export function SideNavDrawer({ isOpen, onClose, user, onOpenAdvisor }: SideNavD
                   onClose();
                   if (onOpenAdvisor) onOpenAdvisor();
                 }}
-                className="mt-1 w-full py-2 px-3 rounded-xl bg-brand-gold-500 hover:bg-brand-gold-400 text-brand-neutral-950 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-sm"
+                className="mt-1 w-full py-2.5 px-3 rounded-xl bg-brand-gold-600 hover:bg-brand-gold-500 active:bg-brand-gold-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-sm cursor-pointer"
               >
                 <span>ابدأ المساعد التفاعلي الآن</span>
                 <ChevronLeft className="h-4 w-4" />
@@ -178,9 +178,9 @@ export function SideNavDrawer({ isOpen, onClose, user, onOpenAdvisor }: SideNavD
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      "flex items-center justify-between p-3 rounded-xl text-sm font-bold transition-colors",
+                      "flex items-center justify-between p-3 rounded-xl text-sm font-bold transition-all active:scale-[0.98]",
                       isActive
-                        ? "bg-brand-green-50 text-brand-green-800 font-extrabold"
+                        ? "bg-brand-green-50 text-brand-green-800 font-extrabold shadow-2xs"
                         : "text-brand-neutral-700 hover:bg-brand-neutral-100 hover:text-brand-neutral-900"
                     )}
                   >
@@ -205,7 +205,7 @@ export function SideNavDrawer({ isOpen, onClose, user, onOpenAdvisor }: SideNavD
               </h5>
               <Link
                 href="/products"
-                className="text-xs font-semibold text-brand-green-700 hover:underline"
+                className="text-xs font-bold text-brand-green-800 hover:underline active:scale-95 transition-all"
               >
                 عرض الكتالوج كامل
               </Link>
@@ -217,10 +217,10 @@ export function SideNavDrawer({ isOpen, onClose, user, onOpenAdvisor }: SideNavD
                   <Link
                     key={cat.id}
                     href={`/products?category=${cat.id}`}
-                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-brand-neutral-100 text-brand-neutral-800 transition-colors text-xs font-semibold"
+                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-brand-neutral-100 text-brand-neutral-800 active:scale-[0.98] transition-all text-xs font-semibold"
                   >
                     <div className="flex items-center gap-2.5">
-                      <div className="p-1 rounded-lg bg-brand-gold-50 text-brand-gold-700">
+                      <div className="p-1 rounded-lg bg-brand-green-50 text-brand-green-800">
                         <Icon className="h-3.5 w-3.5" />
                       </div>
                       <span>{cat.name}</span>
@@ -241,7 +241,7 @@ export function SideNavDrawer({ isOpen, onClose, user, onOpenAdvisor }: SideNavD
             <div className="grid grid-cols-2 gap-2">
               <a
                 href={`tel:${phone1}`}
-                className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-brand-neutral-100 hover:bg-brand-neutral-200 text-brand-neutral-900 text-xs font-bold transition-colors"
+                className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-brand-neutral-100 hover:bg-brand-neutral-200 text-brand-neutral-900 text-xs font-bold active:scale-95 transition-all shadow-2xs"
                 dir="ltr"
               >
                 <Phone className="h-3.5 w-3.5 text-brand-green-700" />
@@ -249,7 +249,7 @@ export function SideNavDrawer({ isOpen, onClose, user, onOpenAdvisor }: SideNavD
               </a>
               <a
                 href={`tel:${phone2}`}
-                className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-brand-neutral-100 hover:bg-brand-neutral-200 text-brand-neutral-900 text-xs font-bold transition-colors"
+                className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-brand-neutral-100 hover:bg-brand-neutral-200 text-brand-neutral-900 text-xs font-bold active:scale-95 transition-all shadow-2xs"
                 dir="ltr"
               >
                 <Phone className="h-3.5 w-3.5 text-brand-green-700" />
@@ -261,7 +261,7 @@ export function SideNavDrawer({ isOpen, onClose, user, onOpenAdvisor }: SideNavD
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full p-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors shadow-sm"
+              className="flex items-center justify-center gap-2 w-full p-3 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white text-xs font-bold active:scale-95 transition-all shadow-2xs"
             >
               <MessageCircle className="h-4 w-4" />
               <span>محادثة واتساب فورية مباشرة</span>
@@ -271,7 +271,7 @@ export function SideNavDrawer({ isOpen, onClose, user, onOpenAdvisor }: SideNavD
               href={mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-3 rounded-xl border border-brand-neutral-200 bg-white hover:bg-brand-neutral-50 text-brand-neutral-800 text-xs font-bold transition-colors"
+              className="flex items-center justify-between p-3 rounded-xl border border-brand-neutral-200 bg-white hover:bg-brand-neutral-50 text-brand-neutral-800 text-xs font-bold active:scale-95 transition-all shadow-2xs"
             >
               <div className="flex items-center gap-2">
                 <MapPin className="h-4 w-4 text-brand-gold-600" />
