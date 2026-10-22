@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { Phone, MessageCircle, MapPin } from "lucide-react";
+import Link from "next/link";
+import { Phone, MessageCircle, Tractor } from "lucide-react";
 import { env } from "@/lib/env";
 import type { BusinessSettings } from "@/types/settings";
 
@@ -17,44 +18,45 @@ export function MobileActionBar({ settings }: MobileActionBarProps = {}) {
   const whatsappUrl = `https://wa.me/${formattedWhatsApp}?text=${encodeURIComponent(
     "السلام عليكم، أود الاستفسار عن الآلات والمعدات الزراعية لدى شركة لبيب كمال."
   )}`;
-  const mapsUrl = settings?.googleMapsUrl || env.business.googleMapsUrl || "https://maps.app.goo.gl/fjJacxeJPcMBw7rU8";
 
   return (
     <nav
       aria-label="أزرار التواصل السريع للموبايل"
-      className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-brand-neutral-200 px-3 py-2.5 shadow-2xl"
+      className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-brand-neutral-200 px-3 py-2 shadow-2xl"
     >
-      <div className="grid grid-cols-3 gap-2.5 max-w-md mx-auto">
-        {/* 1. Phone Call */}
+      <div className="grid grid-cols-3 gap-2 max-w-md mx-auto">
+        {/* 1. Phone Call - Dark Emerald */}
         <a
           href={`tel:${phone1}`}
-          className="flex flex-col items-center justify-center py-2.5 px-2 rounded-2xl bg-emerald-50 text-emerald-950 border border-emerald-200/80 hover:bg-emerald-100 active:scale-90 transition-all shadow-2xs cursor-pointer btn-touch"
+          className="flex flex-col items-center justify-center py-2.5 px-2 rounded-2xl bg-[#064e3b] hover:bg-[#022c22] active:bg-[#022c22] text-white active:scale-90 transition-all shadow-md cursor-pointer btn-touch border border-emerald-800"
         >
-          <Phone className="h-5 w-5 mb-1 text-emerald-700" />
-          <span className="text-xs font-bold">اتصال هاتفي</span>
+          <Phone className="h-5 w-5 mb-0.5 text-amber-300" />
+          <span className="text-[11px] font-black tracking-tight">اتصل بالمحل</span>
         </a>
 
-        {/* 2. WhatsApp Direct (High Accent) */}
+        {/* 2. WhatsApp Direct - Vibrant WhatsApp Green */}
         <a
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col items-center justify-center py-2.5 px-2 rounded-2xl bg-[#25D366] text-white hover:bg-[#20ba59] active:scale-90 active:bg-[#1da851] shadow-md transition-all cursor-pointer btn-touch"
+          className="relative flex flex-col items-center justify-center py-2.5 px-2 rounded-2xl bg-[#25D366] text-white hover:bg-[#20ba59] active:scale-90 active:bg-[#1da851] shadow-lg transition-all cursor-pointer btn-touch border border-emerald-400"
         >
-          <MessageCircle className="h-5 w-5 mb-1" />
-          <span className="text-xs font-black">شات واتساب</span>
+          <span className="absolute -top-1 -end-1 flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-white" />
+          </span>
+          <MessageCircle className="h-5 w-5 mb-0.5" />
+          <span className="text-[11px] font-black tracking-tight">واتساب مباشر</span>
         </a>
 
-        {/* 3. Google Maps */}
-        <a
-          href={mapsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex flex-col items-center justify-center py-2.5 px-2 rounded-2xl bg-amber-50 text-amber-950 border border-amber-200/80 hover:bg-amber-100 active:scale-90 transition-all shadow-2xs cursor-pointer btn-touch"
+        {/* 3. Catalog - Sunny Golden Wheat */}
+        <Link
+          href="/products"
+          className="flex flex-col items-center justify-center py-2.5 px-2 rounded-2xl bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-white active:scale-90 transition-all shadow-md cursor-pointer btn-touch border border-amber-400"
         >
-          <MapPin className="h-5 w-5 mb-1 text-amber-700" />
-          <span className="text-xs font-bold">الموقع بالخريطة</span>
-        </a>
+          <Tractor className="h-5 w-5 mb-0.5 text-white" />
+          <span className="text-[11px] font-black tracking-tight">كل الماكينات</span>
+        </Link>
       </div>
     </nav>
   );

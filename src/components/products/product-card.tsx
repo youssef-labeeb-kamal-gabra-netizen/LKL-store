@@ -47,36 +47,36 @@ export function ProductCard({ product }: ProductCardProps) {
         </span>
 
         {/* Status Pill */}
-        <span className="absolute bottom-3 start-3 inline-flex items-center gap-1 rounded-full bg-emerald-950/80 text-emerald-300 backdrop-blur-xs px-2.5 py-0.5 text-[10px] font-bold border border-emerald-500/30">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span>متوفر بالمحل</span>
+        <span className="absolute bottom-3 start-3 inline-flex items-center gap-1.5 rounded-full bg-emerald-950/90 text-white backdrop-blur-md px-3 py-1 text-xs font-black border border-emerald-400/50 shadow-sm">
+          <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span>متوفر للاستلام بالمحل</span>
         </span>
       </div>
 
       <CardHeader className="p-5 pb-2">
         {product.model && (
-          <span className="text-xs font-bold text-brand-gold-600 mb-1">
-            كود الموديل: {product.model}
+          <span className="text-xs font-extrabold text-amber-700 bg-amber-50 border border-amber-200/80 px-2 py-0.5 rounded-md inline-block w-fit mb-1">
+            طراز: {product.model}
           </span>
         )}
-        <Link href={`/products/${product.slug}`} className="hover:text-brand-green-800 transition-colors">
-          <h3 className="text-base sm:text-lg font-bold text-brand-neutral-900 line-clamp-2">
+        <Link href={`/products/${product.slug}`} className="hover:text-emerald-800 transition-colors">
+          <h3 className="text-base sm:text-lg font-black text-brand-neutral-950 line-clamp-2 leading-snug">
             {product.name}
           </h3>
         </Link>
       </CardHeader>
 
       <CardContent className="px-5 py-2 flex-1">
-        <p className="text-sm text-brand-neutral-600 line-clamp-2 leading-relaxed">
+        <p className="text-xs sm:text-sm text-brand-neutral-600 line-clamp-2 leading-relaxed font-medium">
           {product.shortDescription}
         </p>
       </CardContent>
 
       <CardFooter className="p-4 pt-3 flex flex-col sm:flex-row gap-2 border-t border-brand-neutral-100">
         <Link href={`/products/${product.slug}`} className="w-full sm:flex-1">
-          <Button variant="outline" size="sm" className="w-full justify-center gap-1.5 font-bold rounded-xl py-2.5 text-xs sm:text-sm hover:bg-emerald-50 hover:text-emerald-900 hover:border-emerald-300 active:scale-95 transition-all">
+          <Button variant="outline" size="sm" className="w-full justify-center gap-1.5 font-black rounded-xl py-3 text-xs sm:text-sm bg-neutral-50 hover:bg-emerald-50 hover:text-emerald-900 border-neutral-300 hover:border-emerald-400 active:scale-95 transition-all cursor-pointer">
             <Info className="h-4 w-4 text-emerald-700" />
-            التفاصيل والصور
+            <span>الصور والمواصفات</span>
           </Button>
         </Link>
         <a
@@ -85,9 +85,9 @@ export function ProductCard({ product }: ProductCardProps) {
           rel="noopener noreferrer"
           className="w-full sm:flex-1"
         >
-          <Button variant="primary" size="sm" className="w-full justify-center gap-1.5 font-bold rounded-xl py-2.5 text-xs sm:text-sm bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white shadow-xs active:scale-95 transition-all">
+          <Button variant="primary" size="sm" className="w-full justify-center gap-1.5 font-black rounded-xl py-3 text-xs sm:text-sm bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white shadow-md active:scale-95 transition-all cursor-pointer">
             <MessageCircle className="h-4 w-4" />
-            واتساب فوري
+            <span>اسأل واتساب</span>
           </Button>
         </a>
       </CardFooter>

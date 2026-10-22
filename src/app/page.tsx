@@ -45,10 +45,19 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             <div className="lg:col-span-7 space-y-6">
-              {/* Experience Badge */}
-              <div className="inline-flex items-center gap-2 rounded-full bg-emerald-950/80 border border-emerald-500/30 px-3.5 py-1 text-xs sm:text-sm font-bold text-emerald-200 shadow-sm backdrop-blur-sm">
-                <Sparkles className="h-4 w-4 text-brand-gold-400" />
-                <span>تأسسنا كمحل رسمي عام 2005 • خبرة تتجاوز 20 عاماً بالشرقية</span>
+              {/* Active Live Store Status & Experience Badge */}
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="inline-flex items-center gap-2 rounded-full bg-emerald-950/90 border border-emerald-400/40 px-3.5 py-1.5 text-xs sm:text-sm font-bold text-white shadow-sm backdrop-blur-md">
+                  <span className="flex h-2.5 w-2.5 relative">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+                  </span>
+                  <span>المحل مفتوح وجاهز لاستقبالكم • طريق مصر الزراعي بالجديدة</span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 rounded-full bg-white/10 border border-white/20 px-3 py-1 text-xs font-semibold text-brand-gold-300">
+                  <Sparkles className="h-3.5 w-3.5 text-brand-gold-400" />
+                  <span>تأسسنا عام 2005 • خبرة 20+ سنة</span>
+                </div>
               </div>
 
               {/* Title & Clear Agricultural Tagline */}
@@ -57,8 +66,8 @@ export default function HomePage() {
                   شركة لبيب كمال لبيب <br className="hidden sm:inline" />
                   <span className="text-brand-gold-400">للأدوات والآلات الزراعية</span>
                 </h1>
-                <p className="text-sm xs:text-base sm:text-xl text-brand-gold-300 font-bold">
-                  طلمبات ديزل وبنزين • مواتير رش وضغط عالي • قطع غيار أصلية
+                <p className="text-base xs:text-lg sm:text-2xl text-emerald-100 font-extrabold">
+                  🌾 طلمبات ديزل وبنزين • مواتير رش • قطع غيار أصلية
                 </p>
               </div>
 
@@ -71,8 +80,9 @@ export default function HomePage() {
                 <Link href="/products" className="w-full">
                   <button
                     type="button"
-                    className="w-full py-3.5 sm:py-4 px-4 rounded-2xl bg-brand-gold-500 hover:bg-brand-gold-600 active:bg-brand-gold-700 text-white font-black text-sm sm:text-base shadow-lg btn-touch flex items-center justify-center gap-2 cursor-pointer border border-brand-gold-400/40"
+                    className="w-full py-4 px-4 rounded-2xl bg-brand-gold-500 hover:bg-brand-gold-600 active:bg-brand-gold-700 text-brand-neutral-950 font-black text-sm sm:text-base shadow-xl btn-touch flex items-center justify-center gap-2 cursor-pointer border-2 border-brand-gold-300 transition-all hover:scale-[1.02] active:scale-95"
                   >
+                    <span className="text-xl">🚜</span>
                     <span>كتالوج الماكينات</span>
                     <ArrowLeft className="h-5 w-5" />
                   </button>
@@ -82,7 +92,7 @@ export default function HomePage() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-3.5 sm:py-4 px-4 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white font-black text-sm sm:text-base shadow-lg btn-touch flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-4 px-4 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white font-black text-sm sm:text-base shadow-xl btn-touch flex items-center justify-center gap-2 cursor-pointer border-2 border-emerald-300/40 transition-all hover:scale-[1.02] active:scale-95"
                 >
                   <MessageCircle className="h-5 w-5" />
                   <span>شات واتساب فوري</span>
@@ -90,10 +100,11 @@ export default function HomePage() {
 
                 <a
                   href={`tel:${phone1}`}
-                  className="w-full py-3.5 sm:py-4 px-4 rounded-2xl bg-white/15 hover:bg-white/20 active:bg-white/30 text-white font-bold text-sm sm:text-base border border-white/20 shadow-md btn-touch flex items-center justify-center gap-2 cursor-pointer backdrop-blur-sm"
+                  className="w-full py-4 px-4 rounded-2xl bg-white hover:bg-emerald-50 active:bg-emerald-100 text-brand-green-950 font-black text-sm sm:text-base shadow-xl btn-touch flex items-center justify-center gap-2 cursor-pointer border-2 border-white transition-all hover:scale-[1.02] active:scale-95"
                 >
-                  <Phone className="h-4 w-4 text-brand-gold-300" />
-                  <span dir="ltr">{phone1}</span>
+                  <Phone className="h-4 w-4 text-brand-green-700" />
+                  <span>اتصل بالمحل</span>
+                  <span dir="ltr" className="text-xs font-mono font-bold text-emerald-800">({phone1})</span>
                 </a>
               </div>
 
@@ -264,124 +275,140 @@ export default function HomePage() {
             {/* Door 1: Petter Diesel */}
             <Link
               href="/products?category=diesel-motors"
-              className="group rounded-3xl border-2 border-brand-neutral-200 bg-white p-4 shadow-xs hover:shadow-xl hover:border-brand-green-600 card-touch flex flex-col justify-between overflow-hidden cursor-pointer"
+              className="group rounded-3xl border-2 border-emerald-400/80 hover:border-emerald-600 bg-white hover:bg-emerald-50/30 p-4 shadow-sm hover:shadow-2xl card-touch flex flex-col justify-between overflow-hidden cursor-pointer transition-all duration-300"
             >
-              <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-brand-neutral-100 border border-brand-neutral-100 mb-3.5">
-                <Image
-                  src="/images/products/petter-diesel-pump-hd.jpg"
-                  alt="طلمبات ديزل بتر Petter PH1"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  sizes="(max-width: 640px) 100vw, 300px"
-                />
-                <span className="absolute top-2.5 start-2.5 bg-emerald-950/85 text-emerald-200 text-[10px] font-bold px-2.5 py-1 rounded-lg backdrop-blur-xs border border-emerald-500/30">
-                  ديزل خدمة شاقة
-                </span>
+              <div>
+                <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-brand-neutral-100 border border-emerald-200/60 mb-3.5">
+                  <Image
+                    src="/images/products/petter-diesel-pump-hd.jpg"
+                    alt="طلمبات ديزل بتر Petter PH1"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 640px) 100vw, 300px"
+                  />
+                  <span className="absolute top-2.5 start-2.5 bg-emerald-800 text-white text-[11px] font-black px-3 py-1 rounded-xl shadow-sm">
+                    🟢 ديزل خدمة شاقة
+                  </span>
+                </div>
+                <div className="space-y-1">
+                  <h3 className="text-base sm:text-lg font-black text-brand-neutral-900 group-hover:text-emerald-800 transition-colors">
+                    طلمبات ديزل بتر (Petter)
+                  </h3>
+                  <p className="text-xs text-brand-neutral-600 leading-relaxed font-medium">
+                    ماكينات ديزل 1 سلندر أصلية لسحب ورفع مياه الري وإدارة الغيط.
+                  </p>
+                </div>
               </div>
-              <div className="space-y-1 flex-1">
-                <h3 className="text-base sm:text-lg font-black text-brand-neutral-900 group-hover:text-brand-green-800 transition-colors">
-                  طلمبات ديزل بتر (Petter PH1)
-                </h3>
-                <p className="text-xs text-brand-neutral-600 leading-relaxed">
-                  محركات ديزل 1 سلندر أصلية لسحب ورفع مياه الري وإدارة المعدات.
-                </p>
-              </div>
-              <div className="mt-4 pt-3 border-t border-brand-neutral-100 flex items-center justify-between text-xs font-bold text-brand-green-800 group-hover:text-brand-green-900">
-                <span>عرض موديلات الديزل</span>
-                <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+              <div className="mt-4 pt-2">
+                <div className="w-full py-2.5 px-3.5 rounded-xl bg-emerald-700 group-hover:bg-emerald-800 text-white font-black text-xs sm:text-sm flex items-center justify-between shadow-xs transition-colors">
+                  <span>تصفح ماكينات الديزل</span>
+                  <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+                </div>
               </div>
             </Link>
 
             {/* Door 2: Spray Motors */}
             <Link
               href="/products?category=spray-motors"
-              className="group rounded-3xl border-2 border-brand-neutral-200 bg-white p-4 shadow-xs hover:shadow-xl hover:border-brand-green-600 card-touch flex flex-col justify-between overflow-hidden cursor-pointer"
+              className="group rounded-3xl border-2 border-amber-400/80 hover:border-amber-600 bg-white hover:bg-amber-50/30 p-4 shadow-sm hover:shadow-2xl card-touch flex flex-col justify-between overflow-hidden cursor-pointer transition-all duration-300"
             >
-              <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-brand-neutral-100 border border-brand-neutral-100 mb-3.5">
-                <Image
-                  src="/images/products/knapsack-sprayer-hd.jpg"
-                  alt="مواتير ومجموعات الرش الزراعي"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  sizes="(max-width: 640px) 100vw, 300px"
-                />
-                <span className="absolute top-2.5 start-2.5 bg-amber-950/85 text-amber-200 text-[10px] font-bold px-2.5 py-1 rounded-lg backdrop-blur-xs border border-amber-500/30">
-                  رش ومكافحة
-                </span>
+              <div>
+                <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-brand-neutral-100 border border-amber-200/60 mb-3.5">
+                  <Image
+                    src="/images/products/knapsack-sprayer-hd.jpg"
+                    alt="مواتير ومجموعات الرش الزراعي"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 640px) 100vw, 300px"
+                  />
+                  <span className="absolute top-2.5 start-2.5 bg-amber-700 text-white text-[11px] font-black px-3 py-1 rounded-xl shadow-sm">
+                    🟠 رش ومكافحة آفات
+                  </span>
+                </div>
+                <div className="space-y-1">
+                  <h3 className="text-base sm:text-lg font-black text-brand-neutral-900 group-hover:text-amber-800 transition-colors">
+                    مواتير ومجموعات الرش
+                  </h3>
+                  <p className="text-xs text-brand-neutral-600 leading-relaxed font-medium">
+                    رشاشات ظهر ومجموعات رش ضغط عالي لحماية المحاصيل من الآفات.
+                  </p>
+                </div>
               </div>
-              <div className="space-y-1 flex-1">
-                <h3 className="text-base sm:text-lg font-black text-brand-neutral-900 group-hover:text-brand-green-800 transition-colors">
-                  مواتير ومجموعات الرش
-                </h3>
-                <p className="text-xs text-brand-neutral-600 leading-relaxed">
-                  رشاشات ظهر بموتور بنزين ومجموعات رش ضغط عالي 450 بار للمزارع.
-                </p>
-              </div>
-              <div className="mt-4 pt-3 border-t border-brand-neutral-100 flex items-center justify-between text-xs font-bold text-brand-green-800 group-hover:text-brand-green-900">
-                <span>عرض مواتير الرش</span>
-                <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+              <div className="mt-4 pt-2">
+                <div className="w-full py-2.5 px-3.5 rounded-xl bg-amber-600 group-hover:bg-amber-700 text-white font-black text-xs sm:text-sm flex items-center justify-between shadow-xs transition-colors">
+                  <span>تصفح مواتير الرش</span>
+                  <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+                </div>
               </div>
             </Link>
 
             {/* Door 3: Water Pumps */}
             <Link
               href="/products?category=water-pumps"
-              className="group rounded-3xl border-2 border-brand-neutral-200 bg-white p-4 shadow-xs hover:shadow-xl hover:border-brand-green-600 card-touch flex flex-col justify-between overflow-hidden cursor-pointer"
+              className="group rounded-3xl border-2 border-blue-400/80 hover:border-blue-600 bg-white hover:bg-blue-50/30 p-4 shadow-sm hover:shadow-2xl card-touch flex flex-col justify-between overflow-hidden cursor-pointer transition-all duration-300"
             >
-              <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-brand-neutral-100 border border-brand-neutral-100 mb-3.5">
-                <Image
-                  src="/images/products/gasoline-water-pump-hd.jpg"
-                  alt="طلمبات ومحركات مياه الري"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  sizes="(max-width: 640px) 100vw, 300px"
-                />
-                <span className="absolute top-2.5 start-2.5 bg-blue-950/85 text-blue-200 text-[10px] font-bold px-2.5 py-1 rounded-lg backdrop-blur-xs border border-blue-500/30">
-                  ري وسحب مياه
-                </span>
+              <div>
+                <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-brand-neutral-100 border border-blue-200/60 mb-3.5">
+                  <Image
+                    src="/images/products/gasoline-water-pump-hd.jpg"
+                    alt="طلمبات ومحركات مياه الري"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 640px) 100vw, 300px"
+                  />
+                  <span className="absolute top-2.5 start-2.5 bg-blue-700 text-white text-[11px] font-black px-3 py-1 rounded-xl shadow-sm">
+                    🔵 ري وسحب مياه الغيط
+                  </span>
+                </div>
+                <div className="space-y-1">
+                  <h3 className="text-base sm:text-lg font-black text-brand-neutral-900 group-hover:text-blue-800 transition-colors">
+                    طلمبات مياه الري والسحب
+                  </h3>
+                  <p className="text-xs text-brand-neutral-600 leading-relaxed font-medium">
+                    طلمبات بنزين سريعة النقل 2 و 3 بوصة لسحب المياه من الترع والآبار.
+                  </p>
+                </div>
               </div>
-              <div className="space-y-1 flex-1">
-                <h3 className="text-base sm:text-lg font-black text-brand-neutral-900 group-hover:text-brand-green-800 transition-colors">
-                  طلمبات مياه الري والسحب
-                </h3>
-                <p className="text-xs text-brand-neutral-600 leading-relaxed">
-                  طلمبات بنزين 2 و 3 بوصة لسحب المياه من الترع والآبار وري الحقول.
-                </p>
-              </div>
-              <div className="mt-4 pt-3 border-t border-brand-neutral-100 flex items-center justify-between text-xs font-bold text-brand-green-800 group-hover:text-brand-green-900">
-                <span>عرض طلمبات المياه</span>
-                <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+              <div className="mt-4 pt-2">
+                <div className="w-full py-2.5 px-3.5 rounded-xl bg-blue-600 group-hover:bg-blue-700 text-white font-black text-xs sm:text-sm flex items-center justify-between shadow-xs transition-colors">
+                  <span>تصفح طلمبات المياه</span>
+                  <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+                </div>
               </div>
             </Link>
 
             {/* Door 4: Spare Parts */}
             <Link
               href="/products?category=spare-parts"
-              className="group rounded-3xl border-2 border-brand-neutral-200 bg-white p-4 shadow-xs hover:shadow-xl hover:border-brand-green-600 card-touch flex flex-col justify-between overflow-hidden cursor-pointer"
+              className="group rounded-3xl border-2 border-brand-gold-400/80 hover:border-brand-gold-600 bg-white hover:bg-amber-50/30 p-4 shadow-sm hover:shadow-2xl card-touch flex flex-col justify-between overflow-hidden cursor-pointer transition-all duration-300"
             >
-              <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-brand-neutral-100 border border-brand-neutral-100 mb-3.5">
-                <Image
-                  src="/images/products/spare-parts-hd.jpg"
-                  alt="قطع الغيار الأصلية والمستلزمات"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  sizes="(max-width: 640px) 100vw, 300px"
-                />
-                <span className="absolute top-2.5 start-2.5 bg-brand-gold-950/85 text-brand-gold-200 text-[10px] font-bold px-2.5 py-1 rounded-lg backdrop-blur-xs border border-brand-gold-500/30">
-                  قطع غيار أصلية
-                </span>
+              <div>
+                <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-brand-neutral-100 border border-amber-200/60 mb-3.5">
+                  <Image
+                    src="/images/products/spare-parts-hd.jpg"
+                    alt="قطع الغيار الأصلية والمستلزمات"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 640px) 100vw, 300px"
+                  />
+                  <span className="absolute top-2.5 start-2.5 bg-neutral-900 text-amber-300 text-[11px] font-black px-3 py-1 rounded-xl shadow-sm">
+                    🟡 قطع غيار أصلية
+                  </span>
+                </div>
+                <div className="space-y-1">
+                  <h3 className="text-base sm:text-lg font-black text-brand-neutral-900 group-hover:text-amber-900 transition-colors">
+                    قطع الغيار الأصلية
+                  </h3>
+                  <p className="text-xs text-brand-neutral-600 leading-relaxed font-medium">
+                    بساتم، شنابر، فواني رش، وسيور أصلية مضمونة لصيانة ماكينتك.
+                  </p>
+                </div>
               </div>
-              <div className="space-y-1 flex-1">
-                <h3 className="text-base sm:text-lg font-black text-brand-neutral-900 group-hover:text-brand-green-800 transition-colors">
-                  قطع الغيار الأصلية
-                </h3>
-                <p className="text-xs text-brand-neutral-600 leading-relaxed">
-                  بساتم، شنابر، فواني رش، سيور، خراطيم، ومستلزمات صيانة متوفرة.
-                </p>
-              </div>
-              <div className="mt-4 pt-3 border-t border-brand-neutral-100 flex items-center justify-between text-xs font-bold text-brand-green-800 group-hover:text-brand-green-900">
-                <span>عرض قطع الغيار</span>
-                <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+              <div className="mt-4 pt-2">
+                <div className="w-full py-2.5 px-3.5 rounded-xl bg-neutral-900 group-hover:bg-neutral-800 text-amber-300 font-black text-xs sm:text-sm flex items-center justify-between shadow-xs transition-colors">
+                  <span>تصفح قطع الغيار</span>
+                  <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+                </div>
               </div>
             </Link>
           </div>

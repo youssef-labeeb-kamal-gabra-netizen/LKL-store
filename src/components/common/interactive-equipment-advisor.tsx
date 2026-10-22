@@ -195,49 +195,64 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
       {step === 1 && (
         <div className="space-y-5 py-2">
           <div className="space-y-1">
-            <span className="text-xs font-extrabold text-brand-green-800">الخطوة 1 من 3</span>
-            <h4 className="text-lg font-bold text-brand-neutral-900">
-              ما هي العملية أو المهمة الزراعية التي تريد إنجازها؟
+            <span className="inline-block px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-black">الخطوة الأولى (1 من 3)</span>
+            <h4 className="text-xl sm:text-2xl font-black text-brand-neutral-900">
+              عاوز تعمل إيه بأرضك أو مزرعتك؟
             </h4>
+            <p className="text-xs sm:text-sm text-brand-neutral-600">
+              اضغط على أي عملية تناسبك بالصورة والرمز:
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
             {[
               {
                 id: "water-pump",
                 title: "سحب ورفع مياه الري",
-                desc: "طلمبات ري الحقول والترع والآبار",
+                desc: "طلمبات ومواتير مياه للترع والآبار وري الغيط",
                 icon: Waves,
+                color: "bg-blue-50 text-blue-700 border-blue-200 group-hover:bg-blue-600",
+                badge: "ري وسحب مياه",
               },
               {
                 id: "spray",
                 title: "رش المحاصيل ومكافحة الآفات",
-                desc: "مواتير رش ظهر ومجموعات ضغط عالي",
+                desc: "مواتير رش ظهر بنزين ورشاشات ضغط عالي للمبيدات",
                 icon: SprayCan,
+                color: "bg-amber-50 text-amber-700 border-amber-200 group-hover:bg-amber-600",
+                badge: "رش ومكافحة",
               },
               {
                 id: "diesel",
-                title: "محرك ديزل شاق للخدمة المستمرة",
-                desc: "محركات بتر Petter لإدارة الطلمبات والمعدات",
+                title: "موتور بتر ديزل خدمة شاقة",
+                desc: "محركات ديزل 1 سلندر أصلية (Petter) لعزم ري جبار",
                 icon: Cpu,
+                color: "bg-emerald-50 text-emerald-800 border-emerald-200 group-hover:bg-emerald-700",
+                badge: "بتر ديزل أصلي",
               },
               {
                 id: "tiller",
-                title: "خدمة وتقليب وتجهيز الأرض",
-                desc: "عزاقات وآلات الحراثة المدمجة",
+                title: "عزاقة وتقليب خدمة الأرض",
+                desc: "عزاقات زراعية لحرث وتجهيز التربة للزراعة",
                 icon: Tractor,
+                color: "bg-green-50 text-green-700 border-green-200 group-hover:bg-green-600",
+                badge: "عزاقات وحرث",
               },
               {
                 id: "irrigation",
-                title: "شبكات وفلاتر ري حديث",
-                desc: "فلاتر ديسك ومستلزمات ري بالتنقيط",
+                title: "شبكات وفلاتر ري بالتنقيط",
+                desc: "فلاتر ديسك ومحابس وشبكات ري حديث لترشيد المياه",
                 icon: Pipette,
+                color: "bg-cyan-50 text-cyan-700 border-cyan-200 group-hover:bg-cyan-600",
+                badge: "شبكات ري حديث",
               },
               {
                 id: "parts",
-                title: "قطع غيار وصيانة محركات",
-                desc: "بساتم، شنابر، خراطيم، وطلمبات غيار",
+                title: "قطع غيار وصيانة مواتير",
+                desc: "بساتم، شنابر، فواني رش، خراطيم، وسيور أصلية",
                 icon: Wrench,
+                color: "bg-orange-50 text-orange-700 border-orange-200 group-hover:bg-orange-600",
+                badge: "قطع غيار متوفرة",
               },
             ].map((item) => {
               const Icon = item.icon;
@@ -246,16 +261,19 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
                   key={item.id}
                   type="button"
                   onClick={() => handleNeedSelect(item.id)}
-                  className="flex items-start gap-3.5 p-4 sm:p-5 rounded-2xl border border-brand-neutral-200 bg-brand-neutral-50/60 hover:bg-white hover:border-brand-green-600/60 hover:shadow-md active:scale-[0.98] active:bg-brand-green-50/20 transition-all duration-200 group text-start cursor-pointer"
+                  className="flex items-start gap-4 p-4 sm:p-5 rounded-3xl border-2 border-brand-neutral-200 bg-white hover:border-brand-green-600 hover:shadow-xl active:scale-95 transition-all duration-200 group text-start cursor-pointer relative overflow-hidden"
                 >
-                  <div className="p-3 rounded-2xl bg-brand-green-50 text-brand-green-800 group-hover:bg-brand-green-800 group-hover:text-white transition-colors duration-200 shrink-0">
-                    <Icon className="h-6 w-6" />
+                  <div className={`p-3.5 rounded-2xl border ${item.color} group-hover:text-white transition-all duration-200 shrink-0 shadow-xs`}>
+                    <Icon className="h-7 w-7" />
                   </div>
-                  <div>
-                    <h5 className="font-bold text-brand-neutral-900 group-hover:text-brand-green-800 transition-colors text-sm sm:text-base">
+                  <div className="space-y-1 min-w-0">
+                    <span className="inline-block text-[10px] font-black uppercase tracking-wider text-brand-neutral-500">
+                      {item.badge}
+                    </span>
+                    <h5 className="font-black text-brand-neutral-900 group-hover:text-brand-green-800 transition-colors text-base sm:text-lg leading-snug">
                       {item.title}
                     </h5>
-                    <p className="text-xs text-brand-neutral-500 mt-1 leading-relaxed">
+                    <p className="text-xs text-brand-neutral-600 leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
@@ -270,41 +288,53 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
       {step === 2 && (
         <div className="space-y-5 py-2">
           <div className="space-y-1">
-            <span className="text-xs font-extrabold text-brand-green-800">الخطوة 2 من 3</span>
-            <h4 className="text-lg font-bold text-brand-neutral-900">
-              ما هي مساحة الأرض أو حجم العمل الميداني المتوقع؟
+            <span className="inline-block px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-black">الخطوة الثانية (2 من 3)</span>
+            <h4 className="text-xl sm:text-2xl font-black text-brand-neutral-900">
+              مساحة أرضك كام تقريباً؟
             </h4>
+            <p className="text-xs sm:text-sm text-brand-neutral-600">
+              اختر المساحة التقريبية لاقتراح قوة الحصان والموتور المناسب
+            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
               {
                 id: "small",
-                title: "مساحة صغيرة (حتى فدان واحد)",
-                desc: "حدائق منزلية، مزارع صغيرة، استخدام متقطع خفيف",
+                title: "🌱 أرض صغيرة أو جنينة",
+                subtitle: "أقل من فدان واحد",
+                desc: "استخدام خفيف، رش مساحات صغيرة، ري سريع",
+                color: "hover:border-emerald-500",
               },
               {
                 id: "medium",
-                title: "مساحة متوسطة (من 1 إلى 5 أفدنة)",
-                desc: "الحقول التقليدية، زراعات الخضار والموالح العائلية",
+                title: "🌾 غيط أو حقل متوسط",
+                subtitle: "من 1 إلى 5 أفدنة",
+                desc: "المساحة التقليدية لغالبية المزارعين بالشرقية ومصر",
+                color: "hover:border-amber-500",
               },
               {
                 id: "large",
-                title: "مزارع واسعة (أكثر من 5 أفدنة)",
-                desc: "مشاريع زراعية واسعة، ري مستمر لعدة ساعات يومياً",
+                title: "🚜 مزرعة كبيرة أو مشروع",
+                subtitle: "أكتر من 5 أفدنة",
+                desc: "ري ساعات طويلة متواصلة، سحب مياه غزيرة",
+                color: "hover:border-blue-500",
               },
             ].map((item) => (
               <button
                 key={item.id}
                 type="button"
                 onClick={() => handleAreaSelect(item.id)}
-                className="p-5 rounded-2xl border border-brand-neutral-200 bg-brand-neutral-50/60 hover:bg-white hover:border-brand-green-600/60 hover:shadow-md active:scale-[0.98] transition-all duration-200 text-start group cursor-pointer"
+                className={`p-6 rounded-3xl border-2 border-brand-neutral-200 bg-white ${item.color} hover:shadow-xl active:scale-95 transition-all duration-200 text-start group cursor-pointer space-y-2`}
               >
-                <div className="h-5 w-5 rounded-full border-2 border-brand-neutral-300 group-hover:border-brand-green-700 transition-colors mb-3" />
-                <h5 className="font-bold text-brand-neutral-900 text-sm sm:text-base group-hover:text-brand-green-800">
+                <div className="h-6 w-6 rounded-full border-2 border-brand-neutral-300 group-hover:border-brand-green-700 group-hover:bg-brand-green-50 transition-colors" />
+                <h5 className="font-black text-brand-neutral-900 text-lg group-hover:text-brand-green-800">
                   {item.title}
                 </h5>
-                <p className="text-xs text-brand-neutral-500 mt-1 leading-relaxed">
+                <span className="inline-block px-2.5 py-0.5 rounded-lg bg-brand-neutral-100 text-brand-neutral-800 text-xs font-bold">
+                  {item.subtitle}
+                </span>
+                <p className="text-xs text-brand-neutral-500 leading-relaxed pt-1">
                   {item.desc}
                 </p>
               </button>
@@ -314,7 +344,7 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
           <button
             type="button"
             onClick={() => setStep(1)}
-            className="inline-flex items-center gap-1 text-xs font-bold text-brand-neutral-600 hover:text-brand-neutral-900 active:scale-95 transition-all pt-2"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-neutral-600 hover:text-brand-neutral-900 active:scale-95 transition-all pt-2"
           >
             <ArrowRight className="h-4 w-4" />
             <span>الرجوع للخطوة السابقة</span>
@@ -326,36 +356,46 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
       {step === 3 && (
         <div className="space-y-5 py-2">
           <div className="space-y-1">
-            <span className="text-xs font-extrabold text-brand-green-800">الخطوة 3 من 3</span>
-            <h4 className="text-lg font-bold text-brand-neutral-900">
-              ما هو نوع المحرك أو أسلوب الحركة الذي تفضله؟
+            <span className="inline-block px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-black">الخطوة الثالثة (3 من 3)</span>
+            <h4 className="text-xl sm:text-2xl font-black text-brand-neutral-900">
+              بتحب الموتور يشتغل بنزين ولا ديزل؟
             </h4>
+            <p className="text-xs sm:text-sm text-brand-neutral-600">
+              كل نوع وله ميزته حسب طريقة شغلك في الأرض
+            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
               {
                 id: "petrol",
-                title: "بنزين (خفيف الوزن وسهل النقل)",
-                desc: "تشغيل سريع وسهل، ممتاز للتنقل بين الأراضي والمواقع المختلفة بدون مجهود.",
+                title: "⛽ بنزين (خفيف الوزن وسريع الحركة)",
+                desc: "دوارة سهلة، خفيف تقدر تشيله على دراعك أو تنقله في عربية بكل سهولة.",
+                badge: "الأسهل في النقل والمشاوير",
+                color: "hover:border-amber-500",
               },
               {
                 id: "diesel",
-                title: "ديزل / سولار (عزم هائل واقتصادي)",
-                desc: "شديد التحمل، مصمم ليعمل طوال اليوم بأقل تكلفة استهلاك وقود وصيانة طويلة الأمد.",
+                title: "🛢️ ديزل / سولار (بتر الإنجليزي PH1 عزم جبار)",
+                desc: "يتحمل العمل الشاق لساعات وأيام ويوفر جداً في استهلاك السولار وتكلفة التشغيل.",
+                badge: "الأوفر والأطول عمراً في الغيط",
+                color: "hover:border-emerald-600",
               },
             ].map((item) => (
               <button
                 key={item.id}
                 type="button"
                 onClick={() => handleFuelSelect(item.id)}
-                className="p-5 rounded-2xl border border-brand-neutral-200 bg-brand-neutral-50/60 hover:bg-white hover:border-brand-green-600/60 hover:shadow-md active:scale-[0.98] transition-all duration-200 text-start group cursor-pointer"
+                className={`p-6 rounded-3xl border-2 border-brand-neutral-200 bg-white ${item.color} hover:shadow-xl active:scale-95 transition-all duration-200 text-start group cursor-pointer space-y-2`}
               >
-                <div className="h-5 w-5 rounded-full border-2 border-brand-neutral-300 group-hover:border-brand-green-700 transition-colors mb-3" />
-                <h5 className="font-bold text-brand-neutral-900 text-sm sm:text-base group-hover:text-brand-green-800">
+                <div className="h-6 w-6 rounded-full border-2 border-brand-neutral-300 group-hover:border-brand-green-700 group-hover:bg-brand-green-50 transition-colors" />
+                <h5 className="font-black text-brand-neutral-900 text-lg group-hover:text-brand-green-800">
                   {item.title}
                 </h5>
-                <p className="text-xs text-brand-neutral-500 mt-1 leading-relaxed">
+                <span className="inline-block px-2.5 py-0.5 rounded-lg bg-emerald-100 text-emerald-900 text-xs font-bold">
+                  {item.badge}
+                </span>
+                <p className="text-xs text-brand-neutral-600 leading-relaxed pt-1">
                   {item.desc}
                 </p>
               </button>
@@ -365,7 +405,7 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
           <button
             type="button"
             onClick={() => setStep(2)}
-            className="inline-flex items-center gap-1 text-xs font-bold text-brand-neutral-600 hover:text-brand-neutral-900 active:scale-95 transition-all pt-2"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-neutral-600 hover:text-brand-neutral-900 active:scale-95 transition-all pt-2"
           >
             <ArrowRight className="h-4 w-4" />
             <span>الرجوع للخطوة السابقة</span>
@@ -376,14 +416,14 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
       {/* Step 4: Final Recommendation & Instant Action */}
       {step === 4 && recommendedProduct && (
         <div className="space-y-6 py-2 animate-fadeIn">
-          <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200 px-3.5 py-1 text-xs font-extrabold">
-            <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-            <span>بناءً على اختياراتك — إليك المعدة الأنسب لاحتياجك الميداني:</span>
+          <div className="inline-flex items-center gap-2 rounded-full bg-emerald-600 text-white px-4 py-1.5 text-sm font-black shadow-sm">
+            <CheckCircle2 className="h-5 w-5 text-amber-300" />
+            <span>🎉 مبروك! لقينا أنسب ماكنة تناسب أرضك واحتياجك بالظبط:</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 bg-brand-neutral-50/50 p-6 rounded-3xl border border-brand-neutral-200 shadow-xs items-center">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 bg-emerald-50/60 p-6 sm:p-8 rounded-3xl border-2 border-emerald-300 shadow-md items-center">
             {/* Product Image */}
-            <div className="md:col-span-5 relative aspect-[4/3] rounded-2xl overflow-hidden bg-white border border-brand-neutral-200">
+            <div className="md:col-span-5 relative aspect-[4/3] rounded-2xl overflow-hidden bg-white border-2 border-emerald-200 shadow-sm">
               <Image
                 src={recommendedProduct.images[0]}
                 alt={recommendedProduct.name}
@@ -391,24 +431,24 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 40vw"
               />
-              <span className="absolute top-3 end-3 rounded-full bg-brand-gold-600 text-white font-bold text-[11px] px-2.5 py-1 shadow-sm">
-                ترشيح مثالي
+              <span className="absolute top-3 end-3 rounded-full bg-amber-500 text-white font-black text-xs px-3 py-1 shadow-md">
+                ترشيح مثالي لأرضك ⭐
               </span>
             </div>
 
             {/* Product Details */}
-            <div className="md:col-span-7 space-y-3">
+            <div className="md:col-span-7 space-y-4">
               <div className="space-y-1">
-                <span className="text-xs font-bold text-brand-green-800">
+                <span className="inline-block text-xs font-black text-emerald-800 bg-emerald-200/80 px-2.5 py-0.5 rounded-lg">
                   {recommendedProduct.categoryName} • كود: {recommendedProduct.model || "LKL"}
                 </span>
-                <h4 className="text-xl sm:text-2xl font-black text-brand-neutral-900 leading-snug">
+                <h4 className="text-xl sm:text-2xl lg:text-3xl font-black text-brand-neutral-900 leading-snug">
                   {recommendedProduct.name}
                 </h4>
               </div>
 
-              <p className="text-xs sm:text-sm text-brand-neutral-600 leading-relaxed">
-                {recommendedProduct.description}
+              <p className="text-xs sm:text-sm text-brand-neutral-700 leading-relaxed font-medium">
+                {recommendedProduct.shortDescription}
               </p>
 
               {/* Specs Pills */}
@@ -416,31 +456,31 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
                 {recommendedProduct.specifications.slice(0, 4).map((spec, idx) => (
                   <div
                     key={idx}
-                    className="p-2.5 rounded-xl bg-white border border-brand-neutral-200/80 text-xs"
+                    className="p-2.5 rounded-xl bg-white border border-emerald-200 text-xs shadow-2xs"
                   >
-                    <span className="text-brand-neutral-500 block text-[10px]">{spec.label}</span>
+                    <span className="text-emerald-700 font-bold block text-[10px]">{spec.label}</span>
                     <span className="font-bold text-brand-neutral-900 leading-snug">{spec.value}</span>
                   </div>
                 ))}
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-2.5 pt-3">
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <a
                   href={`https://wa.me/${formattedWhatsApp}?text=${getWhatsAppMessage()}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] px-4 py-3 text-xs sm:text-sm font-bold text-white shadow-md active:scale-95 transition-all"
+                  className="flex-1 inline-flex items-center justify-center gap-2.5 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] px-5 py-4 text-sm sm:text-base font-black text-white shadow-lg active:scale-95 transition-all text-center cursor-pointer border border-emerald-400"
                 >
-                  <MessageCircle className="h-4 w-4" />
-                  <span>تأكيد الحجز والاستفسار عبر واتساب</span>
+                  <MessageCircle className="h-5 w-5" />
+                  <span>اسأل عن سعر ومواصفات الماكنة دي على واتساب</span>
                 </a>
 
                 <Link
                   href={`/products/${recommendedProduct.slug}`}
-                  className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-brand-neutral-300 hover:bg-white active:bg-brand-neutral-100 active:scale-95 px-4 py-3 text-xs sm:text-sm font-bold text-brand-neutral-800 transition-all"
+                  className="inline-flex items-center justify-center gap-1.5 rounded-2xl bg-white border-2 border-emerald-600 hover:bg-emerald-50 active:scale-95 px-5 py-4 text-xs sm:text-sm font-black text-emerald-900 transition-all text-center shadow-xs"
                 >
-                  <span>عرض التفاصيل الكاملة</span>
+                  <span>عرض التفاصيل والصور</span>
                   <ArrowLeft className="h-4 w-4" />
                 </Link>
               </div>
