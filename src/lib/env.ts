@@ -49,7 +49,7 @@ export const env = {
     phone: process.env.NEXT_PUBLIC_BUSINESS_PHONE || "01220792948",
     secondaryPhone: process.env.NEXT_PUBLIC_BUSINESS_SECONDARY_PHONE || "01114587917",
     whatsapp: process.env.NEXT_PUBLIC_BUSINESS_WHATSAPP || "01220792948",
-    googleMapsUrl: process.env.NEXT_PUBLIC_BUSINESS_MAPS_URL || "https://www.google.com/maps/place/%D8%B4%D8%B1%D9%83%D8%A9+%D9%84%D8%A8%D9%8A%D8%A8+%D9%83%D9%85%D8%A7%D9%84+%D9%84%D9%84%D8%A3%D9%84%D8%A7%D8%AA+%D8%A7%D9%84%D8%B2%D8%B1%D8%A7%D8%B9%D9%8A%D9%87/@30.5346921,31.3866374,17z",
+    googleMapsUrl: process.env.NEXT_PUBLIC_BUSINESS_MAPS_URL || "https://maps.app.goo.gl/87VQjF6s9bEyF9yz7", // https://www.google.com/maps/place/شركة-لبيب-كمال-للآلات-الزراعية
     establishedYear: "2005",
     experienceYears: "20+",
   },

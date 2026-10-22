@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { addContactRequest } from "@/lib/contact-requests";
+import { getSession } from "@/lib/auth";
 
 // Egyptian phone: Mobile (010, 011, 012, 015 - 11 digits) or Landline (e.g. 055, 02 - 9-10 digits), with or without +20
 const EGYPTIAN_PHONE_REGEX = /^(?:(?:\+?200?|0)?(?:1[0125]\d{8}|[2-9]\d{7,8}))$/;
@@ -104,11 +105,16 @@ export async function POST(request: Request) {
     const sanitizedProduct = product ? String(product).replace(/<[^>]*>?/gm, "").trim().slice(0, 100) : undefined;
     const sanitizedMessage = message.replace(/<[^>]*>?/gm, "").trim().slice(0, 1000);
 
+    // Authenticated customer context (Customer Data Isolation)
+    const session = await getSession();
+
     // Persist request to storage
     const saved = addContactRequest({
+      userId: session?.id,
+      userEmail: session?.email,
       name: sanitizedName,
       phone: sanitizedPhone,
-      email: sanitizedEmail,
+      email: sanitizedEmail || session?.email,
       product: sanitizedProduct,
       message: sanitizedMessage,
     });

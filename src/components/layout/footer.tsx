@@ -18,7 +18,7 @@ export function Footer({ settings }: FooterProps = {}) {
   const whatsappUrl = `https://wa.me/${cleanWhatsApp.startsWith("0") ? `2${cleanWhatsApp}` : cleanWhatsApp}?text=${encodeURIComponent(
     "السلام عليكم، أود الاستفسار عن الآلات والمعدات الزراعية المتوفرة لدى شركة لبيب كمال."
   )}`;
-  const mapsUrl = settings?.googleMapsUrl || env.business.googleMapsUrl || "https://maps.app.goo.gl/fjJacxeJPcMBw7rU8";
+  const mapsUrl = settings?.googleMapsUrl || env.business.googleMapsUrl || "https://maps.app.goo.gl/87VQjF6s9bEyF9yz7";
   const addressPhrase = settings?.addressPhrase || env.business.addressPhrase || "طريق بنها - الزقازيق (طريق مصر الزراعي)، قرية الجديدة، مركز منيا القمح";
   const workingHours = settings?.workingHours || "يومياً من 8:00 صباحاً حتى 9:00 مساءً";
   const slogan = settings?.slogan || env.business.slogan || "الجودة • الثقة • الخدمة المتميزة";

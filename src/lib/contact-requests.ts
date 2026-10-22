@@ -5,6 +5,8 @@ export type ContactRequestStatus = "NEW" | "CONTACTED" | "IN_PROGRESS" | "RESOLV
 
 export interface ContactRequest {
   id: string;
+  userId?: string;
+  userEmail?: string;
   name: string;
   phone: string;
   email?: string;
@@ -21,10 +23,40 @@ const STORAGE_FILE = "inquiries.json";
 // In adherence with Constitution Rule 1 (Zero Fabrication), initial inquiries start empty
 const initialRequests: ContactRequest[] = [];
 
+/**
+ * Returns all inquiries (Administrator scope)
+ */
 export function getContactRequests(): ContactRequest[] {
   return readStorageFile<ContactRequest[]>(STORAGE_FILE, initialRequests);
 }
 
+/**
+ * Returns inquiries strictly isolated for a single customer (Customer private scope)
+ * Enforces zero cross-customer data leakage.
+ */
+export function getUserContactRequests(userEmail: string, userId?: string): ContactRequest[] {
+  if (!userEmail && !userId) return [];
+  const normalizedEmail = (userEmail || "").trim().toLowerCase();
+  const all = getContactRequests();
+  return all.filter((r) => {
+    if (userId && r.userId && r.userId === userId) return true;
+    if (r.userEmail && r.userEmail.trim().toLowerCase() === normalizedEmail) return true;
+    if (r.email && r.email.trim().toLowerCase() === normalizedEmail) return true;
+    return false;
+  });
+}
+
+/**
+ * Retrieves a single customer inquiry with strict ownership verification
+ */
+export function getUserContactRequestById(id: string, userEmail: string, userId?: string): ContactRequest | null {
+  const userRequests = getUserContactRequests(userEmail, userId);
+  return userRequests.find((r) => r.id === id) || null;
+}
+
+/**
+ * Adds an inquiry, binding it securely to customer identity if authenticated
+ */
 export function addContactRequest(data: Omit<ContactRequest, "id" | "status" | "createdAt">): ContactRequest {
   const requests = getContactRequests();
   const id = `req-${crypto.randomUUID()}`;
@@ -43,6 +75,9 @@ export function addContactRequest(data: Omit<ContactRequest, "id" | "status" | "
   return newReq;
 }
 
+/**
+ * Updates inquiry status and notes (Administrator scope)
+ */
 export function updateContactRequestStatus(
   id: string,
   status: ContactRequestStatus,
@@ -62,6 +97,9 @@ export function updateContactRequestStatus(
   return req;
 }
 
+/**
+ * Deletes an inquiry (Administrator scope)
+ */
 export function deleteContactRequest(id: string): boolean {
   const requests = getContactRequests();
   const filtered = requests.filter((r) => r.id !== id);
@@ -69,4 +107,13 @@ export function deleteContactRequest(id: string): boolean {
 
   writeStorageFile(STORAGE_FILE, filtered);
   return true;
+}
+
+/**
+ * Customer self-service deletion of their own inquiry (Customer scope)
+ */
+export function deleteUserContactRequest(id: string, userEmail: string, userId?: string): boolean {
+  const req = getUserContactRequestById(id, userEmail, userId);
+  if (!req) return false;
+  return deleteContactRequest(id);
 }

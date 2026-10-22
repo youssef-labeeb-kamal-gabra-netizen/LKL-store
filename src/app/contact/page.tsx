@@ -32,7 +32,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
   const whatsappUrl = `https://wa.me/${cleanWhatsApp.startsWith("0") ? `2${cleanWhatsApp}` : cleanWhatsApp}?text=${encodeURIComponent(
     "السلام عليكم ورحمة الله، أود الاستفسار عن تفاصيل ومواصفات المعدات الزراعية المتوفرة لدى شركة لبيب كمال لبيب."
   )}`;
-  const mapsUrl = settings.googleMapsUrl || env.business.googleMapsUrl || "https://maps.app.goo.gl/fjJacxeJPcMBw7rU8";
+  const mapsUrl = settings.googleMapsUrl || env.business.googleMapsUrl || "https://maps.app.goo.gl/87VQjF6s9bEyF9yz7";
   const addressPhrase = settings.addressPhrase || env.business.addressPhrase || "طريق بنها - الزقازيق (طريق مصر الزراعي)، قرية الجديدة، مركز منيا القمح";
   const workingHours = settings.workingHours || "يومياً من 8:00 صباحاً حتى 9:00 مساءً";
 

@@ -72,19 +72,24 @@ CREATE TABLE IF NOT EXISTS product_images (
 
 CREATE INDEX IF NOT EXISTS idx_product_images_product ON product_images(product_id);
 
--- 5. CONTACT / INQUIRY REQUESTS (Task 081)
+-- 5. CONTACT / INQUIRY REQUESTS (Task 081 & Customer Data Isolation)
 CREATE TABLE IF NOT EXISTS contact_requests (
     id VARCHAR(64) PRIMARY KEY,
+    user_id VARCHAR(64),
+    user_email VARCHAR(255),
     name VARCHAR(255) NOT NULL,
     phone VARCHAR(64) NOT NULL,
     email VARCHAR(255),
     product VARCHAR(255),
     message TEXT NOT NULL,
-    status VARCHAR(32) NOT NULL DEFAULT 'NEW' CHECK (status IN ('NEW', 'CONTACTED', 'RESOLVED', 'ARCHIVED')),
+    status VARCHAR(32) NOT NULL DEFAULT 'NEW' CHECK (status IN ('NEW', 'CONTACTED', 'IN_PROGRESS', 'RESOLVED', 'ARCHIVED')),
+    notes TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
+CREATE INDEX IF NOT EXISTS idx_contact_requests_user_email ON contact_requests(user_email);
+CREATE INDEX IF NOT EXISTS idx_contact_requests_user_id ON contact_requests(user_id);
 CREATE INDEX IF NOT EXISTS idx_contact_requests_status ON contact_requests(status);
 CREATE INDEX IF NOT EXISTS idx_contact_requests_created ON contact_requests(created_at DESC);
 

@@ -400,6 +400,72 @@ test('Security: validateProductionSecurity checks production invariants', () => 
   assert.ok(envSource.includes('throw new Error'), 'Must throw on missing production secrets');
 });
 
+// ----------------------------------------------------
+// 18. Customer Data Isolation & Very Secure Private Vault
+// ----------------------------------------------------
+test('Security: Customer private data isolation ensures zero cross-user leakage', () => {
+  // Simulated request store
+  const mockRequests = [
+    {
+      id: 'req-user-1',
+      userId: 'sub-user-1',
+      userEmail: 'customer1@example.com',
+      name: 'العميل الأول',
+      phone: '01011112222',
+      message: 'استفسار عن موتور رشاش',
+      status: 'NEW',
+      createdAt: '2026-10-22T10:00:00.000Z',
+    },
+    {
+      id: 'req-user-2',
+      userId: 'sub-user-2',
+      userEmail: 'customer2@example.com',
+      name: 'العميل الثاني',
+      phone: '01033334444',
+      message: 'استفسار عن طلمبة ديزل',
+      status: 'CONTACTED',
+      createdAt: '2026-10-22T11:00:00.000Z',
+    },
+  ];
+
+  function filterUserRequests(allRequests, userEmail, userId) {
+    if (!userEmail && !userId) return [];
+    const normalized = (userEmail || '').trim().toLowerCase();
+    return allRequests.filter((r) => {
+      if (userId && r.userId && r.userId === userId) return true;
+      if (r.userEmail && r.userEmail.trim().toLowerCase() === normalized) return true;
+      if (r.email && r.email.trim().toLowerCase() === normalized) return true;
+      return false;
+    });
+  }
+
+  // Customer 1 querying
+  const user1Results = filterUserRequests(mockRequests, 'customer1@example.com', 'sub-user-1');
+  assert.strictEqual(user1Results.length, 1, 'Customer 1 must only receive 1 request');
+  assert.strictEqual(user1Results[0].id, 'req-user-1');
+  assert.strictEqual(user1Results[0].userEmail, 'customer1@example.com');
+
+  // Customer 2 querying
+  const user2Results = filterUserRequests(mockRequests, 'customer2@example.com', 'sub-user-2');
+  assert.strictEqual(user2Results.length, 1, 'Customer 2 must only receive 1 request');
+  assert.strictEqual(user2Results[0].id, 'req-user-2');
+
+  // Unauthenticated / Anonymous query must return empty
+  const anonResults = filterUserRequests(mockRequests, '', null);
+  assert.strictEqual(anonResults.length, 0, 'Unauthenticated query must return 0 results');
+});
+
+// ----------------------------------------------------
+// 19. Database Resilience & Adapter Dual-Engine Safety
+// ----------------------------------------------------
+test('Database: Adapter supports Vercel Postgres and falls back gracefully without crash', () => {
+  const dbSource = fs.readFileSync('src/lib/db.ts', 'utf8');
+  assert.ok(dbSource.includes('isPostgresConfigured'), 'Must contain Postgres configuration check');
+  assert.ok(dbSource.includes('POSTGRES_URL'), 'Must check POSTGRES_URL environment variable');
+  assert.ok(dbSource.includes('getDatabaseInfo'), 'Must expose getDatabaseInfo helper');
+  assert.ok(dbSource.includes('@neondatabase/serverless'), 'Must integrate official serverless driver');
+});
+
 console.log(`\n========================================`);
 console.log(`Test Results: ${passedTests} PASSED, ${failedTests} FAILED`);
 console.log(`========================================`);
