@@ -6,14 +6,17 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
   const error = searchParams.get("error");
+  const errorDesc = searchParams.get("error_description");
 
-  // Dynamically resolve base URL from incoming request so Vercel & localhost work seamlessly
+  // Dynamically resolve base URL from incoming request
   const host = request.headers.get("x-forwarded-host") || request.headers.get("host");
   const proto = request.headers.get("x-forwarded-proto") || (request.url.startsWith("https") ? "https" : "http");
-  const baseUrl = host ? `${proto}://${host}` : (env.appUrl || new URL(request.url).origin);
+  const rawBaseUrl = host ? `${proto}://${host}` : (env.appUrl || new URL(request.url).origin);
+  const baseUrl = rawBaseUrl.replace(/\/+$/, "");
 
   if (error || !code) {
-    return NextResponse.redirect(`${baseUrl}/login?error=oauth_failed`);
+    const errorMsg = errorDesc || error || "oauth_failed";
+    return NextResponse.redirect(`${baseUrl}/login?error=${encodeURIComponent(errorMsg)}`);
   }
 
   try {
@@ -34,7 +37,9 @@ export async function GET(request: NextRequest) {
 
     const tokenData = await tokenRes.json();
     if (!tokenRes.ok || !tokenData.access_token) {
-      return NextResponse.redirect(`${baseUrl}/login?error=token_exchange_failed`);
+      const errDetail = tokenData.error_description || tokenData.error || "token_exchange_failed";
+      console.error("Token exchange failed:", tokenData);
+      return NextResponse.redirect(`${baseUrl}/login?error=${encodeURIComponent(errDetail)}`);
     }
 
     // 2. Fetch user profile from Google UserInfo endpoint
@@ -44,7 +49,8 @@ export async function GET(request: NextRequest) {
 
     const googleUser = await userRes.json();
     if (!userRes.ok || !googleUser.email) {
-      return NextResponse.redirect(`${baseUrl}/login?error=user_info_failed`);
+      const errUser = googleUser.error_description || googleUser.error?.message || "user_info_failed";
+      return NextResponse.redirect(`${baseUrl}/login?error=${encodeURIComponent(errUser)}`);
     }
 
     // 3. Create secure application session
@@ -60,7 +66,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(`${baseUrl}/admin`);
     }
     return NextResponse.redirect(`${baseUrl}/account`);
-  } catch {
-    return NextResponse.redirect(`${baseUrl}/login?error=oauth_exception`);
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "oauth_exception";
+    return NextResponse.redirect(`${baseUrl}/login?error=${encodeURIComponent(message)}`);
   }
 }

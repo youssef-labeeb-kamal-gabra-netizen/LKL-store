@@ -35,10 +35,10 @@ export default function LoginPage() {
       )}
 
       {errorParam && (
-        <div className="mb-6">
+        <div className="mb-6 space-y-2">
           <Toast
             type="error"
-            message="تعذر إتمام عملية تسجيل الدخول عبر Google. يرجى المحاولة مجدداً."
+            message={`تعذر إتمام عملية تسجيل الدخول (${errorParam}). يرجى التأكد من حساب Google والمحاولة ثانية.`}
           />
         </div>
       )}

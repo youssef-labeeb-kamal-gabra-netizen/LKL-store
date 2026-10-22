@@ -9,7 +9,8 @@ export async function GET(request: NextRequest) {
   // Dynamically detect the actual live host (Vercel domain or custom domain)
   const host = request.headers.get("x-forwarded-host") || request.headers.get("host");
   const proto = request.headers.get("x-forwarded-proto") || (request.url.startsWith("https") ? "https" : "http");
-  const baseUrl = host ? `${proto}://${host}` : (env.appUrl || new URL(request.url).origin);
+  const rawBaseUrl = host ? `${proto}://${host}` : (env.appUrl || new URL(request.url).origin);
+  const baseUrl = rawBaseUrl.replace(/\/+$/, "");
 
   const redirectUri = `${baseUrl}/api/auth/callback/google`;
   const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
