@@ -128,13 +128,13 @@ export default async function ProductDetailsPage({ params }: ProductDetailsPageP
                 rel="noopener noreferrer"
                 className="w-full sm:flex-1"
               >
-                <Button variant="primary" size="lg" className="w-full justify-center gap-2 bg-emerald-700 hover:bg-emerald-800 font-bold">
+                <Button variant="primary" size="lg" className="w-full justify-center gap-2 bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white font-black shadow-md btn-touch rounded-2xl py-3.5">
                   <MessageCircle className="h-5 w-5" />
                   مراسلة الإدارة عبر واتساب
                 </Button>
               </a>
               <Link href={`/contact?product=${encodeURIComponent(product.slug)}`} className="w-full sm:flex-1">
-                <Button variant="outline" size="lg" className="w-full justify-center gap-2 font-bold border-brand-neutral-300">
+                <Button variant="outline" size="lg" className="w-full justify-center gap-2 font-bold border-2 border-brand-neutral-300 hover:bg-emerald-50 hover:text-emerald-950 hover:border-emerald-400 rounded-2xl py-3.5 btn-touch">
                   <Phone className="h-4 w-4" />
                   طلب اتصال هاتفي
                 </Button>

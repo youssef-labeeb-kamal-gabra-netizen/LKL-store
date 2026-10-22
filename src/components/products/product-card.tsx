@@ -21,7 +21,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const whatsappHref = `https://wa.me/${formattedWhatsApp}?text=${inquiryMessage}`;
 
   return (
-    <Card className="flex flex-col h-full bg-white border border-brand-neutral-200/90 rounded-3xl shadow-xs hover:shadow-xl hover:border-brand-green-600/40 hover:-translate-y-1 active:translate-y-0 active:scale-[0.99] transition-all duration-200 overflow-hidden group">
+    <Card className="flex flex-col h-full bg-white border border-brand-neutral-200/90 rounded-3xl shadow-xs hover:shadow-xl hover:border-brand-green-600/40 card-touch overflow-hidden group">
       {/* Product Image Container */}
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-brand-neutral-50/80 flex items-center justify-center border-b border-brand-neutral-100">
         {product.images && product.images[0] ? (
@@ -45,6 +45,12 @@ export function ProductCard({ product }: ProductCardProps) {
         <span className="absolute top-3 end-3 rounded-full bg-white/95 backdrop-blur-sm px-3 py-1 text-xs font-bold text-brand-green-800 shadow-xs border border-brand-neutral-200/90">
           {product.categoryName}
         </span>
+
+        {/* Status Pill */}
+        <span className="absolute bottom-3 start-3 inline-flex items-center gap-1 rounded-full bg-emerald-950/80 text-emerald-300 backdrop-blur-xs px-2.5 py-0.5 text-[10px] font-bold border border-emerald-500/30">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span>متوفر بالمحل</span>
+        </span>
       </div>
 
       <CardHeader className="p-5 pb-2">
@@ -61,16 +67,16 @@ export function ProductCard({ product }: ProductCardProps) {
       </CardHeader>
 
       <CardContent className="px-5 py-2 flex-1">
-        <p className="text-sm text-brand-neutral-600 line-clamp-3 leading-relaxed">
+        <p className="text-sm text-brand-neutral-600 line-clamp-2 leading-relaxed">
           {product.shortDescription}
         </p>
       </CardContent>
 
-      <CardFooter className="p-5 pt-4 flex flex-col sm:flex-row gap-2 border-t border-brand-neutral-100">
+      <CardFooter className="p-4 pt-3 flex flex-col sm:flex-row gap-2 border-t border-brand-neutral-100">
         <Link href={`/products/${product.slug}`} className="w-full sm:flex-1">
-          <Button variant="outline" size="sm" className="w-full justify-center gap-1.5 font-bold">
-            <Info className="h-4 w-4" />
-            التفاصيل
+          <Button variant="outline" size="sm" className="w-full justify-center gap-1.5 font-bold rounded-xl py-2.5 text-xs sm:text-sm hover:bg-emerald-50 hover:text-emerald-900 hover:border-emerald-300 active:scale-95 transition-all">
+            <Info className="h-4 w-4 text-emerald-700" />
+            التفاصيل والصور
           </Button>
         </Link>
         <a
@@ -79,9 +85,9 @@ export function ProductCard({ product }: ProductCardProps) {
           rel="noopener noreferrer"
           className="w-full sm:flex-1"
         >
-          <Button variant="primary" size="sm" className="w-full justify-center gap-1.5 font-bold bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white shadow-2xs">
+          <Button variant="primary" size="sm" className="w-full justify-center gap-1.5 font-bold rounded-xl py-2.5 text-xs sm:text-sm bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white shadow-xs active:scale-95 transition-all">
             <MessageCircle className="h-4 w-4" />
-            مراسلة واتساب
+            واتساب فوري
           </Button>
         </a>
       </CardFooter>

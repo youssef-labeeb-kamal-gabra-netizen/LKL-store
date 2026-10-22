@@ -73,33 +73,42 @@ export function ProductCatalogView({
       </div>
 
       {/* Category Badges Filter Bar */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+      <div className="flex items-center gap-2 overflow-x-auto pb-3 pt-1 scrollbar-none">
         <button
           type="button"
           onClick={() => setSelectedCategory("")}
-          className={`rounded-full px-4 py-2 text-xs sm:text-sm font-bold whitespace-nowrap transition-all active:scale-95 cursor-pointer ${
+          className={`rounded-2xl px-5 py-2.5 text-xs sm:text-sm font-bold whitespace-nowrap transition-all active:scale-95 cursor-pointer btn-touch flex items-center gap-1.5 ${
             !selectedCategory
-              ? "bg-brand-green-800 text-white shadow-xs"
-              : "bg-white border border-brand-neutral-200 text-brand-neutral-700 hover:border-brand-neutral-300 hover:bg-brand-neutral-50"
+              ? "bg-brand-green-800 text-white shadow-md ring-2 ring-brand-green-500/40"
+              : "bg-white border-2 border-brand-neutral-200 text-brand-neutral-700 hover:border-brand-green-500/50 hover:bg-brand-green-50/40"
           }`}
         >
-          كافة المعدات ({products.filter((p) => p.published).length})
+          <span>🚜</span>
+          <span>كافة المعدات ({products.filter((p) => p.published).length})</span>
         </button>
         {categories.map((cat) => {
           const isSelected = selectedCategory === cat.slug;
           const count = products.filter((p) => p.categoryId === cat.id && p.published).length;
+          
+          const icon = cat.slug === "spray-motors" ? "💨" :
+                       cat.slug === "water-pumps" ? "💧" :
+                       cat.slug === "diesel-motors" ? "⚙️" :
+                       cat.slug === "irrigation-equipment" ? "🌱" :
+                       cat.slug === "agricultural-tools" ? "🌾" : "🔧";
+
           return (
             <button
               key={cat.id}
               type="button"
               onClick={() => setSelectedCategory(cat.slug)}
-              className={`rounded-full px-4 py-2 text-xs sm:text-sm font-semibold whitespace-nowrap transition-all active:scale-95 cursor-pointer ${
+              className={`rounded-2xl px-5 py-2.5 text-xs sm:text-sm font-bold whitespace-nowrap transition-all active:scale-95 cursor-pointer btn-touch flex items-center gap-1.5 ${
                 isSelected
-                  ? "bg-brand-green-800 text-white shadow-xs font-bold"
-                  : "bg-white border border-brand-neutral-200 text-brand-neutral-700 hover:border-brand-neutral-300 hover:bg-brand-neutral-50"
+                  ? "bg-brand-green-800 text-white shadow-md ring-2 ring-brand-green-500/40"
+                  : "bg-white border-2 border-brand-neutral-200 text-brand-neutral-700 hover:border-brand-green-500/50 hover:bg-brand-green-50/40"
               }`}
             >
-              {cat.name} ({count})
+              <span>{icon}</span>
+              <span>{cat.name} ({count})</span>
             </button>
           );
         })}
@@ -107,14 +116,14 @@ export function ProductCatalogView({
 
       {/* Search & Sort Controls Bar */}
       <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute start-3 top-3.5 h-4 w-4 text-brand-neutral-400" />
+        <div className="relative flex-1 max-w-lg">
+          <Search className="absolute start-3.5 top-3.5 h-4 w-4 text-brand-neutral-400" />
           <input
             type="text"
-            placeholder="البحث باسم المعدة، الموديل، أو المواصفات..."
+            placeholder="اكتب هنا اسم الموتور أو الطلمبة أو قطعة الغيار..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-xl border border-brand-neutral-300 bg-white ps-9 pe-4 py-2.5 text-sm text-brand-neutral-900 focus:outline-none focus:ring-2 focus:ring-brand-green-600 shadow-sm"
+            className="w-full rounded-2xl border-2 border-brand-neutral-200 bg-white ps-10 pe-4 py-3 text-sm text-brand-neutral-900 placeholder:text-brand-neutral-400 focus:outline-none focus:border-brand-green-600 focus:ring-4 focus:ring-brand-green-500/10 shadow-xs transition-all"
           />
         </div>
 

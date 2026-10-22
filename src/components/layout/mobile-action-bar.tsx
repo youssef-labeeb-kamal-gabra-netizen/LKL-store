@@ -22,16 +22,16 @@ export function MobileActionBar({ settings }: MobileActionBarProps = {}) {
   return (
     <nav
       aria-label="أزرار التواصل السريع للموبايل"
-      className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-brand-neutral-200 px-3 py-2 shadow-2xl"
+      className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-brand-neutral-200 px-3 py-2.5 shadow-2xl"
     >
-      <div className="grid grid-cols-3 gap-2 max-w-md mx-auto">
+      <div className="grid grid-cols-3 gap-2.5 max-w-md mx-auto">
         {/* 1. Phone Call */}
         <a
           href={`tel:${phone1}`}
-          className="flex flex-col items-center justify-center py-2 px-2 rounded-xl bg-brand-neutral-100 text-brand-neutral-800 hover:bg-brand-green-50 hover:text-brand-green-900 active:scale-90 active:bg-brand-green-100 transition-all shadow-2xs cursor-pointer"
+          className="flex flex-col items-center justify-center py-2.5 px-2 rounded-2xl bg-emerald-50 text-emerald-950 border border-emerald-200/80 hover:bg-emerald-100 active:scale-90 transition-all shadow-2xs cursor-pointer btn-touch"
         >
-          <Phone className="h-4 w-4 mb-1 text-brand-green-700" />
-          <span className="text-[11px] font-bold">اتصال هاتفي</span>
+          <Phone className="h-5 w-5 mb-1 text-emerald-700" />
+          <span className="text-xs font-bold">اتصال هاتفي</span>
         </a>
 
         {/* 2. WhatsApp Direct (High Accent) */}
@@ -39,10 +39,10 @@ export function MobileActionBar({ settings }: MobileActionBarProps = {}) {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col items-center justify-center py-2 px-2 rounded-xl bg-[#25D366] text-white hover:bg-[#20ba59] active:scale-90 active:bg-[#1da851] shadow-sm transition-all cursor-pointer"
+          className="flex flex-col items-center justify-center py-2.5 px-2 rounded-2xl bg-[#25D366] text-white hover:bg-[#20ba59] active:scale-90 active:bg-[#1da851] shadow-md transition-all cursor-pointer btn-touch"
         >
-          <MessageCircle className="h-4 w-4 mb-1" />
-          <span className="text-[11px] font-black">شات واتساب</span>
+          <MessageCircle className="h-5 w-5 mb-1" />
+          <span className="text-xs font-black">شات واتساب</span>
         </a>
 
         {/* 3. Google Maps */}
@@ -50,10 +50,10 @@ export function MobileActionBar({ settings }: MobileActionBarProps = {}) {
           href={mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col items-center justify-center py-2 px-2 rounded-xl bg-brand-neutral-100 text-brand-neutral-800 hover:bg-brand-gold-50 hover:text-brand-gold-900 active:scale-90 active:bg-brand-gold-100 transition-all shadow-2xs cursor-pointer"
+          className="flex flex-col items-center justify-center py-2.5 px-2 rounded-2xl bg-amber-50 text-amber-950 border border-amber-200/80 hover:bg-amber-100 active:scale-90 transition-all shadow-2xs cursor-pointer btn-touch"
         >
-          <MapPin className="h-4 w-4 mb-1 text-brand-gold-600" />
-          <span className="text-[11px] font-bold">الموقع بالخريطة</span>
+          <MapPin className="h-5 w-5 mb-1 text-amber-700" />
+          <span className="text-xs font-bold">الموقع بالخريطة</span>
         </a>
       </div>
     </nav>
