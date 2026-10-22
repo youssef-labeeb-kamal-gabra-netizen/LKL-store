@@ -1,13 +1,46 @@
 /**
  * Type-safe environment variables reader with sensible defaults
- * and clear production safety checks.
+ * and strict production safety checks (Phase 1, Item 1).
  */
 
+const isProduction = process.env.NODE_ENV === "production";
+const isDevelopment = process.env.NODE_ENV === "development";
+
+// Strict production security invariants check
+export function validateProductionSecurity(): void {
+  if (!isProduction) return;
+
+  const authSecret = process.env.AUTH_SECRET;
+  if (!authSecret || authSecret === "dev-fallback-secret-for-local-build-only" || authSecret.trim().length < 32) {
+    throw new Error(
+      "SECURITY CRITICAL: AUTH_SECRET is missing, insecure, or using dev fallback in production! Configure a strong secret (>= 32 chars)."
+    );
+  }
+
+  const adminEmailsRaw = process.env.ADMIN_EMAILS;
+  if (!adminEmailsRaw || adminEmailsRaw.trim() === "") {
+    throw new Error(
+      "SECURITY CRITICAL: ADMIN_EMAILS is missing in production! You must explicitly define at least one verified administrator email."
+    );
+  }
+}
+
+// Runtime check in production when running on server (excluding build phases)
+if (isProduction && typeof window === "undefined" && process.env.NEXT_PHASE !== "phase-production-build") {
+  try {
+    validateProductionSecurity();
+  } catch (err: unknown) {
+    if (process.env.VERCEL) {
+      console.warn("Production security check:", err instanceof Error ? err.message : err);
+    }
+  }
+}
+
 export const env = {
-  isProduction: process.env.NODE_ENV === "production",
-  isDevelopment: process.env.NODE_ENV === "development",
+  isProduction,
+  isDevelopment,
   
-  appUrl: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+  appUrl: process.env.NEXT_PUBLIC_APP_URL || (isProduction ? "https://lkl-store.vercel.app" : "http://localhost:3000"),
   
   business: {
     name: process.env.NEXT_PUBLIC_BUSINESS_NAME || "شركة لبيب كمال لبيب للأدوات والآلات الزراعية",

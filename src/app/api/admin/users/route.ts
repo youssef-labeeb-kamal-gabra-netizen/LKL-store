@@ -33,7 +33,8 @@ export async function PATCH(request: Request) {
     }
 
     return NextResponse.json({ ok: true, user: updated });
-  } catch {
-    return NextResponse.json({ ok: false, message: "غير مصرح" }, { status: 403 });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "غير مصرح أو حدث خطأ";
+    return NextResponse.json({ ok: false, message }, { status: 400 });
   }
 }

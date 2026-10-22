@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import crypto from "crypto";
 import { env } from "@/lib/env";
 import { ApplicationError } from "@/lib/error";
+import { getUsersStore } from "@/lib/users-store";
 
 export interface SessionUser {
   id: string;
@@ -15,20 +16,69 @@ interface StoredSessionPayload {
   user: SessionUser;
   iat: number;
   exp: number;
+  jti: string; // Unique Session ID for revocation (Phase 1, Item 4)
 }
 
 export const SESSION_COOKIE_NAME = "lkl_session";
 export const OAUTH_STATE_COOKIE = "lkl_oauth_state";
+export const OAUTH_PKCE_COOKIE = "lkl_oauth_pkce";
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 7; // 7 days
+
+// In-memory server-side revocation registry (Phase 1, Item 4)
+declare global {
+  var __lkl_revoked_sessions: Set<string> | undefined;
+  var __lkl_revoked_emails: Map<string, number> | undefined;
+}
+
+export function revokeSession(jti: string): void {
+  if (!global.__lkl_revoked_sessions) {
+    global.__lkl_revoked_sessions = new Set();
+  }
+  global.__lkl_revoked_sessions.add(jti);
+}
+
+export function revokeAllSessionsForUser(email: string): void {
+  if (!global.__lkl_revoked_emails) {
+    global.__lkl_revoked_emails = new Map();
+  }
+  global.__lkl_revoked_emails.set(email.trim().toLowerCase(), Date.now());
+}
+
+export function isSessionRevoked(payload: StoredSessionPayload): boolean {
+  if (payload.jti && global.__lkl_revoked_sessions && global.__lkl_revoked_sessions.has(payload.jti)) {
+    return true;
+  }
+  if (global.__lkl_revoked_emails) {
+    const revokedAt = global.__lkl_revoked_emails.get(payload.user.email.trim().toLowerCase());
+    if (revokedAt && payload.iat < revokedAt) {
+      return true;
+    }
+  }
+  return false;
+}
 
 /**
  * Resolves whether an email belongs to an administrator
+ * Unified authoritative check (Phase 1, Item 3)
  */
 export function resolveUserRole(email: string): "USER" | "ADMIN" {
   const normalizedEmail = email.trim().toLowerCase();
+  
+  // 1. Immutable primary admin check from environment
   if (env.auth.adminEmails.includes(normalizedEmail)) {
     return "ADMIN";
   }
+
+  // 2. Dynamic check from registered store
+  try {
+    const user = getUsersStore().find((u) => u.email.trim().toLowerCase() === normalizedEmail);
+    if (user && user.role === "ADMIN") {
+      return "ADMIN";
+    }
+  } catch {
+    // Fallback if users store is uninitialized
+  }
+
   return "USER";
 }
 
@@ -68,10 +118,12 @@ export async function createSession(user: Omit<SessionUser, "role">): Promise<Se
   };
 
   const now = Date.now();
+  const jti = crypto.randomUUID();
   const payload: StoredSessionPayload = {
     user: sessionUser,
     iat: now,
     exp: now + SESSION_MAX_AGE_SECONDS * 1000,
+    jti,
   };
 
   const payloadStr = Buffer.from(JSON.stringify(payload)).toString("base64url");
@@ -119,11 +171,16 @@ export async function getSession(): Promise<SessionUser | null> {
       return null;
     }
 
+    // Check session revocation (Phase 1, Item 4)
+    if (isSessionRevoked(payload)) {
+      return null;
+    }
+
     if (!payload.user || !payload.user.email) {
       return null;
     }
 
-    // Always re-verify role server-side against current ADMIN_EMAILS
+    // Always re-verify role server-side against authoritative source of truth
     const freshRole = resolveUserRole(payload.user.email);
     payload.user.role = freshRole;
 
@@ -134,11 +191,27 @@ export async function getSession(): Promise<SessionUser | null> {
 }
 
 /**
- * Destroys current session cookie (Logout)
+ * Destroys and revokes current session cookie (Logout)
  */
 export async function destroySession(): Promise<void> {
-  const cookieStore = await cookies();
-  cookieStore.delete(SESSION_COOKIE_NAME);
+  try {
+    const cookieStore = await cookies();
+    const sessionCookie = cookieStore.get(SESSION_COOKIE_NAME);
+    if (sessionCookie && sessionCookie.value) {
+      const parts = sessionCookie.value.split(".");
+      if (parts.length === 2 && verifySignature(parts[0], parts[1])) {
+        const jsonStr = Buffer.from(parts[0], "base64url").toString("utf-8");
+        const payload = JSON.parse(jsonStr) as StoredSessionPayload;
+        if (payload.jti) {
+          revokeSession(payload.jti);
+        }
+      }
+    }
+    cookieStore.delete(SESSION_COOKIE_NAME);
+  } catch {
+    const cookieStore = await cookies();
+    cookieStore.delete(SESSION_COOKIE_NAME);
+  }
 }
 
 /**

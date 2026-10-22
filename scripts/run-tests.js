@@ -198,6 +198,33 @@ test('Security: Google OAuth flow must enforce state parameter verification to p
   assert.ok(callbackRoute.includes('invalid_csrf_state'), 'Must reject mismatch with invalid_csrf_state');
 });
 
+// 15. PKCE and Email Verification in Google OAuth (Phase 1, Item 2)
+test('Security: Google OAuth flow must enforce PKCE (S256) and verified email check', () => {
+  const googleRoute = fs.readFileSync('src/app/api/auth/google/route.ts', 'utf8');
+  assert.ok(googleRoute.includes('code_verifier') || googleRoute.includes('codeVerifier'), 'Must generate code_verifier');
+  assert.ok(googleRoute.includes('code_challenge') || googleRoute.includes('codeChallenge'), 'Must generate code_challenge');
+  assert.ok(googleRoute.includes('S256'), 'Must enforce S256 code_challenge_method');
+  assert.ok(googleRoute.includes('OAUTH_PKCE_COOKIE'), 'Must save PKCE in secure cookie');
+
+  const callbackRoute = fs.readFileSync('src/app/api/auth/callback/google/route.ts', 'utf8');
+  assert.ok(callbackRoute.includes('OAUTH_PKCE_COOKIE'), 'Must read PKCE cookie on callback');
+  assert.ok(callbackRoute.includes('code_verifier'), 'Must include code_verifier in token exchange');
+  assert.ok(callbackRoute.includes('email_verified') || callbackRoute.includes('verified_email'), 'Must verify Google verified_email');
+  assert.ok(callbackRoute.includes('unverified_email'), 'Must reject unverified email accounts');
+});
+
+// 16. POST-Only Logout & Session Revocation (Phase 1, Item 4)
+test('Security: Logout route must be POST-only, and auth module must support session revocation', () => {
+  const logoutRoute = fs.readFileSync('src/app/api/auth/logout/route.ts', 'utf8');
+  assert.ok(logoutRoute.includes('export async function POST'), 'Must export POST handler');
+  assert.ok(logoutRoute.includes('status: 405'), 'GET handler must return 405 Method Not Allowed');
+
+  const authModule = fs.readFileSync('src/lib/auth.ts', 'utf8');
+  assert.ok(authModule.includes('revokeSession'), 'Must export revokeSession');
+  assert.ok(authModule.includes('revokeAllSessionsForUser'), 'Must export revokeAllSessionsForUser');
+  assert.ok(authModule.includes('isSessionRevoked'), 'Must enforce session revocation check');
+});
+
 console.log(`\n========================================`);
 console.log(`Test Results: ${passedTests} PASSED, ${failedTests} FAILED`);
 console.log(`========================================`);
