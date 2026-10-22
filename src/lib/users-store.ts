@@ -1,4 +1,5 @@
 import { env } from "@/lib/env";
+import { readStorageFile, writeStorageFile } from "@/lib/storage";
 
 export interface AppUser {
   id: string;
@@ -8,39 +9,66 @@ export interface AppUser {
   createdAt: string;
 }
 
-declare global {
-  var __lkl_users_store: AppUser[] | undefined;
-}
+const STORAGE_FILE = "users.json";
 
 function getInitialUsers(): AppUser[] {
-  const primaryAdminEmail = env.auth.adminEmails[0] || "yousseflabeeb256@gmail.com";
-  return [
-    {
-      id: "admin-primary",
-      name: "مدير النظام (م. يوسف لبيب)",
-      email: primaryAdminEmail,
-      role: "ADMIN",
-      createdAt: "2026-01-01T00:00:00Z",
-    },
-    {
-      id: "user-registered",
-      name: "م. أحمد الشربيني",
-      email: "ahmed@example.com",
-      role: "USER",
-      createdAt: "2026-01-15T12:00:00Z",
-    },
-  ];
+  const adminEmails =
+    env.auth.adminEmails.length > 0
+      ? env.auth.adminEmails
+      : ["yousseflabeeb256@gmail.com"];
+
+  return adminEmails.map((email, idx) => ({
+    id: `admin-${idx + 1}`,
+    name: "مدير النظام (م. يوسف لبيب)",
+    email: email.trim().toLowerCase(),
+    role: "ADMIN" as const,
+    createdAt: "2026-01-01T00:00:00Z",
+  }));
 }
 
 export function getUsersStore(): AppUser[] {
-  if (!global.__lkl_users_store) {
-    global.__lkl_users_store = getInitialUsers();
-  }
-  return global.__lkl_users_store;
+  return readStorageFile<AppUser[]>(STORAGE_FILE, getInitialUsers());
 }
 
 export function isImmutableAdmin(email: string): boolean {
   return env.auth.adminEmails.includes(email.trim().toLowerCase());
+}
+
+export function upsertUser(data: {
+  email: string;
+  name?: string;
+  role?: "USER" | "ADMIN";
+}): AppUser {
+  const store = getUsersStore();
+  const normalizedEmail = data.email.trim().toLowerCase();
+  const existingIndex = store.findIndex((u) => u.email.trim().toLowerCase() === normalizedEmail);
+
+  const isConfiguredAdmin = isImmutableAdmin(normalizedEmail);
+  const targetRole: "USER" | "ADMIN" = isConfiguredAdmin ? "ADMIN" : data.role || "USER";
+
+  if (existingIndex !== -1) {
+    const existing = store[existingIndex];
+    const updated: AppUser = {
+      ...existing,
+      name: data.name || existing.name,
+      role: isConfiguredAdmin ? "ADMIN" : existing.role,
+    };
+    store[existingIndex] = updated;
+    writeStorageFile(STORAGE_FILE, store);
+    return updated;
+  }
+
+  const newUser: AppUser = {
+    id: `usr-${Date.now()}`,
+    name: data.name || "مستخدم جديد",
+    email: normalizedEmail,
+    role: targetRole,
+    createdAt: new Date().toISOString(),
+  };
+
+  store.push(newUser);
+  writeStorageFile(STORAGE_FILE, store);
+  return newUser;
 }
 
 export function updateUserRole(id: string, role: "USER" | "ADMIN"): AppUser | null {
@@ -54,5 +82,6 @@ export function updateUserRole(id: string, role: "USER" | "ADMIN"): AppUser | nu
   }
 
   user.role = role;
+  writeStorageFile(STORAGE_FILE, store);
   return user;
 }

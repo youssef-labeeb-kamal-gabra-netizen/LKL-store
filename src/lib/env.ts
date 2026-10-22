@@ -25,15 +25,9 @@ export function validateProductionSecurity(): void {
   }
 }
 
-// Runtime check in production when running on server (excluding build phases)
+// Runtime check in production when running on server (excluding static build phases)
 if (isProduction && typeof window === "undefined" && process.env.NEXT_PHASE !== "phase-production-build") {
-  try {
-    validateProductionSecurity();
-  } catch (err: unknown) {
-    if (process.env.VERCEL) {
-      console.warn("Production security check:", err instanceof Error ? err.message : err);
-    }
-  }
+  validateProductionSecurity();
 }
 
 export const env = {
@@ -59,10 +53,12 @@ export const env = {
   databaseUrl: process.env.DATABASE_URL || "",
   
   auth: {
-    secret: process.env.AUTH_SECRET || "dev-fallback-secret-for-local-build-only",
+    secret: isProduction
+      ? (process.env.AUTH_SECRET || "")
+      : (process.env.AUTH_SECRET || "dev-fallback-secret-for-local-build-only"),
     googleClientId: process.env.GOOGLE_CLIENT_ID || "",
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-    adminEmails: (process.env.ADMIN_EMAILS || "yousseflabeeb256@gmail.com")
+    adminEmails: (process.env.ADMIN_EMAILS || (isProduction ? "" : "yousseflabeeb256@gmail.com"))
       .split(",")
       .map((e) => e.trim().toLowerCase())
       .filter(Boolean),

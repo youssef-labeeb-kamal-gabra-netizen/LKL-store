@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { getProductsStore } from "@/lib/products-store";
+import { getApprovedReviews } from "@/lib/reviews-store";
 import { ProductCard } from "@/components/products/product-card";
 import { ContactCTA } from "@/components/common/contact-cta";
 import { ReviewsSection } from "@/components/common/reviews-section";
@@ -23,6 +24,7 @@ import { env } from "@/lib/env";
 export default function HomePage() {
   const products = getProductsStore();
   const featuredProducts = products.filter((p) => p.published && p.featured).slice(0, 4);
+  const approvedReviews = getApprovedReviews();
 
   const phone1 = env.business.phone || "01220792948";
   const phone2 = env.business.secondaryPhone || "01114587917";
@@ -465,7 +467,7 @@ export default function HomePage() {
         </section>
 
         {/* 6. AUTHENTIC CUSTOMER REVIEWS */}
-        <ReviewsSection />
+        <ReviewsSection initialReviews={approvedReviews} />
 
         {/* 7. AGRICULTURAL FAQ */}
         <FAQSection />

@@ -1,3 +1,5 @@
+import { readStorageFile, writeStorageFile } from "@/lib/storage";
+
 export interface ContentBlocks {
   heroTagline: string;
   heroHeading: string;
@@ -6,9 +8,7 @@ export interface ContentBlocks {
   locationPhrase: string;
 }
 
-declare global {
-  var __lkl_content_blocks: ContentBlocks | undefined;
-}
+const STORAGE_FILE = "content.json";
 
 const defaultContent: ContentBlocks = {
   heroTagline: "شريككم الأول في المعدات الزراعية وأنظمة الري",
@@ -19,17 +19,15 @@ const defaultContent: ContentBlocks = {
 };
 
 export function getContentStore(): ContentBlocks {
-  if (!global.__lkl_content_blocks) {
-    global.__lkl_content_blocks = { ...defaultContent };
-  }
-  return global.__lkl_content_blocks;
+  return readStorageFile<ContentBlocks>(STORAGE_FILE, defaultContent);
 }
 
 export function updateContentStore(updates: Partial<ContentBlocks>): ContentBlocks {
-  const store = getContentStore();
-  global.__lkl_content_blocks = {
-    ...store,
+  const current = getContentStore();
+  const updated = {
+    ...current,
     ...updates,
   };
-  return global.__lkl_content_blocks;
+  writeStorageFile(STORAGE_FILE, updated);
+  return updated;
 }

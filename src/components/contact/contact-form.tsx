@@ -127,22 +127,22 @@ export function ContactForm({ initialProductSlug, whatsappNumber = "01220792948"
           </div>
 
           {/* Direct WhatsApp Immediate Confirmation Action */}
-          <div className="p-4 rounded-xl bg-white border border-emerald-200 space-y-3">
-            <div className="flex items-center gap-2 text-brand-neutral-900 font-bold text-sm">
-              <MessageCircle className="h-4 w-4 text-[#25D366]" />
-              <span>تنبيه فوري للمحل عبر واتساب (اختياري لسرعة الرد)</span>
+          <div className="p-4 sm:p-5 rounded-2xl bg-white border border-emerald-200 space-y-3 shadow-xs">
+            <div className="flex items-center gap-2 text-brand-neutral-900 font-extrabold text-sm sm:text-base">
+              <MessageCircle className="h-5 w-5 text-[#25D366] shrink-0" />
+              <span>هل تود تنبيه المسؤول فوراً على هاتفه؟</span>
             </div>
-            <p className="text-xs text-brand-neutral-600 leading-relaxed">
-              إذا كنت بحاجة إلى استجابة فورية، يمكنك فتح محادثة مباشرة مع المحل تتضمن تفاصيل طلبك بنقرة واحدة:
+            <p className="text-xs sm:text-sm text-brand-neutral-600 leading-relaxed">
+              تم حفظ طلبك في قاعدة بياناتنا. إذا كنت مستعجلاً، اضغط على الزر الأخضر بالأسفل ليفتح تطبيق واتساب على هاتفك مع ملخص استفسارك جاهزاً للإرسال بضغطة واحدة:
             </p>
             <a
               href={whatsappAlertUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2.5 w-full rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white py-3 px-4 font-bold text-sm shadow-md transition-all active:scale-95 cursor-pointer"
+              className="inline-flex items-center justify-center gap-2.5 w-full rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white py-3.5 px-4 font-black text-sm sm:text-base shadow-md transition-all active:scale-95 cursor-pointer"
             >
               <MessageCircle className="h-5 w-5" />
-              <span>إرسال إشعار فوري للمحل عبر واتساب ({whatsappNumber})</span>
+              <span>فتح واتساب وإرسال تفاصيل الطلب فوراً ({whatsappNumber})</span>
             </a>
           </div>
 

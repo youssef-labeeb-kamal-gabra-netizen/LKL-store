@@ -5,9 +5,42 @@ import { requireAdmin } from "@/lib/auth";
 
 const UPLOADS_DIR = path.join(process.cwd(), "public", "uploads");
 
-// Ensure upload directory exists
-if (!fs.existsSync(UPLOADS_DIR)) {
-  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+function ensureUploadsDir(): boolean {
+  try {
+    if (!fs.existsSync(UPLOADS_DIR)) {
+      fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+    }
+    return true;
+  } catch (err) {
+    console.warn("Uploads directory is not writable (e.g. read-only serverless environment):", err);
+    return false;
+  }
+}
+
+/**
+ * Validates real binary magic bytes for JPEG, PNG, and WebP
+ */
+function validateImageMagicBytes(buffer: Buffer): boolean {
+  if (buffer.length < 12) return false;
+
+  // JPEG: FF D8 FF
+  if (buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff) {
+    return true;
+  }
+
+  // PNG: 89 50 4E 47 (0x89 'P' 'N' 'G')
+  if (buffer[0] === 0x89 && buffer[1] === 0x50 && buffer[2] === 0x4e && buffer[3] === 0x47) {
+    return true;
+  }
+
+  // WebP: 'RIFF' .... 'WEBP'
+  const riff = buffer.toString("ascii", 0, 4);
+  const webp = buffer.toString("ascii", 8, 12);
+  if (riff === "RIFF" && webp === "WEBP") {
+    return true;
+  }
+
+  return false;
 }
 
 export async function GET() {
@@ -17,44 +50,52 @@ export async function GET() {
     const mediaList = [];
 
     // 1. Scan real uploaded files
-    if (fs.existsSync(UPLOADS_DIR)) {
-      const uploadFiles = fs.readdirSync(UPLOADS_DIR);
-      for (const file of uploadFiles) {
-        const fullPath = path.join(UPLOADS_DIR, file);
-        const stat = fs.statSync(fullPath);
-        if (stat.isFile()) {
-          mediaList.push({
-            id: `upload-${file}`,
-            name: file,
-            url: `/uploads/${file}`,
-            alt: file.replace(/[-_]/g, " ").replace(/\.[^/.]+$/, ""),
-            size: `${Math.round(stat.size / 1024)} KB`,
-            date: stat.mtime.toISOString().split("T")[0],
-            isCustomUpload: true,
-          });
+    try {
+      if (fs.existsSync(UPLOADS_DIR)) {
+        const uploadFiles = fs.readdirSync(UPLOADS_DIR);
+        for (const file of uploadFiles) {
+          const fullPath = path.join(UPLOADS_DIR, file);
+          const stat = fs.statSync(fullPath);
+          if (stat.isFile()) {
+            mediaList.push({
+              id: `upload-${file}`,
+              name: file,
+              url: `/uploads/${file}`,
+              alt: file.replace(/[-_]/g, " ").replace(/\.[^/.]+$/, ""),
+              size: `${Math.round(stat.size / 1024)} KB`,
+              date: stat.mtime.toISOString().split("T")[0],
+              isCustomUpload: true,
+            });
+          }
         }
       }
+    } catch {
+      // Continue if uploads dir cannot be read in some serverless environments
     }
 
     // 2. Scan official products catalogue HD images
     const productsDir = path.join(process.cwd(), "public", "images", "products");
-    if (fs.existsSync(productsDir)) {
-      const productFiles = fs.readdirSync(productsDir);
-      for (const file of productFiles) {
-        if (file.endsWith(".jpg") || file.endsWith(".png") || file.endsWith(".webp")) {
-          const fullPath = path.join(productsDir, file);
-          const stat = fs.statSync(fullPath);
-          mediaList.push({
-            id: `prod-img-${file}`,
-            name: file,
-            url: `/images/products/${file}`,
-            alt: file.replace(/[-_]/g, " ").replace(/\.[^/.]+$/, ""),
-            size: `${Math.round(stat.size / 1024)} KB`,
-            date: stat.mtime.toISOString().split("T")[0],
-            isCustomUpload: false,
-          });
+    try {
+      if (fs.existsSync(productsDir)) {
+        const productFiles = fs.readdirSync(productsDir);
+        for (const file of productFiles) {
+          if (file.endsWith(".jpg") || file.endsWith(".png") || file.endsWith(".webp")) {
+            const fullPath = path.join(productsDir, file);
+            const stat = fs.statSync(fullPath);
+            mediaList.push({
+              id: `prod-img-${file}`,
+              name: file,
+              url: `/images/products/${file}`,
+              alt: file.replace(/[-_]/g, " ").replace(/\.[^/.]+$/, ""),
+              size: `${Math.round(stat.size / 1024)} KB`,
+              date: stat.mtime.toISOString().split("T")[0],
+              isCustomUpload: false,
+            });
+          }
         }
       }
+    } catch {
+      // Continue if productsDir is inaccessible
     }
 
     return NextResponse.json({ ok: true, media: mediaList });
@@ -91,16 +132,50 @@ export async function POST(request: Request) {
       );
     }
 
+    // Inspect file content buffer & binary magic bytes
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    if (!validateImageMagicBytes(buffer)) {
+      return NextResponse.json(
+        { ok: false, message: "محتوى الملف غير صالح أو لا يطابق ترويسة صور JPG أو PNG أو WEBP الحقيقية." },
+        { status: 400 }
+      );
+    }
+
+    if (!ensureUploadsDir()) {
+      return NextResponse.json(
+        {
+          ok: false,
+          message:
+            "بيئة الاستضافة الحالية تعمل بنظام ملفات للقراءة فقط (Read-only Serverless). يرجى ربط خدمة تخزين سحابية خارجية (مثل S3 أو Cloudflare R2) لحفظ الصور المرفوعة.",
+        },
+        { status: 500 }
+      );
+    }
+
     // Sanitize and generate unique safe filename
     const ext = path.extname(file.name).toLowerCase() || ".jpg";
     const baseName = path.basename(file.name, ext).replace(/[^a-zA-Z0-9_-]/g, "_");
     const uniqueName = `${Date.now()}-${baseName}${ext}`;
     const destinationPath = path.join(UPLOADS_DIR, uniqueName);
 
-    // Save actual file to disk
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    fs.writeFileSync(destinationPath, buffer);
+    try {
+      fs.writeFileSync(destinationPath, buffer);
+    } catch (writeErr: unknown) {
+      const code = (writeErr as { code?: string })?.code;
+      if (code === "EROFS" || code === "EACCES") {
+        return NextResponse.json(
+          {
+            ok: false,
+            message:
+              "تعذر حفظ الصورة: مسار الملفات في هذه الاستضافة مخصص للقراءة فقط (Serverless Read-Only). يرجى استخدام خدمة تخزين سحابية خارجية للصور الجديدة.",
+          },
+          { status: 500 }
+        );
+      }
+      throw writeErr;
+    }
 
     const mediaItem = {
       id: `upload-${uniqueName}`,
@@ -134,8 +209,19 @@ export async function DELETE(request: Request) {
     const targetPath = path.join(UPLOADS_DIR, safeBaseName);
 
     if (fs.existsSync(targetPath)) {
-      fs.unlinkSync(targetPath);
-      return NextResponse.json({ ok: true, message: "تم حذف الصورة نهائياً من السيرفر" });
+      try {
+        fs.unlinkSync(targetPath);
+        return NextResponse.json({ ok: true, message: "تم حذف الصورة نهائياً من السيرفر" });
+      } catch (unlinkErr: unknown) {
+        const code = (unlinkErr as { code?: string })?.code;
+        if (code === "EROFS" || code === "EACCES") {
+          return NextResponse.json(
+            { ok: false, message: "تعذر حذف الملف: نظام الملفات للقراءة فقط." },
+            { status: 500 }
+          );
+        }
+        throw unlinkErr;
+      }
     }
 
     return NextResponse.json({ ok: false, message: "الملف غير موجود في مجلد الرفع" }, { status: 404 });

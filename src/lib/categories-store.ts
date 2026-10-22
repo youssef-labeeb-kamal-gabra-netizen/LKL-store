@@ -1,15 +1,11 @@
 import { Category } from "@/types/product";
 import { CATEGORIES } from "@/data/catalog";
+import { readStorageFile, writeStorageFile } from "@/lib/storage";
 
-declare global {
-  var __lkl_categories_store: Category[] | undefined;
-}
+const STORAGE_FILE = "categories.json";
 
 export function getCategoriesStore(): Category[] {
-  if (!global.__lkl_categories_store) {
-    global.__lkl_categories_store = [...CATEGORIES];
-  }
-  return global.__lkl_categories_store;
+  return readStorageFile<Category[]>(STORAGE_FILE, CATEGORIES);
 }
 
 export function addCategory(data: Omit<Category, "id">): Category {
@@ -19,6 +15,7 @@ export function addCategory(data: Omit<Category, "id">): Category {
     id: `cat-${Date.now()}`,
   };
   store.push(newCat);
+  writeStorageFile(STORAGE_FILE, store);
   return newCat;
 }
 
@@ -27,6 +24,7 @@ export function updateCategory(id: string, updates: Partial<Omit<Category, "id">
   const index = store.findIndex((c) => c.id === id);
   if (index === -1) return null;
   store[index] = { ...store[index], ...updates };
+  writeStorageFile(STORAGE_FILE, store);
   return store[index];
 }
 
@@ -35,5 +33,6 @@ export function deleteCategory(id: string): boolean {
   const index = store.findIndex((c) => c.id === id);
   if (index === -1) return false;
   store.splice(index, 1);
+  writeStorageFile(STORAGE_FILE, store);
   return true;
 }

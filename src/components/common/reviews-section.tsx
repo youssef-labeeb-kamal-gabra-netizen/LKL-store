@@ -1,16 +1,35 @@
 "use client";
 
-import React, { useState } from "react";
-import { CustomerReview, INITIAL_REVIEWS } from "@/data/reviews";
+import React, { useState, useEffect } from "react";
+import { CustomerReview } from "@/data/reviews";
 import { Star, MessageSquarePlus, CheckCircle, ShieldCheck, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export function ReviewsSection() {
-  const [reviews, setReviews] = useState<CustomerReview[]>(INITIAL_REVIEWS);
+interface ReviewsSectionProps {
+  initialReviews?: CustomerReview[];
+}
+
+export function ReviewsSection({ initialReviews = [] }: ReviewsSectionProps) {
+  // Only display reviews that are strictly approved
+  const [reviews, setReviews] = useState<CustomerReview[]>(() =>
+    initialReviews.filter((r) => r.status === "APPROVED")
+  );
   const [modalOpen, setModalOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+
+  // Re-fetch approved reviews on mount to get latest updates
+  useEffect(() => {
+    fetch("/api/reviews")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.ok && Array.isArray(data.reviews)) {
+          setReviews(data.reviews.filter((r: CustomerReview) => r.status === "APPROVED"));
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   // Form fields
   const [author, setAuthor] = useState("");
@@ -44,8 +63,10 @@ export function ReviewsSection() {
         throw new Error(data.message || "فشل إرسال التقييم");
       }
 
-      setReviews([data.review, ...reviews]);
-      setSuccessMsg("تمت إضافة مراجعتك وتجربتك بنجاح، شكراً لثقتكم الغالية!");
+      setSuccessMsg(
+        data.message ||
+          "تم إرسال مراجعتكم بنجاح! شكراً لثقتكم الغالية، وسيتم عرضها بعد المراجعة والاعتماد من إدارة المحل."
+      );
       setTimeout(() => {
         setModalOpen(false);
         setSuccessMsg("");
@@ -55,7 +76,7 @@ export function ReviewsSection() {
         setEquipmentUsed("");
         setComment("");
         setRating(5);
-      }, 1500);
+      }, 2500);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "حدث خطأ غير متوقع، يرجى المحاولة لاحقاً";
       setErrorMsg(msg);
@@ -91,59 +112,84 @@ export function ReviewsSection() {
       </div>
 
       {/* Reviews Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {reviews.map((rev) => (
-          <div
-            key={rev.id}
-            className="rounded-3xl border border-brand-neutral-200/80 bg-white p-6 sm:p-7 shadow-xs hover:shadow-md hover:border-brand-green-600/40 transition-all flex flex-col justify-between space-y-4"
-          >
-            <div className="space-y-3">
-              {/* Rating & Verified badge */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1 text-amber-500">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`h-4 w-4 ${i < rev.rating ? "fill-amber-400 text-amber-400" : "text-brand-neutral-200"}`}
-                    />
-                  ))}
-                </div>
-                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100">
-                  <CheckCircle className="h-3 w-3" />
-                  عميل موثق
-                </span>
-              </div>
-
-              {/* Review Text */}
-              <p className="text-sm text-brand-neutral-700 leading-relaxed font-normal italic">
-                &ldquo;{rev.comment}&rdquo;
-              </p>
-
-              {rev.equipmentUsed && (
-                <div className="pt-2">
-                  <span className="text-[11px] font-semibold text-brand-neutral-500 bg-brand-neutral-100 rounded-lg px-2.5 py-1 inline-block">
-                    المعدة: {rev.equipmentUsed}
-                  </span>
-                </div>
-              )}
-            </div>
-
-            {/* Author info */}
-            <div className="pt-4 border-t border-brand-neutral-100 flex items-center justify-between text-xs">
-              <div className="flex items-center gap-2.5">
-                <div className="h-8 w-8 rounded-full bg-brand-green-100 text-brand-green-800 flex items-center justify-center font-bold text-xs shrink-0">
-                  {rev.author.charAt(0)}
-                </div>
-                <div>
-                  <h4 className="font-bold text-brand-neutral-900 text-sm">{rev.author}</h4>
-                  <p className="text-brand-neutral-500 text-[11px]">{rev.location} • {rev.role}</p>
-                </div>
-              </div>
-              <span className="text-[10px] text-brand-neutral-400 font-medium">{rev.date}</span>
-            </div>
+      {reviews.length === 0 ? (
+        <div className="rounded-3xl border border-brand-neutral-200/90 bg-white p-8 sm:p-12 text-center space-y-4 shadow-xs">
+          <div className="h-12 w-12 rounded-2xl bg-brand-green-50 text-brand-green-700 flex items-center justify-center mx-auto border border-brand-green-200">
+            <ShieldCheck className="h-6 w-6" />
           </div>
-        ))}
-      </div>
+          <div className="space-y-1">
+            <h3 className="text-lg font-extrabold text-brand-neutral-900">
+              تقييمات وآراء العملاء
+            </h3>
+            <p className="text-sm text-brand-neutral-600 max-w-lg mx-auto leading-relaxed">
+              تخضع جميع التقييمات للمراجعة والتحقق المباشر من إدارة المحل لضمان الأمانة والشفافية. نتشرف دائماً بمشاركتكم تجاربكم ورأيكم في معداتنا وخدماتنا.
+            </p>
+          </div>
+          <button
+            onClick={() => setModalOpen(true)}
+            className="inline-flex items-center gap-2 rounded-xl bg-brand-green-800 hover:bg-brand-green-700 active:bg-brand-green-900 text-white px-5 py-2.5 text-xs font-bold transition-all cursor-pointer"
+          >
+            <MessageSquarePlus className="h-4 w-4" />
+            <span>شاركنا تجربتك الآن</span>
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {reviews.map((rev) => (
+            <div
+              key={rev.id}
+              className="rounded-3xl border border-brand-neutral-200/80 bg-white p-6 sm:p-7 shadow-xs hover:shadow-md hover:border-brand-green-600/40 transition-all flex flex-col justify-between space-y-4"
+            >
+              <div className="space-y-3">
+                {/* Rating & Verified badge */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1 text-amber-500">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`h-4 w-4 ${i < rev.rating ? "fill-amber-400 text-amber-400" : "text-brand-neutral-200"}`}
+                      />
+                    ))}
+                  </div>
+                  {rev.verified && (
+                    <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100">
+                      <CheckCircle className="h-3 w-3" />
+                      عميل موثق
+                    </span>
+                  )}
+                </div>
+
+                {/* Review Text */}
+                <p className="text-sm text-brand-neutral-700 leading-relaxed font-normal italic">
+                  &ldquo;{rev.comment}&rdquo;
+                </p>
+
+                {rev.equipmentUsed && (
+                  <div className="pt-2">
+                    <span className="text-[11px] font-semibold text-brand-neutral-500 bg-brand-neutral-100 rounded-lg px-2.5 py-1 inline-block">
+                      المعدة: {rev.equipmentUsed}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Author info */}
+              <div className="pt-4 border-t border-brand-neutral-100 flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2.5">
+                  <div className="h-8 w-8 rounded-full bg-brand-green-100 text-brand-green-800 flex items-center justify-center font-bold text-xs shrink-0">
+                    {rev.author.charAt(0)}
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-brand-neutral-900 text-sm">{rev.author}</h4>
+                    <p className="text-brand-neutral-500 text-[11px]">{rev.location} • {rev.role}</p>
+                  </div>
+                </div>
+                <span className="text-[10px] text-brand-neutral-400 font-medium">{rev.date}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Modal Dialog for Adding a Voluntary Review */}
       {modalOpen && (

@@ -25,7 +25,7 @@ export const INITIAL_REVIEWS: CustomerReview[] = [
     equipmentUsed: "موتور رش زراعي 450 بار",
     date: "منذ أسبوعين",
     verified: false,
-    status: "APPROVED",
+    status: "PENDING",
   },
   {
     id: "rev-2",
@@ -38,7 +38,7 @@ export const INITIAL_REVIEWS: CustomerReview[] = [
     equipmentUsed: "طلمبة مياه سحب ورفع 3 بوصة",
     date: "منذ 3 أسابيع",
     verified: false,
-    status: "APPROVED",
+    status: "PENDING",
   },
   {
     id: "rev-3",
@@ -51,7 +51,7 @@ export const INITIAL_REVIEWS: CustomerReview[] = [
     equipmentUsed: "رشاشة ظهرية بموتور بنزين 25 لتر",
     date: "منذ شهر",
     verified: false,
-    status: "APPROVED",
+    status: "PENDING",
   },
   {
     id: "rev-4",
@@ -64,7 +64,7 @@ export const INITIAL_REVIEWS: CustomerReview[] = [
     equipmentUsed: "عزاقة زراعية ميكانيكية 7 حصان",
     date: "منذ شهر ونصف",
     verified: false,
-    status: "APPROVED",
+    status: "PENDING",
   },
   {
     id: "rev-5",
@@ -77,7 +77,7 @@ export const INITIAL_REVIEWS: CustomerReview[] = [
     equipmentUsed: "قطع غيار طلمبات ومحركات ديزل",
     date: "منذ شهرين",
     verified: false,
-    status: "APPROVED",
+    status: "PENDING",
   },
   {
     id: "rev-6",
@@ -90,6 +90,6 @@ export const INITIAL_REVIEWS: CustomerReview[] = [
     equipmentUsed: "فلاتر قرصية ومستلزمات ري بالتنقيط",
     date: "منذ شهرين",
     verified: false,
-    status: "APPROVED",
+    status: "PENDING",
   },
 ];

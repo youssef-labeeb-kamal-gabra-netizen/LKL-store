@@ -32,6 +32,10 @@ temp_*
 push.bat
 upload-to-github.bat
 
+# persistent storage files (protect real customer inquiries & live data)
+data/storage/*.json
+!data/storage/.gitkeep
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

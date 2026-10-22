@@ -2,7 +2,8 @@ import { cookies } from "next/headers";
 import crypto from "crypto";
 import { env } from "@/lib/env";
 import { ApplicationError } from "@/lib/error";
-import { getUsersStore } from "@/lib/users-store";
+import { getUsersStore, upsertUser } from "@/lib/users-store";
+import { readStorageFile, writeStorageFile } from "@/lib/storage";
 
 export interface SessionUser {
   id: string;
@@ -24,37 +25,56 @@ export const OAUTH_STATE_COOKIE = "lkl_oauth_state";
 export const OAUTH_PKCE_COOKIE = "lkl_oauth_pkce";
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 7; // 7 days
 
-// In-memory server-side revocation registry (Phase 1, Item 4)
-declare global {
-  var __lkl_revoked_sessions: Set<string> | undefined;
-  var __lkl_revoked_emails: Map<string, number> | undefined;
+interface RevocationsStore {
+  revokedJtis: string[];
+  revokedEmails: Record<string, number>;
+}
+
+const REVOCATIONS_FILE = "revocations.json";
+
+function getRevocationsStore(): RevocationsStore {
+  return readStorageFile<RevocationsStore>(REVOCATIONS_FILE, {
+    revokedJtis: [],
+    revokedEmails: {},
+  });
 }
 
 export function revokeSession(jti: string): void {
-  if (!global.__lkl_revoked_sessions) {
-    global.__lkl_revoked_sessions = new Set();
+  if (!jti) return;
+  const store = getRevocationsStore();
+  if (!store.revokedJtis.includes(jti)) {
+    store.revokedJtis.push(jti);
+    // Keep max 5000 recent revoked jtis to prevent unbounded storage file growth
+    if (store.revokedJtis.length > 5000) {
+      store.revokedJtis = store.revokedJtis.slice(-5000);
+    }
+    writeStorageFile(REVOCATIONS_FILE, store);
   }
-  global.__lkl_revoked_sessions.add(jti);
 }
 
 export function revokeAllSessionsForUser(email: string): void {
-  if (!global.__lkl_revoked_emails) {
-    global.__lkl_revoked_emails = new Map();
-  }
-  global.__lkl_revoked_emails.set(email.trim().toLowerCase(), Date.now());
+  if (!email) return;
+  const store = getRevocationsStore();
+  store.revokedEmails[email.trim().toLowerCase()] = Date.now();
+  writeStorageFile(REVOCATIONS_FILE, store);
 }
 
 export function isSessionRevoked(payload: StoredSessionPayload): boolean {
-  if (payload.jti && global.__lkl_revoked_sessions && global.__lkl_revoked_sessions.has(payload.jti)) {
-    return true;
-  }
-  if (global.__lkl_revoked_emails) {
-    const revokedAt = global.__lkl_revoked_emails.get(payload.user.email.trim().toLowerCase());
-    if (revokedAt && payload.iat < revokedAt) {
+  try {
+    const store = getRevocationsStore();
+    if (payload.jti && store.revokedJtis.includes(payload.jti)) {
       return true;
     }
+    if (payload.user?.email) {
+      const revokedAt = store.revokedEmails[payload.user.email.trim().toLowerCase()];
+      if (revokedAt && payload.iat < revokedAt) {
+        return true;
+      }
+    }
+    return false;
+  } catch {
+    return false;
   }
-  return false;
 }
 
 /**
@@ -138,6 +158,16 @@ export async function createSession(user: Omit<SessionUser, "role">): Promise<Se
     path: "/",
     maxAge: SESSION_MAX_AGE_SECONDS,
   });
+
+  try {
+    upsertUser({
+      email: sessionUser.email,
+      name: sessionUser.name,
+      role: sessionUser.role,
+    });
+  } catch {
+    // Non-fatal if storage fails during edge session creation
+  }
 
   return sessionUser;
 }

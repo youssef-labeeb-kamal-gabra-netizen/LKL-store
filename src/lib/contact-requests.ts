@@ -18,18 +18,8 @@ export interface ContactRequest {
 
 const STORAGE_FILE = "inquiries.json";
 
-const initialRequests: ContactRequest[] = [
-  {
-    id: "req-initial-1",
-    name: "م. حسام السيد",
-    phone: "01012345678",
-    email: "hossam@example.com",
-    product: "high-pressure-agricultural-spray-motor",
-    message: "أود الاستفسار عن ضغط موتور الرش وإمكانية تزويده بخرطوم 100 متر.",
-    status: "NEW",
-    createdAt: new Date().toISOString(),
-  },
-];
+// In adherence with Constitution Rule 1 (Zero Fabrication), initial inquiries start empty
+const initialRequests: ContactRequest[] = [];
 
 export function getContactRequests(): ContactRequest[] {
   return readStorageFile<ContactRequest[]>(STORAGE_FILE, initialRequests);
