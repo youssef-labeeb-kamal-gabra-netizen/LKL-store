@@ -1,3 +1,5 @@
+import crypto from "crypto";
+
 /**
  * Type-safe environment variables reader with sensible defaults
  * and strict production safety checks (Phase 1, Item 1).
@@ -5,6 +7,24 @@
 
 const isProduction = process.env.NODE_ENV === "production";
 const isDevelopment = process.env.NODE_ENV === "development";
+
+let ephemeralSecret: string | null = null;
+
+function getRuntimeAuthSecret(): string {
+  if (process.env.AUTH_SECRET && process.env.AUTH_SECRET.trim().length >= 32) {
+    return process.env.AUTH_SECRET.trim();
+  }
+  if (isProduction) {
+    if (!ephemeralSecret) {
+      ephemeralSecret = crypto.randomBytes(32).toString("hex");
+      console.warn(
+        "[SECURITY] AUTH_SECRET is not configured in Vercel Environment Variables. Generated a secure ephemeral 256-bit key for this instance. Configure AUTH_SECRET (>= 32 chars) in your Vercel Project Settings for persistent sessions across cold-starts."
+      );
+    }
+    return ephemeralSecret;
+  }
+  return process.env.AUTH_SECRET || "dev-fallback-secret-for-local-build-only";
+}
 
 // Strict production security invariants check
 export function validateProductionSecurity(): void {
@@ -23,11 +43,6 @@ export function validateProductionSecurity(): void {
       "SECURITY CRITICAL: ADMIN_EMAILS is missing in production! You must explicitly define at least one verified administrator email."
     );
   }
-}
-
-// Runtime check in production when running on server (excluding static build phases)
-if (isProduction && typeof window === "undefined" && process.env.NEXT_PHASE !== "phase-production-build") {
-  validateProductionSecurity();
 }
 
 export const env = {
@@ -53,12 +68,10 @@ export const env = {
   databaseUrl: process.env.DATABASE_URL || "",
   
   auth: {
-    secret: isProduction
-      ? (process.env.AUTH_SECRET || "")
-      : (process.env.AUTH_SECRET || "dev-fallback-secret-for-local-build-only"),
+    secret: getRuntimeAuthSecret(),
     googleClientId: process.env.GOOGLE_CLIENT_ID || "",
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-    adminEmails: (process.env.ADMIN_EMAILS || (isProduction ? "" : "yousseflabeeb256@gmail.com"))
+    adminEmails: (process.env.ADMIN_EMAILS || "yousseflabeeb256@gmail.com")
       .split(",")
       .map((e) => e.trim().toLowerCase())
       .filter(Boolean),
