@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: ProductDetailsPageProps) {
   const products = getProductsStore();
   const product = products.find((p) => p.slug === slug);
 
-  if (!product) {
+  if (!product || !product.published) {
     return constructMetadata({
       title: "المنتج غير موجود",
       noIndex: true,
@@ -41,12 +41,13 @@ export default async function ProductDetailsPage({ params }: ProductDetailsPageP
   const products = getProductsStore();
   const product = products.find((p) => p.slug === slug);
 
-  if (!product) {
+  // Strictly reject draft/unpublished products from direct access (Phase 5, Item 1)
+  if (!product || !product.published) {
     notFound();
   }
 
   const relatedProducts = products.filter(
-    (p) => p.categoryId === product.categoryId && p.id !== product.id
+    (p) => p.published && p.categoryId === product.categoryId && p.id !== product.id
   ).slice(0, 3);
 
   const rawWhatsApp = env.business.whatsapp || "01220792948";

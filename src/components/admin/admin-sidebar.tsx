@@ -14,6 +14,7 @@ import {
   FileText,
   Settings,
   ShieldAlert,
+  Star,
   ArrowRight,
   LogOut,
 } from "lucide-react";
@@ -23,6 +24,7 @@ const adminNav = [
   { href: "/admin/products", label: "إدارة المنتجات والمعدات", icon: Tractor },
   { href: "/admin/categories", label: "الأقسام والكتالوج", icon: Layers },
   { href: "/admin/contact-requests", label: "طلبات الاستفسار والعملاء", icon: Inbox },
+  { href: "/admin/reviews", label: "مراجعة تقييمات العملاء", icon: Star },
   { href: "/admin/media", label: "وسائط وصور المعدات", icon: Image },
   { href: "/admin/users", label: "المستخدمين والصلاحيات", icon: Users },
   { href: "/admin/content", label: "إدارة محتوى النصوص", icon: FileText },

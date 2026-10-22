@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ContentBlocks } from "@/lib/content-store";
+import type { ContentBlocks } from "@/lib/content-store";
 import { Input, Textarea } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Toast } from "@/components/ui/toast";

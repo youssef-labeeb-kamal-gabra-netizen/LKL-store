@@ -22,6 +22,13 @@ interface HeaderProps {
     email?: string | null;
     role?: "USER" | "ADMIN";
   } | null;
+  settings?: {
+    phone?: string;
+    secondaryPhone?: string;
+    whatsapp?: string;
+    googleMapsUrl?: string;
+    addressPhrase?: string;
+  };
 }
 
 const quickNavLinks = [
@@ -31,18 +38,18 @@ const quickNavLinks = [
   { href: "/contact", label: "تواصل معنا" },
 ];
 
-export function Header({ user }: HeaderProps) {
+export function Header({ user, settings }: HeaderProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const pathname = usePathname();
 
-  const phone1 = env.business.phone || "01220792948";
-  const phone2 = env.business.secondaryPhone || "01114587917";
-  const rawWhatsApp = env.business.whatsapp || "01220792948";
+  const phone1 = settings?.phone || env.business.phone || "01220792948";
+  const phone2 = settings?.secondaryPhone || env.business.secondaryPhone || "01114587917";
+  const rawWhatsApp = settings?.whatsapp || env.business.whatsapp || "01220792948";
   const cleanWhatsApp = rawWhatsApp.replace(/[^0-9]/g, "");
   const whatsappUrl = `https://wa.me/${cleanWhatsApp.startsWith("0") ? `2${cleanWhatsApp}` : cleanWhatsApp}?text=${encodeURIComponent(
     "السلام عليكم، أود الاستفسار عن الآلات والمعدات الزراعية وقطع الغيار لدى شركة لبيب كمال لبيب."
   )}`;
-  const mapsUrl = env.business.googleMapsUrl || "https://maps.app.goo.gl/fjJacxeJPcMBw7rU8";
+  const mapsUrl = settings?.googleMapsUrl || env.business.googleMapsUrl || "https://www.google.com/maps/place/%D8%B4%D8%B1%D9%83%D8%A9+%D9%84%D8%A8%D9%8A%D8%A8+%D9%83%D9%85%D8%A7%D9%84+%D9%84%D9%84%D8%A3%D9%84%D8%A7%D8%AA+%D8%A7%D9%84%D8%B2%D8%B1%D8%A7%D8%B9%D9%8A%D9%87/@30.5346921,31.3866374,17z";
 
   return (
     <>

@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Toast } from "@/components/ui/toast";
 import { ShieldCheck, Phone, Save } from "lucide-react";
 import { env } from "@/lib/env";
+import type { BusinessSettings } from "@/types/settings";
 
-export function SettingsManager({ initialSettings }: { initialSettings: Record<string, string> }) {
-  const [settings, setSettings] = useState(initialSettings);
+export function SettingsManager({ initialSettings }: { initialSettings: BusinessSettings }) {
+  const [settings, setSettings] = useState<BusinessSettings>(initialSettings);
   const [isLoading, setIsLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
@@ -47,13 +48,13 @@ export function SettingsManager({ initialSettings }: { initialSettings: Record<s
 
       <div className="border-b border-brand-neutral-200 pb-5">
         <span className="text-xs font-bold text-brand-green-700 tracking-wider uppercase">
-          بيانات المنصة
+          بيانات المنصة المركزية
         </span>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-brand-neutral-900 tracking-tight mt-0.5">
           إعدادات وهوية شركة لبيب كمال
         </h1>
         <p className="text-sm text-brand-neutral-500 mt-1">
-          إدارة أرقام التواصل الفوري، واتساب، والعنوان المعتمد لظهوره في الترويسة والتذييل.
+          إدارة أرقام التواصل الفوري، واتساب، ومواعيد العمل، والعنوان المعتمد الذي ينعكس مباشرة في الترويسة، التذييل، وصفحة تواصل معنا.
         </p>
       </div>
 
@@ -67,32 +68,57 @@ export function SettingsManager({ initialSettings }: { initialSettings: Record<s
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input
               label="رقم الهاتف الأساسي"
-              placeholder="010xxxxxxxx"
+              placeholder="01220792948"
               value={settings.phone || ""}
               onChange={(e) => setSettings({ ...settings, phone: e.target.value })}
             />
 
             <Input
-              label="رقم الواتساب (للاستفسارات المباشرة)"
-              placeholder="010xxxxxxxx"
-              value={settings.whatsapp || ""}
-              onChange={(e) => setSettings({ ...settings, whatsapp: e.target.value })}
+              label="رقم الهاتف الإضافي (الثاني)"
+              placeholder="01114587917"
+              value={settings.secondaryPhone || ""}
+              onChange={(e) => setSettings({ ...settings, secondaryPhone: e.target.value })}
             />
           </div>
 
-          <Input
-            label="صيغة عنوان المقر (Address Phrase)"
-            placeholder="البداية، طريق مصر الزراعي"
-            value={settings.addressPhrase || ""}
-            onChange={(e) => setSettings({ ...settings, addressPhrase: e.target.value })}
-          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Input
+              label="رقم الواتساب (للاستفسارات المباشرة)"
+              placeholder="01220792948"
+              value={settings.whatsapp || ""}
+              onChange={(e) => setSettings({ ...settings, whatsapp: e.target.value })}
+            />
 
-          <Input
-            label="شعار المؤسسة (Slogan)"
-            placeholder="الجودة • الثقة • الخدمة المتميزة"
-            value={settings.slogan || ""}
-            onChange={(e) => setSettings({ ...settings, slogan: e.target.value })}
-          />
+            <Input
+              label="مواعيد العمل الرسمية"
+              placeholder="يومياً من 8:00 صباحاً حتى 9:00 مساءً"
+              value={settings.workingHours || ""}
+              onChange={(e) => setSettings({ ...settings, workingHours: e.target.value })}
+            />
+          </div>
+
+          <div className="pt-2 border-t border-brand-neutral-100 space-y-4">
+            <Input
+              label="صيغة عنوان المقر (Address Phrase)"
+              placeholder="طريق بنها - الزقازيق (طريق مصر الزراعي)، قرية الجديدة، مركز منيا القمح"
+              value={settings.addressPhrase || ""}
+              onChange={(e) => setSettings({ ...settings, addressPhrase: e.target.value })}
+            />
+
+            <Input
+              label="رابط الموقع على خرائط Google"
+              placeholder="https://www.google.com/maps/..."
+              value={settings.googleMapsUrl || ""}
+              onChange={(e) => setSettings({ ...settings, googleMapsUrl: e.target.value })}
+            />
+
+            <Input
+              label="شعار المؤسسة (Slogan)"
+              placeholder="الجودة • الثقة • الخدمة المتميزة"
+              value={settings.slogan || ""}
+              onChange={(e) => setSettings({ ...settings, slogan: e.target.value })}
+            />
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-brand-neutral-100">
             <Input
@@ -120,7 +146,7 @@ export function SettingsManager({ initialSettings }: { initialSettings: Record<s
           <div className="p-3 bg-purple-50 border border-purple-200 rounded-lg text-purple-900 font-mono text-xs">
             {env.auth.adminEmails.length > 0
               ? env.auth.adminEmails.join(", ")
-              : "admin@lkl-egypt.com"}
+              : "yousseflabeeb256@gmail.com"}
           </div>
         </div>
 

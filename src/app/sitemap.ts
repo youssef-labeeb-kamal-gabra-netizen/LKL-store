@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
-import { INITIAL_PRODUCTS, CATEGORIES } from "@/data/catalog";
+import { CATEGORIES } from "@/data/catalog";
+import { getPublishedProducts } from "@/lib/products-store";
 import { env } from "@/lib/env";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -45,7 +46,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const productRoutes: MetadataRoute.Sitemap = INITIAL_PRODUCTS.map((prod) => ({
+  const productRoutes: MetadataRoute.Sitemap = getPublishedProducts().map((prod) => ({
     url: `${baseUrl}/products/${prod.slug}`,
     lastModified: new Date(prod.updatedAt),
     changeFrequency: "weekly",

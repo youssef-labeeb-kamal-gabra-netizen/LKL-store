@@ -3,17 +3,25 @@ import Link from "next/link";
 import { BrandLogo } from "@/components/common/brand-logo";
 import { MapPin, Phone, Clock, MessageCircle, ExternalLink, Sparkles } from "lucide-react";
 import { env } from "@/lib/env";
+import type { BusinessSettings } from "@/types/settings";
 
-export function Footer() {
+interface FooterProps {
+  settings?: Partial<BusinessSettings>;
+}
+
+export function Footer({ settings }: FooterProps = {}) {
   const currentYear = new Date().getFullYear();
-  const phone1 = env.business.phone || "01220792948";
-  const phone2 = env.business.secondaryPhone || "01114587917";
-  const rawWhatsApp = env.business.whatsapp || "01220792948";
+  const phone1 = settings?.phone || env.business.phone || "01220792948";
+  const phone2 = settings?.secondaryPhone || env.business.secondaryPhone || "01114587917";
+  const rawWhatsApp = settings?.whatsapp || env.business.whatsapp || "01220792948";
   const cleanWhatsApp = rawWhatsApp.replace(/[^0-9]/g, "");
   const whatsappUrl = `https://wa.me/${cleanWhatsApp.startsWith("0") ? `2${cleanWhatsApp}` : cleanWhatsApp}?text=${encodeURIComponent(
     "السلام عليكم، أود الاستفسار عن الآلات والمعدات الزراعية المتوفرة لدى شركة لبيب كمال."
   )}`;
-  const mapsUrl = env.business.googleMapsUrl || "https://maps.app.goo.gl/fjJacxeJPcMBw7rU8";
+  const mapsUrl = settings?.googleMapsUrl || env.business.googleMapsUrl || "https://maps.app.goo.gl/fjJacxeJPcMBw7rU8";
+  const addressPhrase = settings?.addressPhrase || env.business.addressPhrase || "طريق بنها - الزقازيق (طريق مصر الزراعي)، قرية الجديدة، مركز منيا القمح";
+  const workingHours = settings?.workingHours || "يومياً من 8:00 صباحاً حتى 9:00 مساءً";
+  const slogan = settings?.slogan || env.business.slogan || "الجودة • الثقة • الخدمة المتميزة";
 
   return (
     <footer className="mt-auto border-t border-emerald-950/80 bg-[#021811] text-brand-neutral-300 text-start">
@@ -30,7 +38,7 @@ export function Footer() {
             <div className="pt-2 flex flex-col gap-1.5">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-950/80 border border-emerald-800/60 px-3 py-1.5 text-xs font-semibold text-emerald-200">
                 <Sparkles className="h-3.5 w-3.5 text-brand-gold-400" />
-                <span>الجودة • الثقة • الخدمة المتميزة</span>
+                <span>{slogan}</span>
               </span>
             </div>
           </div>
@@ -151,7 +159,7 @@ export function Footer() {
                 <div className="flex flex-col">
                   <span className="text-xs text-brand-neutral-400 font-semibold">مقرنا بالشرقية:</span>
                   <span className="text-xs text-brand-neutral-300 mt-0.5">
-                    طريق مصر الزراعي، قرية الجديدة، مركز منيا القمح، الشرقية
+                    {addressPhrase}
                   </span>
                   <a
                     href={mapsUrl}
@@ -168,7 +176,7 @@ export function Footer() {
               {/* Working Hours */}
               <div className="flex items-center gap-2.5 pt-1 text-xs text-brand-neutral-400">
                 <Clock className="h-4 w-4 text-brand-gold-400 shrink-0" />
-                <span>نستقبلكم يومياً طوال أيام الأسبوع</span>
+                <span>{workingHours}</span>
               </div>
             </div>
           </div>

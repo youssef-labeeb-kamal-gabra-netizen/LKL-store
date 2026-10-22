@@ -129,7 +129,7 @@ test('Business Data: Verified phones, WhatsApp, and Google Maps must be present'
 
 // 10. Customer Reviews Data Test
 test('Reviews: Must contain 6 authentic reviews in Egyptian rural dialect', () => {
-  const reviewsContent = fs.readFileSync('src/lib/reviews-store.ts', 'utf8');
+  const reviewsContent = fs.readFileSync('src/data/reviews.ts', 'utf8');
   assert.ok(reviewsContent.includes('الحاج ممدوح الشرقاوي'), 'Must contain Haj Mamdouh');
   assert.ok(reviewsContent.includes('المعلم رمضان النجار'), 'Must contain Ramadan El Naggar');
   assert.ok(reviewsContent.includes('أستاذ رضا السعدني'), 'Must contain Reda El Saadany');
@@ -223,6 +223,57 @@ test('Security: Logout route must be POST-only, and auth module must support ses
   assert.ok(authModule.includes('revokeSession'), 'Must export revokeSession');
   assert.ok(authModule.includes('revokeAllSessionsForUser'), 'Must export revokeAllSessionsForUser');
   assert.ok(authModule.includes('isSessionRevoked'), 'Must enforce session revocation check');
+});
+
+// 17. Atomic Persistence Engine & Storage Integrity (Phase 2 & Operational Priority 1)
+test('Persistence: Atomic file storage engine must exist and protect against corrupt writes', () => {
+  const storageModule = fs.readFileSync('src/lib/storage.ts', 'utf8');
+  assert.ok(storageModule.includes('readStorageFile'), 'Must export readStorageFile');
+  assert.ok(storageModule.includes('writeStorageFile'), 'Must export writeStorageFile');
+  assert.ok(storageModule.includes('fs.renameSync'), 'Must use atomic rename to prevent corruption');
+  assert.ok(fs.existsSync('data/storage'), 'data/storage directory must exist');
+});
+
+// 18. Customer Inquiries Lifecycle & Status Updates (Phase 2 & Operational Priority 2)
+test('Inquiries: Must support full lifecycle states (NEW, CONTACTED, IN_PROGRESS, RESOLVED, ARCHIVED)', () => {
+  const contactModule = fs.readFileSync('src/lib/contact-requests.ts', 'utf8');
+  assert.ok(contactModule.includes('updateContactRequestStatus'), 'Must support updating request status');
+  assert.ok(contactModule.includes('deleteContactRequest'), 'Must support deleting spam requests');
+  assert.ok(contactModule.includes('NEW') && contactModule.includes('CONTACTED') && contactModule.includes('RESOLVED'), 'Must define all lifecycle states');
+  
+  const adminContactApi = fs.readFileSync('src/app/api/admin/contact-requests/route.ts', 'utf8');
+  assert.ok(adminContactApi.includes('requireAdmin'), 'Admin inquiries API must require admin authentication');
+  assert.ok(adminContactApi.includes('PATCH'), 'Must provide PATCH method for status updates');
+});
+
+// 19. Review Moderation Guard (Operational Priority 6)
+test('Reviews Moderation: Submissions must default to PENDING and public only sees APPROVED', () => {
+  const reviewsModule = fs.readFileSync('src/lib/reviews-store.ts', 'utf8');
+  assert.ok(reviewsModule.includes('status: "PENDING"'), 'New reviews must default to PENDING status');
+  assert.ok(reviewsModule.includes('verified: false'), 'New reviews must be unverified by default');
+  assert.ok(reviewsModule.includes('getApprovedReviews'), 'Must provide getApprovedReviews');
+  assert.ok(reviewsModule.includes('moderateReview'), 'Must provide moderateReview');
+
+  const publicReviewsApi = fs.readFileSync('src/app/api/reviews/route.ts', 'utf8');
+  assert.ok(publicReviewsApi.includes('getApprovedReviews()'), 'Public reviews API must ONLY return approved reviews');
+
+  const adminReviewsApi = fs.readFileSync('src/app/api/admin/reviews/route.ts', 'utf8');
+  assert.ok(adminReviewsApi.includes('requireAdmin'), 'Admin reviews moderation API must be protected');
+});
+
+// 20. Universal Draft Product Isolation (Operational Priority 5)
+test('Universal Draft Isolation: Unpublished products must be hidden from home, sitemap, and slug page', () => {
+  const productsStore = fs.readFileSync('src/lib/products-store.ts', 'utf8');
+  assert.ok(productsStore.includes('getPublishedProducts'), 'Must export getPublishedProducts');
+
+  const homePage = fs.readFileSync('src/app/page.tsx', 'utf8');
+  assert.ok(homePage.includes('p.published'), 'Home page featured products must filter p.published');
+
+  const sitemap = fs.readFileSync('src/app/sitemap.ts', 'utf8');
+  assert.ok(sitemap.includes('getPublishedProducts'), 'Sitemap must only index published products');
+
+  const productSlugPage = fs.readFileSync('src/app/products/[slug]/page.tsx', 'utf8');
+  assert.ok(productSlugPage.includes('!product.published') && productSlugPage.includes('notFound()'), 'Unpublished product page must return 404 notFound()');
 });
 
 console.log(`\n========================================`);

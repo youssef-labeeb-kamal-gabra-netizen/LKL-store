@@ -26,7 +26,7 @@ import { env } from "@/lib/env";
 
 export default function HomePage() {
   const products = getProductsStore();
-  const featuredProducts = products.filter((p) => p.featured).slice(0, 4);
+  const featuredProducts = products.filter((p) => p.published && p.featured).slice(0, 4);
 
   const phone1 = env.business.phone || "01220792948";
   const phone2 = env.business.secondaryPhone || "01114587917";

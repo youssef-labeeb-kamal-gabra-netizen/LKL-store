@@ -3,10 +3,15 @@
 import React, { useState } from "react";
 import { MessageCircle, X } from "lucide-react";
 import { env } from "@/lib/env";
+import type { BusinessSettings } from "@/types/settings";
 
-export function WhatsAppFloatingButton() {
+interface WhatsAppFloatingButtonProps {
+  settings?: Partial<BusinessSettings>;
+}
+
+export function WhatsAppFloatingButton({ settings }: WhatsAppFloatingButtonProps = {}) {
   const [showNotification, setShowNotification] = useState(true);
-  const rawNumber = env.business.whatsapp || "01220792948";
+  const rawNumber = settings?.whatsapp || env.business.whatsapp || "01220792948";
   const cleanNumber = rawNumber.replace(/[^0-9]/g, "");
   const formattedNumber = cleanNumber.startsWith("0") ? `2${cleanNumber}` : cleanNumber;
 

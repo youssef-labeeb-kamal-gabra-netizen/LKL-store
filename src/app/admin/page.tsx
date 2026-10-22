@@ -3,16 +3,19 @@ import Link from "next/link";
 import { CATEGORIES } from "@/data/catalog";
 import { getProductsStore } from "@/lib/products-store";
 import { getContactRequests } from "@/lib/contact-requests";
-import { Tractor, Layers, Inbox, CheckCircle2, ArrowLeft } from "lucide-react";
+import { getReviewsStore } from "@/lib/reviews-store";
+import { Tractor, Layers, Inbox, ArrowLeft, Star } from "lucide-react";
 
 export default function AdminDashboardPage() {
   const products = getProductsStore();
   const categories = CATEGORIES;
   const requests = getContactRequests();
+  const reviews = getReviewsStore();
 
   const totalProducts = products.length;
   const publishedProducts = products.filter((p) => p.published).length;
   const newRequestsCount = requests.filter((r) => r.status === "NEW").length;
+  const pendingReviewsCount = reviews.filter((r) => r.status === "PENDING").length;
 
   return (
     <div className="space-y-8 text-start">
@@ -67,13 +70,20 @@ export default function AdminDashboardPage() {
 
         <div className="rounded-2xl border border-brand-neutral-200 bg-white p-5 shadow-sm space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-brand-neutral-500">حالة النظام</span>
-            <div className="p-2 rounded-lg bg-emerald-100 text-emerald-800">
-              <CheckCircle2 className="h-4 w-4" />
+            <span className="text-xs font-bold text-brand-neutral-500">تقييمات وآراء العملاء</span>
+            <div className="p-2 rounded-lg bg-brand-gold-100 text-brand-gold-800">
+              <Star className="h-4 w-4" />
             </div>
           </div>
-          <p className="text-xl font-bold text-emerald-700 mt-2">يعمل بكفاءة</p>
-          <span className="text-xs text-brand-neutral-500">حماية الخادم والمصادقة نشطة</span>
+          <p className="text-3xl font-black text-brand-neutral-900">{reviews.length}</p>
+          <Link
+            href="/admin/reviews"
+            className="text-xs text-brand-gold-700 font-bold hover:underline inline-block"
+          >
+            {pendingReviewsCount > 0
+              ? `${pendingReviewsCount} تقييمات جديدة بانتظار المراجعة`
+              : "جميع التقييمات مفحوصة ومعتمدة"}
+          </Link>
         </div>
       </div>
 

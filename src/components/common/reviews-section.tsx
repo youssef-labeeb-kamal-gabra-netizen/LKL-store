@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { CustomerReview, INITIAL_REVIEWS } from "@/lib/reviews-store";
+import { CustomerReview, INITIAL_REVIEWS } from "@/data/reviews";
 import { Star, MessageSquarePlus, CheckCircle, ShieldCheck, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 

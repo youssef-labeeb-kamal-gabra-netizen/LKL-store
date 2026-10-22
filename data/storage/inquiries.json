@@ -1,0 +1,12 @@
+[
+  {
+    "id": "req-initial-1",
+    "name": "م. حسام السيد",
+    "phone": "01012345678",
+    "email": "hossam@example.com",
+    "product": "high-pressure-agricultural-spray-motor",
+    "message": "أود الاستفسار عن ضغط موتور الرش وإمكانية تزويده بخرطوم 100 متر.",
+    "status": "NEW",
+    "createdAt": "2026-10-22T14:09:33.567Z"
+  }
+]

@@ -7,6 +7,7 @@ import { WhatsAppFloatingButton } from "@/components/common/whatsapp-button";
 import { MobileActionBar } from "@/components/layout/mobile-action-bar";
 import { constructMetadata } from "@/lib/seo";
 import { getSession } from "@/lib/auth";
+import { getCustomSettings } from "@/lib/settings-store";
 
 const cairo = Cairo({
   subsets: ["arabic", "latin"],
@@ -30,15 +31,16 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await getSession();
+  const settings = getCustomSettings();
 
   return (
     <html lang="ar" dir="rtl" className={cairo.variable}>
       <body className="font-sans antialiased bg-brand-neutral-50 text-brand-neutral-900 flex flex-col min-h-screen">
-        <Header user={session} />
+        <Header user={session} settings={settings} />
         <main className="flex-1 w-full pb-16 md:pb-0">{children}</main>
-        <Footer />
-        <WhatsAppFloatingButton />
-        <MobileActionBar />
+        <Footer settings={settings} />
+        <WhatsAppFloatingButton settings={settings} />
+        <MobileActionBar settings={settings} />
       </body>
     </html>
   );

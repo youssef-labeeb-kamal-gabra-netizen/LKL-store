@@ -3,6 +3,7 @@ import { constructMetadata } from "@/lib/seo";
 import { ContactForm } from "@/components/contact/contact-form";
 import { StoreLocationMap } from "@/components/common/store-location-map";
 import { env } from "@/lib/env";
+import { getCustomSettings } from "@/lib/settings-store";
 import { MapPin, Phone, MessageCircle, Clock, ShieldCheck, ExternalLink, Sparkles } from "lucide-react";
 
 export const metadata = constructMetadata({
@@ -22,15 +23,18 @@ interface ContactPageProps {
 export default async function ContactPage({ searchParams }: ContactPageProps) {
   const params = await searchParams;
   const initialProduct = params.product || "";
+  const settings = getCustomSettings();
 
-  const phone1 = env.business.phone || "01220792948";
-  const phone2 = env.business.secondaryPhone || "01114587917";
-  const rawWhatsApp = env.business.whatsapp || "01220792948";
+  const phone1 = settings.phone || env.business.phone || "01220792948";
+  const phone2 = settings.secondaryPhone || env.business.secondaryPhone || "01114587917";
+  const rawWhatsApp = settings.whatsapp || env.business.whatsapp || "01220792948";
   const cleanWhatsApp = rawWhatsApp.replace(/[^0-9]/g, "");
   const whatsappUrl = `https://wa.me/${cleanWhatsApp.startsWith("0") ? `2${cleanWhatsApp}` : cleanWhatsApp}?text=${encodeURIComponent(
     "السلام عليكم ورحمة الله، أود الاستفسار عن تفاصيل ومواصفات المعدات الزراعية المتوفرة لدى شركة لبيب كمال لبيب."
   )}`;
-  const mapsUrl = env.business.googleMapsUrl || "https://maps.app.goo.gl/fjJacxeJPcMBw7rU8";
+  const mapsUrl = settings.googleMapsUrl || env.business.googleMapsUrl || "https://maps.app.goo.gl/fjJacxeJPcMBw7rU8";
+  const addressPhrase = settings.addressPhrase || env.business.addressPhrase || "طريق بنها - الزقازيق (طريق مصر الزراعي)، قرية الجديدة، مركز منيا القمح";
+  const workingHours = settings.workingHours || "يومياً من 8:00 صباحاً حتى 9:00 مساءً";
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-12 text-start">
@@ -60,7 +64,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
             </p>
           </div>
 
-          <ContactForm initialProductSlug={initialProduct} />
+          <ContactForm initialProductSlug={initialProduct} whatsappNumber={rawWhatsApp} />
         </div>
 
         {/* Business Context & Direct Channels Column */}
@@ -119,8 +123,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 <div className="flex-1">
                   <h4 className="font-bold text-brand-neutral-900">المقر والعنوان الميداني:</h4>
                   <p className="text-brand-neutral-600 mt-0.5 leading-relaxed">
-                    قرية الجديدة — مركز منيا القمح — محافظة الشرقية <br />
-                    (طريق بنها - الزقازيق / طريق مصر الزراعي)
+                    {addressPhrase}
                   </p>
                   <a
                     href={mapsUrl}
@@ -142,7 +145,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 <div>
                   <h4 className="font-bold text-brand-neutral-900">مواعيد العمل:</h4>
                   <p className="text-brand-neutral-600 mt-0.5">
-                    نستقبلكم يومياً طوال أيام الأسبوع في مركزنا بالجديدة (مركز منيا القمح).
+                    {workingHours}
                   </p>
                 </div>
               </div>

@@ -29,6 +29,8 @@ client_secret*.json
 .vercel
 temp_*
 *.log
+push.bat
+upload-to-github.bat
 
 # typescript
 *.tsbuildinfo

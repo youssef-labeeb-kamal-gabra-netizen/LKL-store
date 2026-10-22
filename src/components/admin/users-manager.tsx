@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { AppUser } from "@/lib/users-store";
+import type { AppUser } from "@/lib/users-store";
 import { Toast } from "@/components/ui/toast";
 import { ShieldCheck, UserCheck, Search } from "lucide-react";
 

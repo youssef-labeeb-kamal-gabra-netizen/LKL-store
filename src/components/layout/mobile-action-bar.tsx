@@ -3,16 +3,21 @@
 import React from "react";
 import { Phone, MessageCircle, MapPin } from "lucide-react";
 import { env } from "@/lib/env";
+import type { BusinessSettings } from "@/types/settings";
 
-export function MobileActionBar() {
-  const phone1 = env.business.phone || "01220792948";
-  const rawWhatsApp = env.business.whatsapp || "01220792948";
+interface MobileActionBarProps {
+  settings?: Partial<BusinessSettings>;
+}
+
+export function MobileActionBar({ settings }: MobileActionBarProps = {}) {
+  const phone1 = settings?.phone || env.business.phone || "01220792948";
+  const rawWhatsApp = settings?.whatsapp || env.business.whatsapp || "01220792948";
   const cleanWhatsApp = rawWhatsApp.replace(/[^0-9]/g, "");
   const formattedWhatsApp = cleanWhatsApp.startsWith("0") ? `2${cleanWhatsApp}` : cleanWhatsApp;
   const whatsappUrl = `https://wa.me/${formattedWhatsApp}?text=${encodeURIComponent(
     "السلام عليكم، أود الاستفسار عن الآلات والمعدات الزراعية لدى شركة لبيب كمال."
   )}`;
-  const mapsUrl = env.business.googleMapsUrl || "https://maps.app.goo.gl/fjJacxeJPcMBw7rU8";
+  const mapsUrl = settings?.googleMapsUrl || env.business.googleMapsUrl || "https://maps.app.goo.gl/fjJacxeJPcMBw7rU8";
 
   return (
     <nav

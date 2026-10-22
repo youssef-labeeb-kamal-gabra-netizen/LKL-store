@@ -1,15 +1,58 @@
 import React from "react";
-import { MediaManager } from "@/components/admin/media-manager";
+import fs from "fs";
+import path from "path";
+import { MediaManager, MediaItem } from "@/components/admin/media-manager";
+import { constructMetadata } from "@/lib/seo";
 
-const initialMedia = [
-  { id: "img-1", name: "spray-motor-1.jpg", alt: "موتور رش زراعي عالي الضغط", size: "142 KB", date: "2026-01-15" },
-  { id: "img-2", name: "water-pump-1.jpg", alt: "طلمبة مياه ري 3 بوصة", size: "185 KB", date: "2026-01-16" },
-  { id: "img-3", name: "diesel-motor-1.jpg", alt: "محرك ديزل زراعي للخدمة الشاقة", size: "210 KB", date: "2026-01-17" },
-  { id: "img-4", name: "irrigation-filter-1.jpg", alt: "فلاتر ومستلزمات ري", size: "95 KB", date: "2026-01-18" },
-  { id: "img-5", name: "tiller-1.jpg", alt: "عزاقة زراعية ميكانيكية", size: "160 KB", date: "2026-01-19" },
-  { id: "img-6", name: "spare-parts-1.jpg", alt: "طقم بساتم وجلود طلمبة رش", size: "115 KB", date: "2026-01-20" },
-];
+export const metadata = constructMetadata({
+  title: "مكتبة وسائط وصور المعدات | شركة لبيب كمال",
+  noIndex: true,
+});
 
 export default function AdminMediaPage() {
-  return <MediaManager initialMedia={initialMedia} />;
+  const mediaList: MediaItem[] = [];
+
+  // 1. Scan real custom uploaded files from public/uploads
+  const uploadsDir = path.join(process.cwd(), "public", "uploads");
+  if (fs.existsSync(uploadsDir)) {
+    const uploadFiles = fs.readdirSync(uploadsDir);
+    for (const file of uploadFiles) {
+      const fullPath = path.join(uploadsDir, file);
+      const stat = fs.statSync(fullPath);
+      if (stat.isFile()) {
+        mediaList.push({
+          id: `upload-${file}`,
+          name: file,
+          url: `/uploads/${file}`,
+          alt: file.replace(/[-_]/g, " ").replace(/\.[^/.]+$/, ""),
+          size: `${Math.round(stat.size / 1024)} KB`,
+          date: stat.mtime.toISOString().split("T")[0],
+          isCustomUpload: true,
+        });
+      }
+    }
+  }
+
+  // 2. Scan official products catalogue HD images
+  const productsDir = path.join(process.cwd(), "public", "images", "products");
+  if (fs.existsSync(productsDir)) {
+    const productFiles = fs.readdirSync(productsDir);
+    for (const file of productFiles) {
+      if (file.endsWith(".jpg") || file.endsWith(".png") || file.endsWith(".webp")) {
+        const fullPath = path.join(productsDir, file);
+        const stat = fs.statSync(fullPath);
+        mediaList.push({
+          id: `prod-img-${file}`,
+          name: file,
+          url: `/images/products/${file}`,
+          alt: file.replace(/[-_]/g, " ").replace(/\.[^/.]+$/, ""),
+          size: `${Math.round(stat.size / 1024)} KB`,
+          date: stat.mtime.toISOString().split("T")[0],
+          isCustomUpload: false,
+        });
+      }
+    }
+  }
+
+  return <MediaManager initialMedia={mediaList} />;
 }
