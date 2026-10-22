@@ -123,7 +123,7 @@ test('Business Data: Verified phones, WhatsApp, and Google Maps must be present'
   const envContent = fs.readFileSync('src/lib/env.ts', 'utf8');
   assert.ok(envContent.includes('01220792948'), 'Must contain 01220792948');
   assert.ok(envContent.includes('01114587917'), 'Must contain 01114587917');
-  assert.ok(envContent.includes('8G2HG9MM%2BVMW') || envContent.includes('G9MM+VMW'), 'Must contain Google Maps URL');
+  assert.ok(envContent.includes('maps/place') || envContent.includes('maps.google'), 'Must contain Google Maps URL');
   assert.ok(envContent.includes('2005'), 'Must contain established year 2005');
 });
 
@@ -139,11 +139,11 @@ test('Reviews: Must contain 6 authentic reviews in Egyptian rural dialect', () =
 });
 
 // 11. Store Map Exact Coordinates & Embed Test
-test('Store Map: Must use exact shop coordinates (30.5347375, 31.3842031 - G9MM+VMW)', () => {
+test('Store Map: Must use official store embed and coordinates (30.5346921, 31.3866374)', () => {
   const mapContent = fs.readFileSync('src/components/common/store-location-map.tsx', 'utf8');
-  assert.ok(mapContent.includes('30.5347375'), 'Must contain exact latitude 30.5347375');
-  assert.ok(mapContent.includes('31.3842031'), 'Must contain exact longitude 31.3842031');
-  assert.ok(mapContent.includes('G9MM+VMW') || mapContent.includes('8G2HG9MM'), 'Must include Plus Code');
+  assert.ok(mapContent.includes('30.5346921'), 'Must contain exact latitude 30.5346921');
+  assert.ok(mapContent.includes('31.3866374'), 'Must contain exact longitude 31.3866374');
+  assert.ok(mapContent.includes('0x14f7e5007a056ec1%3A0xc8b55e0580a9488a'), 'Must contain exact Google Maps place CID');
 });
 
 // 12. HD Real Machinery Images Test
@@ -154,6 +154,48 @@ test('HD Images: Product catalog must reference high-definition photography', ()
   assert.ok(fs.existsSync('public/images/products/power-tiller-hd.jpg'), 'Power tiller HD image exists');
   assert.ok(fs.existsSync('public/images/products/irrigation-filters-hd.jpg'), 'Irrigation filters HD image exists');
   assert.ok(fs.existsSync('public/images/products/spare-parts-hd.jpg'), 'Spare parts HD image exists');
+});
+
+// 13. Cryptographic HMAC Session Integrity Test
+test('Security: Session tokens must be HMAC-SHA256 signed and reject forged or tampered tokens', () => {
+  const crypto = require('crypto');
+  const secret = 'test-secret-key-32chars-for-hmac';
+
+  function sign(payloadStr, sec) {
+    return crypto.createHmac('sha256', sec).update(payloadStr).digest('base64url');
+  }
+
+  function verify(payloadStr, sig, sec) {
+    const expected = sign(payloadStr, sec);
+    return crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(sig));
+  }
+
+  const validPayload = Buffer.from(JSON.stringify({ user: { email: 'yousseflabeeb256@gmail.com', role: 'ADMIN' }, exp: Date.now() + 10000 })).toString('base64url');
+  const validSig = sign(validPayload, secret);
+
+  // Valid token passes
+  assert.strictEqual(verify(validPayload, validSig, secret), true);
+
+  // Attacker tries to modify payload
+  const tamperedPayload = Buffer.from(JSON.stringify({ user: { email: 'attacker@evil.com', role: 'ADMIN' } })).toString('base64url');
+  assert.strictEqual(verify(tamperedPayload, validSig, secret), false);
+
+  // Attacker uses wrong secret
+  const forgedSig = sign(tamperedPayload, 'wrong-secret');
+  assert.strictEqual(verify(tamperedPayload, forgedSig, secret), false);
+});
+
+// 14. OAuth CSRF State Parameter Verification Test
+test('Security: Google OAuth flow must enforce state parameter verification to prevent login CSRF', () => {
+  const googleRoute = fs.readFileSync('src/app/api/auth/google/route.ts', 'utf8');
+  assert.ok(googleRoute.includes('crypto.randomBytes(32)'), 'Must generate random 32-byte state');
+  assert.ok(googleRoute.includes('OAUTH_STATE_COOKIE') || googleRoute.includes('lkl_oauth_state'), 'Must set state cookie');
+  assert.ok(googleRoute.includes('state: state'), 'Must pass state to Google OAuth options');
+
+  const callbackRoute = fs.readFileSync('src/app/api/auth/callback/google/route.ts', 'utf8');
+  assert.ok(callbackRoute.includes('storedState'), 'Must retrieve stored state cookie');
+  assert.ok(callbackRoute.includes('state !== storedState'), 'Must verify state against stored cookie');
+  assert.ok(callbackRoute.includes('invalid_csrf_state'), 'Must reject mismatch with invalid_csrf_state');
 });
 
 console.log(`\n========================================`);

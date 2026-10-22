@@ -12,16 +12,16 @@ interface StoreLocationMapProps {
 export function StoreLocationMap({ className = "", showDetails = true }: StoreLocationMapProps) {
   const [copied, setCopied] = useState(false);
 
-  // Exact coordinates extracted directly from the verified store pin (Plus Code: G9MM+VMW)
-  const latitude = 30.5347375;
-  const longitude = 31.3842031;
+  // Exact official coordinates directly from the store Google Maps embed
+  const latitude = 30.5346921;
+  const longitude = 31.3866374;
   const placeName = "شركة لبيب كمال للآلات الزراعية";
   const addressArabic = "طريق بنها - الزقازيق (طريق مصر الزراعي)، قرية الجديدة، مركز منيا القمح، محافظة الشرقية";
-  const directMapsUrl = env.business.googleMapsUrl || "https://maps.google.com/?q=8G2HG9MM%2BVMW";
+  const directMapsUrl = env.business.googleMapsUrl || "https://www.google.com/maps/place/%D8%B4%D8%B1%D9%83%D8%A9+%D9%84%D8%A8%D9%8A%D8%A8+%D9%83%D9%85%D8%A7%D9%84+%D9%84%D9%84%D8%A3%D9%84%D8%A7%D8%AA+%D8%A7%D9%84%D8%B2%D8%B1%D8%A7%D8%B9%D9%8A%D9%87/@30.5346921,31.3866374,17z";
   const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
 
-  // Google Maps Embed URL with exact coordinates pin
-  const embedUrl = `https://maps.google.com/maps?q=${latitude},${longitude}&hl=ar&z=17&output=embed`;
+  // Official Google Maps Embed URL provided by store owner
+  const embedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3436.5170682838425!2d31.386637424728942!3d30.534692095177277!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f7e5007a056ec1%3A0xc8b55e0580a9488a!2z2LTYsdmD2Kkg2YTYqNmK2Kgg2YPZhdin2YQg2YTZhNij2YTYp9iqINin2YTYstix2KfYudmK2Yc!5e0!3m2!1sar!2seg!4v1792674799030!5m2!1sar!2seg";
 
   const copyCoordinates = () => {
     navigator.clipboard.writeText(`${latitude}, ${longitude}`);
