@@ -15,7 +15,7 @@ import {
   Settings,
   ShieldAlert,
   Star,
-  ArrowRight,
+  Home,
   LogOut,
   X,
 } from "lucide-react";
@@ -98,9 +98,9 @@ export function AdminSidebar({ isOpen = false, onClose }: AdminSidebarProps) {
         <Link
           href="/"
           onClick={onClose}
-          className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-xs font-semibold text-brand-neutral-600 hover:bg-brand-neutral-100 transition-colors"
+          className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-xs font-semibold text-brand-neutral-700 hover:bg-brand-neutral-100 transition-colors cursor-pointer"
         >
-          <ArrowRight className="h-4 w-4" />
+          <Home className="h-4 w-4 text-brand-green-700" />
           <span>العودة للموقع العام</span>
         </Link>
 

@@ -239,10 +239,10 @@ export default function HomePage() {
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-brand-green-800 text-white text-xs font-bold hover:bg-brand-green-700 active:scale-95 transition-all shadow-2xs shrink-0"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-brand-green-800 hover:bg-brand-green-700 text-white text-xs font-bold active:scale-95 transition-all shadow-2xs shrink-0 cursor-pointer"
           >
             <MessageCircle className="h-3.5 w-3.5 text-emerald-300" />
-            <span>استشارة المهندس الفني</span>
+            <span>استشارة المهندس</span>
           </a>
         </div>
       </div>
@@ -445,7 +445,7 @@ export default function HomePage() {
         </section>
 
         {/* 4. INTERACTIVE AGRICULTURAL ADVISOR */}
-        <section className="space-y-4">
+        <section id="advisor" className="space-y-4 scroll-mt-24">
           <InteractiveEquipmentAdvisor />
         </section>
 

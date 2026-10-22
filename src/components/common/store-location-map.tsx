@@ -141,16 +141,18 @@ export function StoreLocationMap({ className = "", showDetails = true }: StoreLo
                 <button
                   type="button"
                   onClick={copyCoordinates}
-                  className="p-2 rounded-xl border border-brand-neutral-200 hover:bg-brand-neutral-100 text-brand-neutral-700 transition-colors"
+                  className="p-2 rounded-xl border border-brand-neutral-200 hover:bg-brand-neutral-100 text-brand-neutral-700 transition-all active:scale-95 cursor-pointer"
                   title="نسخ الإحداثيات"
+                  aria-label="نسخ الإحداثيات"
                 >
                   {copied ? <Check className="h-4 w-4 text-emerald-600" /> : <Copy className="h-4 w-4" />}
                 </button>
                 <button
                   type="button"
                   onClick={shareLocation}
-                  className="p-2 rounded-xl border border-brand-neutral-200 hover:bg-brand-neutral-100 text-brand-neutral-700 transition-colors"
+                  className="p-2 rounded-xl border border-brand-neutral-200 hover:bg-brand-neutral-100 text-brand-neutral-700 transition-all active:scale-95 cursor-pointer"
                   title="مشاركة الموقع"
+                  aria-label="مشاركة الموقع"
                 >
                   <Share2 className="h-4 w-4" />
                 </button>

@@ -42,9 +42,10 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
             <button
               key={idx}
               type="button"
+              aria-label={`عرض الصورة رقم ${idx + 1}`}
               onClick={() => setSelectedIdx(idx)}
               className={cn(
-                "relative h-20 w-20 rounded-2xl border-2 bg-brand-neutral-100 flex items-center justify-center shrink-0 transition-all overflow-hidden",
+                "relative h-20 w-20 rounded-2xl border-2 bg-brand-neutral-100 flex items-center justify-center shrink-0 transition-all overflow-hidden cursor-pointer active:scale-95",
                 selectedIdx === idx
                   ? "border-brand-green-600 ring-2 ring-brand-green-200 shadow-sm"
                   : "border-brand-neutral-200 hover:border-brand-neutral-400"

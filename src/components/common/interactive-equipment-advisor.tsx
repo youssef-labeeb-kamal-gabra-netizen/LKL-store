@@ -344,7 +344,7 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
           <button
             type="button"
             onClick={() => setStep(1)}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-neutral-600 hover:text-brand-neutral-900 active:scale-95 transition-all pt-2"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-neutral-600 hover:text-brand-neutral-900 active:scale-95 transition-all pt-2 cursor-pointer"
           >
             <ArrowRight className="h-4 w-4" />
             <span>الرجوع للخطوة السابقة</span>
@@ -405,7 +405,7 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
           <button
             type="button"
             onClick={() => setStep(2)}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-neutral-600 hover:text-brand-neutral-900 active:scale-95 transition-all pt-2"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-neutral-600 hover:text-brand-neutral-900 active:scale-95 transition-all pt-2 cursor-pointer"
           >
             <ArrowRight className="h-4 w-4" />
             <span>الرجوع للخطوة السابقة</span>

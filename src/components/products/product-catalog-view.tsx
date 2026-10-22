@@ -25,7 +25,7 @@ export function ProductCatalogView({
     let list = products.filter((p) => p.published);
 
     if (selectedCategory) {
-      const cat = categories.find((c) => c.slug === selectedCategory);
+      const cat = categories.find((c) => c.slug === selectedCategory || c.id === selectedCategory);
       if (cat) {
         list = list.filter((p) => p.categoryId === cat.id);
       }
@@ -53,7 +53,7 @@ export function ProductCatalogView({
     return list;
   }, [products, categories, selectedCategory, searchQuery, sortOption]);
 
-  const activeCategory = categories.find((c) => c.slug === selectedCategory);
+  const activeCategory = categories.find((c) => c.slug === selectedCategory || c.id === selectedCategory);
 
   return (
     <div className="space-y-8 text-start">
@@ -87,7 +87,7 @@ export function ProductCatalogView({
           <span>كافة المعدات ({products.filter((p) => p.published).length})</span>
         </button>
         {categories.map((cat) => {
-          const isSelected = selectedCategory === cat.slug;
+          const isSelected = selectedCategory === cat.slug || selectedCategory === cat.id;
           const count = products.filter((p) => p.categoryId === cat.id && p.published).length;
           
           const icon = cat.slug === "spray-motors" ? "💨" :
@@ -123,8 +123,19 @@ export function ProductCatalogView({
             placeholder="اكتب هنا اسم الموتور أو الطلمبة أو قطعة الغيار..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-2xl border-2 border-brand-neutral-200 bg-white ps-10 pe-4 py-3 text-sm text-brand-neutral-900 placeholder:text-brand-neutral-400 focus:outline-none focus:border-brand-green-600 focus:ring-4 focus:ring-brand-green-500/10 shadow-xs transition-all"
+            className="w-full rounded-2xl border-2 border-brand-neutral-200 bg-white ps-10 pe-10 py-3 text-sm text-brand-neutral-900 placeholder:text-brand-neutral-400 focus:outline-none focus:border-brand-green-600 focus:ring-4 focus:ring-brand-green-500/10 shadow-xs transition-all"
           />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => setSearchQuery("")}
+              className="absolute end-3.5 top-3 h-5 w-5 rounded-full bg-brand-neutral-200 hover:bg-brand-neutral-300 text-brand-neutral-700 flex items-center justify-center text-xs font-bold transition-colors cursor-pointer"
+              title="مسح البحث"
+              aria-label="مسح البحث"
+            >
+              ✕
+            </button>
+          )}
         </div>
 
         <div className="flex items-center gap-2 w-full sm:w-auto">

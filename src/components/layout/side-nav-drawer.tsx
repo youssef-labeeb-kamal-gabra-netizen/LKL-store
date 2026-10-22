@@ -35,7 +35,6 @@ interface SideNavDrawerProps {
     email?: string | null;
     role?: "USER" | "ADMIN";
   } | null;
-  onOpenAdvisor?: () => void;
 }
 
 const mainNav = [
@@ -55,7 +54,7 @@ const categoryIcons: Record<string, React.ElementType> = {
   "cat-6": Wrench,
 };
 
-export function SideNavDrawer({ isOpen, onClose, user, onOpenAdvisor }: SideNavDrawerProps) {
+export function SideNavDrawer({ isOpen, onClose, user }: SideNavDrawerProps) {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
 
@@ -143,17 +142,14 @@ export function SideNavDrawer({ isOpen, onClose, user, onOpenAdvisor }: SideNavD
               <p className="text-xs text-emerald-100/80 leading-relaxed">
                 حدد نوع المحصول ومساحة الأرض واحصل على ترشيح فوري للمعدة المناسبة.
               </p>
-              <button
-                type="button"
-                onClick={() => {
-                  onClose();
-                  if (onOpenAdvisor) onOpenAdvisor();
-                }}
+              <Link
+                href="/#advisor"
+                onClick={onClose}
                 className="mt-1 w-full py-2.5 px-3 rounded-xl bg-brand-gold-600 hover:bg-brand-gold-500 active:bg-brand-gold-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-sm cursor-pointer"
               >
                 <span>ابدأ المساعد التفاعلي الآن</span>
                 <ChevronLeft className="h-4 w-4" />
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -209,8 +205,8 @@ export function SideNavDrawer({ isOpen, onClose, user, onOpenAdvisor }: SideNavD
                 return (
                   <Link
                     key={cat.id}
-                    href={`/products?category=${cat.id}`}
-                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-brand-neutral-100 text-brand-neutral-800 active:scale-[0.98] transition-all text-xs font-semibold"
+                    href={`/products?category=${cat.slug}`}
+                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-brand-neutral-100 text-brand-neutral-800 active:scale-[0.98] transition-all text-xs font-semibold cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5">
                       <div className="p-1 rounded-lg bg-brand-green-50 text-brand-green-800">

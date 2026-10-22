@@ -9,7 +9,7 @@ import { ProductCard } from "@/components/products/product-card";
 import { Button } from "@/components/ui/button";
 import { constructMetadata } from "@/lib/seo";
 import { env } from "@/lib/env";
-import { MessageCircle, Phone, ArrowRight, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { MessageCircle, Phone, ArrowLeft, ShieldCheck, CheckCircle2 } from "lucide-react";
 
 interface ProductDetailsPageProps {
   params: Promise<{
@@ -128,15 +128,15 @@ export default async function ProductDetailsPage({ params }: ProductDetailsPageP
                 rel="noopener noreferrer"
                 className="w-full sm:flex-1"
               >
-                <Button variant="primary" size="lg" className="w-full justify-center gap-2 bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white font-black shadow-md btn-touch rounded-2xl py-3.5">
+                <Button variant="primary" size="lg" className="w-full justify-center gap-2 bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white font-black shadow-md btn-touch rounded-2xl py-4 text-sm sm:text-base cursor-pointer">
                   <MessageCircle className="h-5 w-5" />
-                  مراسلة الإدارة عبر واتساب
+                  <span>اسأل عن السعر والمواصفات بالواتساب</span>
                 </Button>
               </a>
               <Link href={`/contact?product=${encodeURIComponent(product.slug)}`} className="w-full sm:flex-1">
-                <Button variant="outline" size="lg" className="w-full justify-center gap-2 font-bold border-2 border-brand-neutral-300 hover:bg-emerald-50 hover:text-emerald-950 hover:border-emerald-400 rounded-2xl py-3.5 btn-touch">
-                  <Phone className="h-4 w-4" />
-                  طلب اتصال هاتفي
+                <Button variant="outline" size="lg" className="w-full justify-center gap-2 font-black border-2 border-emerald-600 bg-emerald-50 text-emerald-950 hover:bg-emerald-100 hover:border-emerald-700 rounded-2xl py-4 text-sm sm:text-base btn-touch cursor-pointer">
+                  <Phone className="h-4 w-4 text-emerald-700" />
+                  <span>طلب اتصال تليفوني بالمحل</span>
                 </Button>
               </Link>
             </div>
@@ -177,11 +177,11 @@ export default async function ProductDetailsPage({ params }: ProductDetailsPageP
               معدات ذات صلة في قسم {product.categoryName}
             </h3>
             <Link
-              href={`/products?category=${CATEGORIES.find((c) => c.id === product.categoryId)?.slug}`}
-              className="text-xs sm:text-sm font-bold text-brand-green-700 hover:text-brand-green-800 flex items-center gap-1"
+              href={`/products?category=${CATEGORIES.find((c) => c.id === product.categoryId)?.slug || ""}`}
+              className="text-xs sm:text-sm font-bold text-brand-green-700 hover:text-brand-green-800 flex items-center gap-1 active:scale-95 transition-all"
             >
-              عرض الكل
-              <ArrowRight className="h-4 w-4" />
+              <span>عرض الكل</span>
+              <ArrowLeft className="h-4 w-4" />
             </Link>
           </div>
 

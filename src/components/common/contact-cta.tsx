@@ -30,7 +30,7 @@ export function ContactCTA() {
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] px-5 sm:px-6 py-3.5 sm:py-4 text-xs sm:text-sm md:text-base font-bold text-white shadow-lg transition-all active:scale-95 cursor-pointer w-full sm:w-auto"
+            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] px-6 py-4 text-sm sm:text-base font-black text-white shadow-xl transition-all hover:scale-[1.02] active:scale-95 cursor-pointer w-full sm:w-auto"
           >
             <MessageCircle className="h-5 w-5 shrink-0" />
             <span>مراسلة واتساب فورية ({rawWhatsApp})</span>
@@ -38,7 +38,7 @@ export function ContactCTA() {
 
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-gold-600 hover:bg-brand-gold-500 active:bg-brand-gold-700 px-5 sm:px-6 py-3.5 sm:py-4 text-xs sm:text-sm md:text-base font-bold text-white shadow-md transition-all active:scale-95 w-full sm:w-auto"
+            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-gold-500 hover:bg-brand-gold-600 active:bg-brand-gold-700 border-2 border-brand-gold-300 px-6 py-4 text-sm sm:text-base font-black text-brand-neutral-950 shadow-xl transition-all hover:scale-[1.02] active:scale-95 w-full sm:w-auto cursor-pointer"
           >
             <Phone className="h-5 w-5 shrink-0" />
             <span>طلب تواصل ومواصفات</span>
@@ -46,9 +46,9 @@ export function ContactCTA() {
 
           <Link
             href="/products"
-            className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/20 bg-white/10 px-4 sm:px-5 py-3.5 sm:py-4 text-xs sm:text-sm font-semibold text-white hover:bg-white/20 active:scale-95 transition-all backdrop-blur-sm w-full sm:w-auto"
+            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white hover:bg-emerald-50 active:bg-emerald-100 border-2 border-white px-6 py-4 text-sm sm:text-base font-black text-brand-green-950 shadow-xl transition-all hover:scale-[1.02] active:scale-95 w-full sm:w-auto cursor-pointer"
           >
-            <span>استعراض الكتالوج</span>
+            <span>استعراض كتالوج الماكينات</span>
             <ArrowLeft className="h-4 w-4 shrink-0" />
           </Link>
         </div>
