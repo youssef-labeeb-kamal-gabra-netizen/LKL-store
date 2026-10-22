@@ -44,7 +44,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           يسعدنا تواصلكم وخدمتكم
         </h1>
         <p className="text-base sm:text-lg text-brand-neutral-600 leading-relaxed">
-          سواء كنت تبحث عن استشارة فنية لاختيار الموتور المناسب لأرضك، أو ترغب في الاستفسار عن توفر قطع غيار معينة، فريق شركة لبيب كمال لبيب في خدمتكم دائماً هاتفياً، عبر واتساب، أو بزيارة مقرنا بالزقازيق.
+          سواء كنت تبحث عن استشارة فنية لاختيار الموتور المناسب لأرضك، أو ترغب في الاستفسار عن توفر قطع غيار معينة، فريق شركة لبيب كمال لبيب في خدمتكم دائماً هاتفياً، عبر واتساب، أو بزيارة مقرنا بالجديدة (مركز منيا القمح).
         </p>
       </div>
 
@@ -119,8 +119,8 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 <div className="flex-1">
                   <h4 className="font-bold text-brand-neutral-900">المقر والعنوان الميداني:</h4>
                   <p className="text-brand-neutral-600 mt-0.5 leading-relaxed">
-                    الزقازيق — محافظة الشرقية — مصر <br />
-                    (البداية، طريق مصر الزراعي)
+                    قرية الجديدة — مركز منيا القمح — محافظة الشرقية <br />
+                    (طريق بنها - الزقازيق / طريق مصر الزراعي)
                   </p>
                   <a
                     href={mapsUrl}
@@ -142,7 +142,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 <div>
                   <h4 className="font-bold text-brand-neutral-900">مواعيد العمل:</h4>
                   <p className="text-brand-neutral-600 mt-0.5">
-                    نستقبلكم يومياً طوال أيام الأسبوع في مركزنا بالزقازيق.
+                    نستقبلكم يومياً طوال أيام الأسبوع في مركزنا بالجديدة (مركز منيا القمح).
                   </p>
                 </div>
               </div>

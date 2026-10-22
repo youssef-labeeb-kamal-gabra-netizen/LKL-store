@@ -123,7 +123,7 @@ test('Business Data: Verified phones, WhatsApp, and Google Maps must be present'
   const envContent = fs.readFileSync('src/lib/env.ts', 'utf8');
   assert.ok(envContent.includes('01220792948'), 'Must contain 01220792948');
   assert.ok(envContent.includes('01114587917'), 'Must contain 01114587917');
-  assert.ok(envContent.includes('https://maps.app.goo.gl/fjJacxeJPcMBw7rU8'), 'Must contain Google Maps URL');
+  assert.ok(envContent.includes('8G2HG9MM%2BVMW') || envContent.includes('G9MM+VMW'), 'Must contain Google Maps URL');
   assert.ok(envContent.includes('2005'), 'Must contain established year 2005');
 });
 
@@ -139,11 +139,11 @@ test('Reviews: Must contain 6 authentic reviews in Egyptian rural dialect', () =
 });
 
 // 11. Store Map Exact Coordinates & Embed Test
-test('Store Map: Must use exact shop coordinates (30.5672317, 31.5233545)', () => {
+test('Store Map: Must use exact shop coordinates (30.5347375, 31.3842031 - G9MM+VMW)', () => {
   const mapContent = fs.readFileSync('src/components/common/store-location-map.tsx', 'utf8');
-  assert.ok(mapContent.includes('30.5672317'), 'Must contain exact latitude 30.5672317');
-  assert.ok(mapContent.includes('31.5233545'), 'Must contain exact longitude 31.5233545');
-  assert.ok(mapContent.includes('https://maps.app.goo.gl/fjJacxeJPcMBw7rU8'), 'Must include direct Google Maps app link');
+  assert.ok(mapContent.includes('30.5347375'), 'Must contain exact latitude 30.5347375');
+  assert.ok(mapContent.includes('31.3842031'), 'Must contain exact longitude 31.3842031');
+  assert.ok(mapContent.includes('G9MM+VMW') || mapContent.includes('8G2HG9MM'), 'Must include Plus Code');
 });
 
 // 12. HD Real Machinery Images Test

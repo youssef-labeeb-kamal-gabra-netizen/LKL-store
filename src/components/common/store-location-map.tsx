@@ -12,16 +12,16 @@ interface StoreLocationMapProps {
 export function StoreLocationMap({ className = "", showDetails = true }: StoreLocationMapProps) {
   const [copied, setCopied] = useState(false);
 
-  // Exact coordinates extracted directly from the verified store pin
-  const latitude = 30.5672317;
-  const longitude = 31.5233545;
-  const placeName = "شركة لبيب كمال لبيب للأدوات والآلات الزراعية";
-  const addressArabic = "طريق مصر الزراعي، قرية الجديدة، مركز منيا القمح، محافظة الشرقية";
-  const directMapsUrl = env.business.googleMapsUrl || "https://maps.app.goo.gl/fjJacxeJPcMBw7rU8";
+  // Exact coordinates extracted directly from the verified store pin (Plus Code: G9MM+VMW)
+  const latitude = 30.5347375;
+  const longitude = 31.3842031;
+  const placeName = "شركة لبيب كمال للآلات الزراعية";
+  const addressArabic = "طريق بنها - الزقازيق (طريق مصر الزراعي)، قرية الجديدة، مركز منيا القمح، محافظة الشرقية";
+  const directMapsUrl = env.business.googleMapsUrl || "https://maps.google.com/?q=8G2HG9MM%2BVMW";
   const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
 
   // Google Maps Embed URL with exact coordinates pin
-  const embedUrl = `https://maps.google.com/maps?q=${latitude},${longitude}&hl=ar&z=16&output=embed`;
+  const embedUrl = `https://maps.google.com/maps?q=${latitude},${longitude}&hl=ar&z=17&output=embed`;
 
   const copyCoordinates = () => {
     navigator.clipboard.writeText(`${latitude}, ${longitude}`);
@@ -109,7 +109,7 @@ export function StoreLocationMap({ className = "", showDetails = true }: StoreLo
               <div>
                 <p className="font-bold text-brand-neutral-900">العنوان بالتفصيل:</p>
                 <p className="text-brand-neutral-600 mt-0.5 leading-relaxed">
-                  طريق مصر الزراعي، الجديدة، مركز منيا القمح، الشرقية (على الطريق الزراعي مباشرة)
+                  طريق بنها - الزقازيق (طريق مصر الزراعي)، قرية الجديدة، مركز منيا القمح، محافظة الشرقية (رمز الخريطة: G9MM+VMW)
                 </p>
               </div>
             </div>
@@ -129,9 +129,12 @@ export function StoreLocationMap({ className = "", showDetails = true }: StoreLo
 
             <div className="flex items-center justify-between p-3 rounded-2xl bg-white border border-brand-neutral-200">
               <div className="space-y-0.5">
-                <p className="font-bold text-brand-neutral-900">الإحداثيات الجغرافية:</p>
+                <p className="font-bold text-brand-neutral-900">الإحداثيات ورمز الخريطة:</p>
                 <p className="text-brand-neutral-500 text-xs font-mono" dir="ltr">
                   {latitude.toFixed(5)}, {longitude.toFixed(5)}
+                </p>
+                <p className="text-[11px] text-emerald-700 font-semibold" dir="ltr">
+                  Plus Code: G9MM+VMW
                 </p>
               </div>
               <div className="flex items-center gap-1.5">

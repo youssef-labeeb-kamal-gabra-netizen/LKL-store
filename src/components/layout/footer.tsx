@@ -151,7 +151,7 @@ export function Footer() {
                 <div className="flex flex-col">
                   <span className="text-xs text-brand-neutral-400 font-semibold">مقرنا بالشرقية:</span>
                   <span className="text-xs text-brand-neutral-300 mt-0.5">
-                    الزقازيق — البداية، طريق مصر الزراعي
+                    طريق مصر الزراعي، قرية الجديدة، مركز منيا القمح، الشرقية
                   </span>
                   <a
                     href={mapsUrl}
