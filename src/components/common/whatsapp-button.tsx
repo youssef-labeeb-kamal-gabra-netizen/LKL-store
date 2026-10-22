@@ -17,7 +17,7 @@ export function WhatsAppFloatingButton() {
   const href = `https://wa.me/${formattedNumber}?text=${defaultMessage}`;
 
   return (
-    <aside aria-label="مراسلة سريعة عبر واتساب" className="fixed bottom-6 start-6 z-50 flex flex-col items-start gap-2 select-none">
+    <aside aria-label="مراسلة سريعة عبر واتساب" className="hidden md:flex fixed bottom-6 start-6 z-50 flex-col items-start gap-2 select-none">
       {/* Interactive Tooltip Card */}
       {showNotification && (
         <div className="relative animate-bounce bg-white border border-brand-neutral-200 rounded-2xl p-3 shadow-xl max-w-xs text-start text-xs hidden sm:block">

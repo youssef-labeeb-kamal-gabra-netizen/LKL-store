@@ -100,24 +100,24 @@ export function Header({ user }: HeaderProps) {
         </div>
 
         {/* Main navigation bar */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex h-20 items-center justify-between gap-3">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex h-16 sm:h-20 items-center justify-between gap-2 sm:gap-4">
             {/* Start side: Hamburger 3-Bars Drawer Button + Official Brand Logo */}
-            <div className="flex items-center gap-3 sm:gap-4">
+            <div className="flex items-center gap-2 sm:gap-4 min-w-0">
               {/* The Prominent 3-Bars Hamburger Button */}
               <button
                 type="button"
                 onClick={() => setDrawerOpen(true)}
-                className="inline-flex items-center gap-2.5 px-3 sm:px-3.5 py-2.5 rounded-2xl bg-brand-green-50 border border-brand-green-200 text-brand-green-950 hover:bg-brand-green-100 hover:border-brand-green-300 transition-all shadow-xs group cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-green-600"
+                className="inline-flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-3.5 py-2 sm:py-2.5 rounded-2xl bg-brand-green-50 border border-brand-green-200 text-brand-green-950 hover:bg-brand-green-100 hover:border-brand-green-300 transition-all shadow-xs group cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-green-600 shrink-0"
                 aria-label="فتح القائمة الجانبية والأقسام"
                 title="القائمة والأقسام"
               >
-                <div className="flex flex-col gap-1 w-5 justify-center items-center py-0.5">
-                  <span className="block h-0.5 w-5 bg-brand-green-900 rounded-full group-hover:bg-brand-gold-600 transition-all group-hover:w-4" />
-                  <span className="block h-0.5 w-5 bg-brand-green-900 rounded-full group-hover:bg-brand-gold-600 transition-all" />
-                  <span className="block h-0.5 w-5 bg-brand-green-900 rounded-full group-hover:bg-brand-gold-600 transition-all group-hover:w-4" />
+                <div className="flex flex-col gap-1 w-4 sm:w-5 justify-center items-center py-0.5">
+                  <span className="block h-0.5 w-4 sm:w-5 bg-brand-green-900 rounded-full group-hover:bg-brand-gold-600 transition-all" />
+                  <span className="block h-0.5 w-4 sm:w-5 bg-brand-green-900 rounded-full group-hover:bg-brand-gold-600 transition-all" />
+                  <span className="block h-0.5 w-4 sm:w-5 bg-brand-green-900 rounded-full group-hover:bg-brand-gold-600 transition-all" />
                 </div>
-                <span className="font-extrabold text-xs sm:text-sm text-brand-green-950">
+                <span className="font-extrabold text-[11px] sm:text-sm text-brand-green-950">
                   القائمة
                 </span>
               </button>
@@ -125,7 +125,7 @@ export function Header({ user }: HeaderProps) {
               {/* Logo & Brand Identity */}
               <Link
                 href="/"
-                className="flex items-center group focus:outline-none focus:ring-2 focus:ring-brand-green-600 rounded-xl p-1"
+                className="flex items-center group focus:outline-none focus:ring-2 focus:ring-brand-green-600 rounded-xl p-0.5 min-w-0"
               >
                 <BrandLogo size="md" />
               </Link>
@@ -154,18 +154,17 @@ export function Header({ user }: HeaderProps) {
             </nav>
 
             {/* End side: Direct WhatsApp Messaging & User Account */}
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
               {/* Direct WhatsApp Messaging Button */}
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-bold text-white shadow-sm hover:bg-emerald-700 transition-all hover:scale-105 active:scale-95"
+                className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-bold text-white shadow-sm hover:bg-emerald-700 transition-all hover:scale-105 active:scale-95"
                 title="مراسلة فورية عبر واتساب"
               >
                 <MessageCircle className="h-4 w-4" />
-                <span className="hidden sm:inline">مراسلة واتساب</span>
-                <span className="sm:hidden">واتساب</span>
+                <span>مراسلة واتساب</span>
               </a>
 
               {user ? (

@@ -150,7 +150,7 @@ export function InteractiveEquipmentAdvisor({ className = "" }: AdvisorProps) {
 
   return (
     <div
-      className={`rounded-3xl border-2 border-brand-green-800/20 bg-gradient-to-br from-white via-brand-neutral-50/50 to-brand-green-50/30 p-6 sm:p-10 shadow-xl relative overflow-hidden text-start ${className}`}
+      className={`rounded-3xl border-2 border-brand-green-800/20 bg-gradient-to-br from-white via-brand-neutral-50/50 to-brand-green-50/30 p-4 sm:p-6 md:p-10 shadow-xl relative overflow-hidden text-start ${className}`}
     >
       {/* Decorative background element */}
       <div className="absolute top-0 end-0 -mt-10 -me-10 h-48 w-48 rounded-full bg-brand-gold-500/10 blur-3xl pointer-events-none" />

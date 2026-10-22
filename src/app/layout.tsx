@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cairo } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
@@ -14,6 +14,13 @@ const cairo = Cairo({
   display: "swap",
   weight: ["400", "500", "600", "700", "800", "900"],
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#0c3b2e",
+};
 
 export const metadata: Metadata = constructMetadata();
 

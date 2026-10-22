@@ -68,9 +68,9 @@ export default function HomePage() {
               </p>
 
               {/* Direct CTAs: Catalog + Instant WhatsApp + Phone Call */}
-              <div className="flex flex-wrap items-center gap-3.5 pt-2">
-                <Link href="/products">
-                  <Button variant="secondary" size="lg" className="font-bold text-brand-neutral-950 shadow-xl hover:scale-105 transition-transform bg-brand-gold-500 hover:bg-brand-gold-400">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+                <Link href="/products" className="w-full sm:w-auto">
+                  <Button variant="secondary" size="lg" className="w-full sm:w-auto font-bold text-brand-neutral-950 shadow-xl hover:scale-105 transition-transform bg-brand-gold-500 hover:bg-brand-gold-400 justify-center">
                     تصفح كتالوج المعدات
                     <ArrowLeft className="h-5 w-5 ms-2" />
                   </Button>
@@ -80,7 +80,7 @@ export default function HomePage() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-3.5 text-base font-bold shadow-lg transition-all hover:scale-105 active:scale-95"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-3.5 text-sm sm:text-base font-bold shadow-lg transition-all hover:scale-105 active:scale-95 w-full sm:w-auto"
                 >
                   <MessageCircle className="h-5 w-5" />
                   <span>مراسلة واتساب فورية</span>
@@ -88,7 +88,7 @@ export default function HomePage() {
 
                 <a
                   href={`tel:${phone1}`}
-                  className="inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white/10 hover:bg-white/20 text-white px-4 py-3.5 text-sm font-semibold transition-colors"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/10 hover:bg-white/20 text-white px-4 py-3.5 text-sm font-semibold transition-colors w-full sm:w-auto"
                 >
                   <Phone className="h-4 w-4 text-brand-gold-300" />
                   <span dir="ltr">{phone1}</span>
@@ -96,7 +96,7 @@ export default function HomePage() {
               </div>
 
               {/* Verified Trust Badges */}
-              <div className="pt-6 border-t border-brand-green-800/80 flex flex-wrap items-center gap-6 text-xs sm:text-sm text-brand-green-200">
+              <div className="pt-6 border-t border-brand-green-800/80 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 text-xs sm:text-sm text-brand-green-200">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="h-4 w-4 text-brand-gold-400 shrink-0" />
                   <span>الجودة • الثقة • الخدمة المتميزة</span>
